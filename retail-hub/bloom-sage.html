@@ -3,31 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bloom — Sage Field</title>
+<title>Solace — Wellness Studio Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;1,300&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --linen:      #edf2ec;
-  --parchment:  #dce8da;
-  --panel:      #f4f8f3;
-  --panel-warm: #eef5ec;
-  --ink:        #2d4035;
-  --warm:       #4a6b58;
-  --muted:      #7a9a85;
-  --faint:      #b4c9bc;
-  --brass:      #8a6e3a;
-  --brass-l:    #eef0e4;
-  --sage:       #5a8f6a;
-  --sage-l:     #deeadc;
-  --terra:      #b8614a;
-  --terra-l:    #f5e4de;
-  --charcoal:   #2d4035;
-  --line:       rgba(60,100,70,0.08);
-  --line-m:     rgba(60,100,70,0.14);
+  --linen:      #edf2f0;
+  --parchment:  #dce8e2;
+  --panel:      #f4f8f6;
+  --panel-warm: #edf5f1;
+  --ink:        #1e3028;
+  --warm:       #486058;
+  --muted:      #7a9a90;
+  --faint:      #b4c8c0;
+  --charcoal:   #1e3028;
+  --line:       rgba(40,90,70,0.07);
+  --line-m:     rgba(40,90,70,0.13);
 
-  /* Sage Field accent — amber, active nav only */
-  --accent:     #c09a5b;
-  --accent-l:   #f5f0e4;
+  /* Solace accent — dusty rose, active nav only */
+  --accent:     #a87878;
+  --accent-l:   #f0e8e8;
+
+  /* Status colours */
+  --sage:       #5a8f78;
+  --sage-l:     #deeae4;
+  --terra:      #b06050;
+  --terra-l:    #f5e4de;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,7 +41,6 @@ body {
   line-height: 1.6;
 }
 
-/* ── Topbar ── */
 .topbar {
   height: 48px;
   background: var(--panel);
@@ -78,556 +77,244 @@ body {
   flex-shrink: 0;
 }
 .topbar-sep { width: 1px; height: 16px; background: var(--line-m); flex-shrink: 0; }
-.topbar-status {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
+.topbar-status { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .status-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
+  display: flex; align-items: center; gap: 5px;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
 }
-.status-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--faint);
-  flex-shrink: 0;
-}
-.status-dot.on { background: var(--sage); box-shadow: 0 0 5px rgba(90,143,106,0.5); }
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--faint); flex-shrink: 0; }
+.status-dot.on { background: var(--sage); box-shadow: 0 0 5px rgba(90,143,120,0.5); }
 .topbar-right { margin-left: auto; }
 .tbar-btn {
-  font-family: Inter;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--warm);
-  background: none;
-  border: 1px solid var(--line-m);
-  border-radius: 4px;
-  padding: 6px 14px;
-  cursor: pointer;
-  transition: all 0.15s;
+  font-family: Inter; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  color: var(--warm); background: none; border: 1px solid var(--line-m);
+  border-radius: 4px; padding: 6px 14px; cursor: pointer; transition: all 0.15s;
 }
 .tbar-btn:hover { border-color: var(--faint); color: var(--ink); background: var(--parchment); }
 
-/* ── Nav ── */
 .nav {
-  height: 44px;
-  background: var(--linen);
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  padding: 0 32px;
-  gap: 4px;
+  height: 44px; background: var(--linen); border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; padding: 0 32px; gap: 4px;
 }
 .nav button {
-  font-family: Inter;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  padding: 6px 16px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
+  font-family: Inter; font-size: 10px; font-weight: 400; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); background: none;
+  border: 1px solid transparent; border-radius: 999px; padding: 6px 16px;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
 }
 .nav button.active {
-  background: var(--accent-l);
-  color: var(--accent);
-  font-weight: 600;
-  border-color: rgba(192,154,91,0.3);
+  background: var(--accent-l); color: var(--accent); font-weight: 600;
+  border-color: rgba(168,120,120,0.3);
 }
-.nav button:hover:not(.active) {
-  background: var(--parchment);
-  color: var(--warm);
-}
-.nav-right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
+.nav button:hover:not(.active) { background: var(--parchment); color: var(--warm); }
+.nav-right { margin-left: auto; display: flex; align-items: center; }
 .nav-pill {
-  font-family: Inter;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  border: 1px solid var(--line-m);
-  border-radius: 999px;
-  padding: 5px 12px;
-  white-space: nowrap;
+  font-family: Inter; font-size: 9px; font-weight: 400; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-m);
+  border-radius: 999px; padding: 5px 12px; white-space: nowrap;
 }
 
-/* ── Main ── */
 main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 32px 64px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  max-width: 1200px; margin: 0 auto; padding: 24px 32px 64px;
+  display: flex; flex-direction: column; gap: 16px;
 }
 
-/* ── Cards ── */
-.card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 24px;
-}
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
 .card-label {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 16px;
+  font-size: 9px; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 16px;
 }
 
-/* ── Hero row ── */
-.hero-row {
-  display: grid;
-  grid-template-columns: 7fr 5fr;
-  gap: 16px;
-}
+.hero-row { display: grid; grid-template-columns: 7fr 5fr; gap: 16px; }
 
-/* ── Greeting card ── */
 .greeting-card {
-  background: var(--panel-warm);
-  border: 1px solid var(--line-m);
-  border-left: 3px solid rgba(90,143,106,0.3);
-  border-radius: 16px;
-  padding: 24px;
+  background: var(--panel-warm); border: 1px solid var(--line-m);
+  border-left: 3px solid rgba(168,120,120,0.3); border-radius: 16px; padding: 24px;
 }
-.greeting-context {
-  font-size: 12px;
-  color: var(--warm);
-  margin-bottom: 12px;
-  letter-spacing: 0.01em;
-}
+.greeting-context { font-size: 12px; color: var(--warm); margin-bottom: 12px; letter-spacing: 0.01em; }
 .greeting-headline {
-  font-family: Cormorant, serif;
-  font-weight: 300;
-  font-size: 32px;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  margin-bottom: 12px;
+  font-family: Cormorant, serif; font-weight: 300; font-size: 32px;
+  line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px;
 }
 .greeting-headline em { font-style: italic; }
 .greeting-body {
-  font-size: 14px;
-  color: var(--warm);
-  line-height: 1.6;
-  max-width: 520px;
-  margin-bottom: 20px;
+  font-size: 14px; color: var(--warm); line-height: 1.6; max-width: 520px; margin-bottom: 20px;
 }
 .greeting-body strong { color: var(--ink); font-weight: 600; }
 .greeting-body em { font-style: italic; color: var(--ink); }
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .btn-primary {
-  font-family: Inter;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  background: var(--charcoal);
-  color: rgba(244,248,243,0.9);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 18px;
-  cursor: pointer;
-  transition: all 0.15s;
+  font-family: Inter; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  background: var(--charcoal); color: rgba(244,248,246,0.9); border: none;
+  border-radius: 8px; padding: 10px 18px; cursor: pointer; transition: all 0.15s;
 }
 .btn-primary:hover { background: var(--warm); }
 .btn-secondary {
-  font-family: Inter;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  background: none;
-  color: var(--warm);
-  border: 1px solid var(--line-m);
-  border-radius: 8px;
-  padding: 10px 18px;
-  cursor: pointer;
-  transition: all 0.15s;
+  font-family: Inter; font-size: 11px; font-weight: 400; letter-spacing: 0.04em;
+  background: none; color: var(--warm); border: 1px solid var(--line-m);
+  border-radius: 8px; padding: 10px 18px; cursor: pointer; transition: all 0.15s;
 }
 .btn-secondary:hover { border-color: var(--faint); color: var(--ink); background: var(--parchment); }
 
-/* ── Metrics card ── */
-.metrics-card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 24px;
-}
+.metrics-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
 .metric-rows { display: flex; flex-direction: column; }
 .metric-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
 }
 .metric-row:last-child { border-bottom: none; padding-bottom: 0; }
 .metric-row:first-child { padding-top: 0; }
 .metric-left { display: flex; flex-direction: column; gap: 2px; }
-.metric-name {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.metric-delta {
-  font-size: 12px;
-  color: var(--sage);
-  letter-spacing: 0.02em;
-}
+.metric-name { font-size: 9px; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+.metric-delta { font-size: 12px; color: var(--sage); letter-spacing: 0.02em; }
 .metric-delta.down { color: var(--terra); }
-.metric-value {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1;
-  align-self: center;
-}
+.metric-value { font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1; align-self: center; }
 
-/* ── What's Moving ── */
-.moving-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.bar-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-.bar-row:last-child { margin-bottom: 0; }
-.bar-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.bar-name { font-size: 14px; color: var(--ink); }
-.bar-amt { font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
-.bar-track {
-  height: 4px;
-  background: var(--parchment);
-  border-radius: 99px;
-  overflow: hidden;
-}
-.bar-fill {
-  height: 100%;
-  border-radius: 99px;
-}
-.bar-fill.top { background: var(--sage); }
-.bar-fill.mid { background: var(--faint); }
-.bar-fill.low { background: var(--terra); opacity: 0.6; }
-
-/* ── Lower row ── */
-.lower-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-/* ── Shop Moments ── */
-.moment {
-  display: flex;
-  gap: 12px;
-  padding: 14px 0;
+/* Session timeline */
+.session-list { display: flex; flex-direction: column; }
+.session-row {
+  display: flex; align-items: center; gap: 14px; padding: 12px 0;
   border-bottom: 1px solid var(--line);
 }
-.moment:last-child { border-bottom: none; padding-bottom: 0; }
-.moment:first-child { padding-top: 0; }
-.moment-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--parchment);
-  border: 1px solid var(--line-m);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Cormorant, serif;
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--warm);
-  flex-shrink: 0;
+.session-row:first-child { padding-top: 0; }
+.session-row:last-child { border-bottom: none; padding-bottom: 0; }
+.session-time { font-size: 12px; color: var(--muted); width: 64px; flex-shrink: 0; }
+.session-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  background: var(--faint);
 }
-.moment-body { flex: 1; min-width: 0; }
-.moment-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 3px;
-}
-.moment-who { font-size: 12px; font-weight: 600; color: var(--ink); }
-.moment-time { font-size: 12px; color: var(--muted); }
-.moment-text { font-size: 14px; color: var(--warm); line-height: 1.6; margin-bottom: 6px; }
-.tag {
-  display: inline-block;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: 999px;
-  border: 1px solid var(--line-m);
-  color: var(--muted);
-}
-.tag.action { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,106,0.2); }
-.tag.alert  { background: var(--terra-l); color: var(--terra); border-color: rgba(184,97,74,0.2); }
+.session-dot.done { background: var(--sage); }
+.session-dot.now  { background: var(--accent); box-shadow: 0 0 6px rgba(168,120,120,0.5); }
+.session-dot.next { background: var(--faint); border: 2px solid var(--muted); }
+.session-info { flex: 1; }
+.session-client { font-size: 14px; color: var(--ink); }
+.session-type { font-size: 12px; color: var(--muted); }
+.session-who { font-size: 12px; color: var(--warm); margin-left: auto; white-space: nowrap; }
 
-/* ── Team ── */
-.team-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-}
-.team-row:last-child { border-bottom: none; padding-bottom: 0; }
-.team-row:first-child { padding-top: 0; }
-.team-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--parchment);
-  border: 1px solid var(--line-m);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Cormorant, serif;
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--warm);
-  flex-shrink: 0;
-}
-.team-info { flex: 1; }
-.team-name { font-size: 14px; color: var(--ink); font-weight: 400; }
-.team-time { font-size: 12px; color: var(--muted); margin-top: 1px; }
-.team-role { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); margin-left: auto; flex-shrink: 0; }
-.badge {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 999px;
-  border: 1px solid var(--line-m);
-  color: var(--muted);
-  flex-shrink: 0;
-}
-.badge.on { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,106,0.2); }
+.lower-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-/* ── Week grid ── */
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(7,1fr);
-  gap: 10px;
-}
-.day-card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px 12px;
-  text-align: center;
-}
-.day-card.today { border-color: var(--line-m); background: var(--panel-warm); }
-.day-name { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-.day-amt { font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
-.day-amt.dim { font-size: 14px; font-weight: 400; color: var(--faint); }
-.day-txn { font-size: 12px; color: var(--muted); margin-top: 3px; }
-.day-delta { font-size: 12px; color: var(--sage); margin-top: 2px; }
-
-/* ── Two-col util ── */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-/* ── List ── */
-.plain-list { list-style: none; }
-.plain-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 14px;
-}
-.plain-list li:last-child { border-bottom: none; padding-bottom: 0; }
-.plain-list li:first-child { padding-top: 0; }
-.list-muted { font-size: 12px; color: var(--muted); }
-
-/* ── Inventory ── */
-.inv-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 14px;
-}
-.inv-row:last-child { border-bottom: none; padding-bottom: 0; }
-.inv-row:first-child { padding-top: 0; }
-.inv-sku { font-size: 12px; color: var(--muted); margin-left: 8px; }
-.qty { font-size: 12px; font-weight: 600; color: var(--muted); }
-.qty.low { color: var(--terra); }
-.qty.critical { color: #9e4030; }
-.qty.ok { color: var(--sage); }
-
-/* ── Automations ── */
-.auto-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
-}
-.auto-row:last-child { border-bottom: none; padding-bottom: 0; }
-.auto-row:first-child { padding-top: 0; }
-.auto-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  flex-shrink: 0;
-  background: var(--parchment);
-}
-.auto-icon.ok { background: var(--sage-l); }
-.auto-icon.warn { background: var(--terra-l); }
-.auto-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
-.auto-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
-.auto-status {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 999px;
-  flex-shrink: 0;
-  border: 1px solid;
-  height: max-content;
-  align-self: flex-start;
-  margin-top: 2px;
-}
-.auto-status.ok { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,106,0.2); }
-.auto-status.warn { background: var(--terra-l); color: var(--terra); border-color: rgba(184,97,74,0.2); }
-
-/* ── Client entries ── */
+/* Client notes */
 .client-entry {
-  display: flex;
-  gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-  align-items: flex-start;
+  display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items: flex-start;
 }
 .client-entry:first-child { padding-top: 0; }
 .client-entry:last-child { border-bottom: none; padding-bottom: 0; }
 .client-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--parchment);
-  border: 1px solid var(--line-m);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Cormorant, serif;
-  font-size: 15px;
-  font-weight: 300;
-  color: var(--warm);
-  flex-shrink: 0;
+  width: 32px; height: 32px; border-radius: 50%; background: var(--parchment);
+  border: 1px solid var(--line-m); display: flex; align-items: center; justify-content: center;
+  font-family: Cormorant, serif; font-size: 14px; font-weight: 300; color: var(--warm); flex-shrink: 0;
 }
-.client-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
-.client-note { font-size: 12px; color: var(--warm); line-height: 1.6; }
-.client-meta { margin-left: auto; text-align: right; font-size: 12px; color: var(--muted); white-space: nowrap; padding-left: 12px; }
+.client-body { flex: 1; min-width: 0; }
+.client-name { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.client-note { font-size: 14px; color: var(--warm); line-height: 1.6; margin-bottom: 6px; }
+.tag {
+  display: inline-block; font-size: 9px; font-weight: 400; letter-spacing: 0.15em;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+  border: 1px solid var(--line-m); color: var(--muted);
+}
+.tag.care  { background: var(--accent-l); color: var(--accent); border-color: rgba(168,120,120,0.2); }
+.tag.alert { background: var(--terra-l); color: var(--terra); border-color: rgba(176,96,80,0.2); }
+.tag.note  { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,120,0.2); }
 
-/* ── Toast ── */
+/* Practitioner rows */
+.prac-row {
+  display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.prac-row:first-child { padding-top: 0; }
+.prac-row:last-child { border-bottom: none; padding-bottom: 0; }
+.prac-avatar {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--parchment);
+  border: 1px solid var(--line-m); display: flex; align-items: center; justify-content: center;
+  font-family: Cormorant, serif; font-size: 14px; font-weight: 300; color: var(--warm); flex-shrink: 0;
+}
+.prac-info { flex: 1; }
+.prac-name { font-size: 14px; color: var(--ink); }
+.prac-detail { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.prac-role { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); margin-left: auto; flex-shrink: 0; }
+.badge {
+  font-size: 9px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 999px; border: 1px solid var(--line-m); color: var(--muted); flex-shrink: 0;
+}
+.badge.on { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,120,0.2); }
+
+/* Retail inventory */
+.inv-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.inv-row:first-child { padding-top: 0; }
+.inv-row:last-child { border-bottom: none; padding-bottom: 0; }
+.inv-sku { font-size: 12px; color: var(--muted); margin-left: 8px; }
+.qty { font-size: 12px; font-weight: 600; color: var(--muted); }
+.qty.low { color: var(--terra); }
+.qty.ok { color: var(--sage); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.plain-list { list-style: none; }
+.plain-list li {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+}
+.plain-list li:first-child { padding-top: 0; }
+.plain-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.list-muted { font-size: 12px; color: var(--muted); }
+
+/* Automations */
+.auto-row { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.auto-row:first-child { padding-top: 0; }
+.auto-row:last-child { border-bottom: none; padding-bottom: 0; }
+.auto-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; background: var(--parchment); }
+.auto-icon.ok { background: var(--sage-l); }
+.auto-icon.warn { background: var(--terra-l); }
+.auto-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.auto-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.auto-status { font-size: 9px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; flex-shrink: 0; border: 1px solid; height: max-content; align-self: flex-start; margin-top: 2px; }
+.auto-status.ok { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,120,0.2); }
+.auto-status.warn { background: var(--terra-l); color: var(--terra); border-color: rgba(176,96,80,0.2); }
+
 .toast {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  background: var(--charcoal);
-  color: rgba(244,248,243,0.88);
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-size: 12px;
-  letter-spacing: 0.03em;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: 0.2s;
-  pointer-events: none;
-  border: 1px solid rgba(255,255,255,0.06);
+  position: fixed; right: 24px; bottom: 24px; background: var(--charcoal);
+  color: rgba(244,248,246,0.88); border-radius: 10px; padding: 12px 18px;
+  font-size: 12px; letter-spacing: 0.03em; opacity: 0; transform: translateY(6px);
+  transition: 0.2s; pointer-events: none; border: 1px solid rgba(255,255,255,0.06);
 }
 .toast.show { opacity: 1; transform: translateY(0); }
-
-/* ── Tab sections ── */
 .tab-section { display: none; }
 
-/* ── Responsive ── */
-@media(max-width:1024px) {
-  .hero-row { grid-template-columns: 1fr; }
-  .week-grid { grid-template-columns: repeat(4,1fr); }
-}
+@media(max-width:1024px) { .hero-row { grid-template-columns: 1fr; } }
 @media(max-width:768px) {
   .nav { overflow-x: auto; }
   .topbar { padding: 0 16px; gap: 10px; }
-  .topbar-season { display: none; }
-  .topbar-status { display: none; }
+  .topbar-season, .topbar-status { display: none; }
   .lower-row, .two-col { grid-template-columns: 1fr; }
-  .moving-grid { grid-template-columns: 1fr; }
 }
 @media(max-width:640px) {
   main { padding: 16px 14px 48px; gap: 12px; }
   .nav { padding: 0 12px; }
-  .week-grid { grid-template-columns: repeat(2,1fr); }
   .brand-sub { display: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
-  <span class="brand-mark">Bloom</span>
-  <span class="brand-sub">Boutique Operations</span>
+  <span class="brand-mark">Solace</span>
+  <span class="brand-sub">Wellness Studio</span>
   <div class="topbar-sep"></div>
-  <span class="topbar-season">Spring Collection · Week 8 of 12</span>
+  <span class="topbar-season">Tuesday · 8 Sessions Booked</span>
   <div class="topbar-sep"></div>
   <div class="topbar-status">
-    <div class="status-item"><span class="status-dot on"></span>Square</div>
-    <div class="status-item"><span class="status-dot on"></span>Shopify</div>
+    <div class="status-item"><span class="status-dot on"></span>Mindbody</div>
+    <div class="status-item"><span class="status-dot on"></span>Online Booking</div>
   </div>
   <div class="topbar-right">
-    <button class="tbar-btn" onclick="toast('Running end of day...')">Close Out the Day</button>
+    <button class="tbar-btn" onclick="toast('Closing out sessions...')">End of Day Wrap</button>
   </div>
 </div>
 
-<!-- NAV -->
 <nav class="nav">
-  <button class="active" data-tab="floor">The Floor</button>
-  <button data-tab="week">This Week</button>
-  <button data-tab="collection">Collection</button>
+  <button class="active" data-tab="today">Today</button>
+  <button data-tab="bookings">Bookings</button>
+  <button data-tab="practitioners">Practitioners</button>
   <button data-tab="clients">Clients</button>
-  <button data-tab="backstage">Backstage</button>
+  <button data-tab="retail">Retail</button>
   <button data-tab="automations">Automations</button>
   <div class="nav-right">
     <span class="nav-pill">Live Sync</span>
@@ -636,217 +323,223 @@ main {
 
 <main>
 
-  <!-- ── THE FLOOR ── -->
-  <div id="tab-floor">
-
+  <!-- ── TODAY ── -->
+  <div id="tab-today">
     <div class="hero-row">
 
-      <!-- Greeting -->
       <div class="greeting-card">
         <div class="card-label" style="margin-bottom:8px;">Good Morning</div>
-        <h2 class="greeting-headline">Good morning, <em>Mara.</em></h2>
-        <p class="greeting-context">Every season tells a story — this is yours for today.</p>
-        <p class="greeting-body">You're at <strong>$1,842</strong> across <strong>34 transactions</strong> — up 12% from last Tuesday. The <em>Linen Throw in Sage</em> is moving well, 7 units and still going. Three items need attention before the weekend. The window went up Monday and it's working.</p>
+        <h2 class="greeting-headline">Good morning, <em>Chloe.</em></h2>
+        <p class="greeting-context">Eight sessions today. Three before noon.</p>
+        <p class="greeting-body">Clara's 10:00 AM has confirmed — her third visit this month. You have two open slots this afternoon if you'd like to run a same-day promo. <strong>$960</strong> in session value booked so far, with <strong>$84</strong> in retail attached to today's visits. Anika needs a note reviewed before her 2:00 PM.</p>
         <div class="actions">
-          <button class="btn-primary" onclick="toast('Running close report...')">Close Out the Day</button>
-          <button class="btn-secondary" onclick="toast('Printing summary...')">Print Summary</button>
-          <button class="btn-secondary" onclick="toast('Messaging team...')">Message Team</button>
+          <button class="btn-primary" onclick="toast('Opening schedule...')">View Full Schedule</button>
+          <button class="btn-secondary" onclick="toast('Sending promo...')">Fill Open Slots</button>
+          <button class="btn-secondary" onclick="toast('Opening notes...')">Client Notes</button>
         </div>
       </div>
 
-      <!-- Metrics -->
       <div class="metrics-card">
         <div class="card-label">Right Now</div>
         <div class="metric-rows">
           <div class="metric-row">
             <div class="metric-left">
-              <span class="metric-name">Revenue</span>
-              <span class="metric-delta">↑ 12% vs last Tue</span>
+              <span class="metric-name">Sessions Today</span>
+              <span class="metric-delta">3 complete · 5 ahead</span>
             </div>
-            <span class="metric-value">$1,842</span>
+            <span class="metric-value">8</span>
           </div>
           <div class="metric-row">
             <div class="metric-left">
-              <span class="metric-name">Transactions</span>
-              <span class="metric-delta">↑ 6 from yesterday</span>
+              <span class="metric-name">Session Revenue</span>
+              <span class="metric-delta">↑ $120 vs last Tue</span>
             </div>
-            <span class="metric-value">34</span>
+            <span class="metric-value">$960</span>
           </div>
           <div class="metric-row">
             <div class="metric-left">
-              <span class="metric-name">Avg Ticket</span>
-              <span class="metric-delta">↑ $4.20 from last week</span>
+              <span class="metric-name">Occupancy</span>
+              <span class="metric-delta">2 open slots remain</span>
             </div>
-            <span class="metric-value">$54</span>
+            <span class="metric-value">75%</span>
           </div>
           <div class="metric-row">
             <div class="metric-left">
-              <span class="metric-name">Online Orders</span>
-              <span class="metric-delta">3 shipped · 1 pending</span>
+              <span class="metric-name">Retail Add-ons</span>
+              <span class="metric-delta">4 items across 3 visits</span>
             </div>
-            <span class="metric-value">4</span>
+            <span class="metric-value">$84</span>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- What's Moving -->
+    <!-- Session Timeline -->
     <div class="card">
-      <div class="card-label">What's Moving</div>
-      <div class="moving-grid">
-        <div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Home Goods</span><span class="bar-amt">$842 · 46%</span></div>
-            <div class="bar-track"><div class="bar-fill top" style="width:46%"></div></div>
+      <div class="card-label">Today's Sessions</div>
+      <div class="session-list">
+        <div class="session-row">
+          <span class="session-time">9:00 AM</span>
+          <span class="session-dot done"></span>
+          <div class="session-info">
+            <div class="session-client">Sarah M. — Deep Tissue, 60 min</div>
+            <div class="session-type">Treatment Room 1</div>
           </div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Wellness & Candles</span><span class="bar-amt">$418 · 23%</span></div>
-            <div class="bar-track"><div class="bar-fill top" style="width:23%"></div></div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Textile & Apparel</span><span class="bar-amt">$294 · 16%</span></div>
-            <div class="bar-track"><div class="bar-fill mid" style="width:16%"></div></div>
-          </div>
+          <span class="session-who">Elena R.</span>
         </div>
-        <div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Online Channel</span><span class="bar-amt">$214 · 12%</span></div>
-            <div class="bar-track"><div class="bar-fill mid" style="width:12%"></div></div>
+        <div class="session-row">
+          <span class="session-time">9:30 AM</span>
+          <span class="session-dot done"></span>
+          <div class="session-info">
+            <div class="session-client">James T. — Remedial, 45 min</div>
+            <div class="session-type">Treatment Room 2</div>
           </div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Gift Cards</span><span class="bar-amt">$74 · 4%</span></div>
-            <div class="bar-track"><div class="bar-fill mid" style="width:4%"></div></div>
+          <span class="session-who">Priya K.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">10:00 AM</span>
+          <span class="session-dot now"></span>
+          <div class="session-info">
+            <div class="session-client">Clara H. — Hot Stone, 90 min</div>
+            <div class="session-type">Room 1 · In session</div>
           </div>
+          <span class="session-who">Elena R.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">11:00 AM</span>
+          <span class="session-dot next"></span>
+          <div class="session-info">
+            <div class="session-client">Marcus B. — Sports Therapy, 60 min</div>
+            <div class="session-type">Treatment Room 2</div>
+          </div>
+          <span class="session-who">Priya K.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">2:00 PM</span>
+          <span class="session-dot next"></span>
+          <div class="session-info">
+            <div class="session-client">Anika L. — Prenatal Massage, 60 min</div>
+            <div class="session-type">Room 1 · Note flagged</div>
+          </div>
+          <span class="session-who">Elena R.</span>
         </div>
       </div>
     </div>
 
-    <!-- Moments + Team -->
     <div class="lower-row">
+      <!-- Client notes -->
       <div class="card">
-        <div class="card-label">Shop Moments</div>
-        <div class="moment">
-          <div class="moment-avatar">J</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Jess L.</span><span class="moment-time">9:42 AM</span></div>
-            <p class="moment-text">Deborah H. asked about custom orders for the holiday line. Third visit this season.</p>
-            <span class="tag action">Follow up Friday</span>
+        <div class="card-label">Client Notes</div>
+        <div class="client-entry">
+          <div class="client-avatar">A</div>
+          <div class="client-body">
+            <div class="client-name">Anika L. — 2:00 PM</div>
+            <p class="client-note">28 weeks. Reported lower back tension last session. Avoid prone position. Pillow support confirmed available in Room 1.</p>
+            <span class="tag care">Care note</span>
           </div>
         </div>
-        <div class="moment">
-          <div class="moment-avatar">M</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Mara R.</span><span class="moment-time">9:15 AM</span></div>
-            <p class="moment-text">Bloom Supply order checked in. 14 units, all match PO. Shelves stocked before open.</p>
-            <span class="tag">Ops</span>
+        <div class="client-entry">
+          <div class="client-avatar">C</div>
+          <div class="client-body">
+            <div class="client-name">Clara H. — 10:00 AM</div>
+            <p class="client-note">Third visit this month. Responded well to basalt stones on shoulders. Mentioned she'd like to book a series.</p>
+            <span class="tag note">Follow up</span>
           </div>
         </div>
-        <div class="moment">
-          <div class="moment-avatar">J</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Jess L.</span><span class="moment-time">11:30 AM</span></div>
-            <p class="moment-text">Woven Basket return — customer drop-off. No defect visible. Holding for review.</p>
-            <span class="tag alert">Review needed</span>
+        <div class="client-entry">
+          <div class="client-avatar">M</div>
+          <div class="client-body">
+            <div class="client-name">Marcus B. — 11:00 AM</div>
+            <p class="client-note">Post-marathon recovery. Right ITB tight. Increase hip flexor work from last session.</p>
+            <span class="tag">Sports</span>
           </div>
         </div>
       </div>
 
+      <!-- Practitioners -->
       <div class="card">
-        <div class="card-label">On the Floor</div>
-        <div class="team-row">
-          <div class="team-avatar">MR</div>
-          <div class="team-info">
-            <div class="team-name">Mara R.</div>
-            <div class="team-time">9:00 AM – 5:00 PM</div>
+        <div class="card-label">On Today</div>
+        <div class="prac-row">
+          <div class="prac-avatar">ER</div>
+          <div class="prac-info">
+            <div class="prac-name">Elena R.</div>
+            <div class="prac-detail">9:00 AM – 6:00 PM · 5 sessions</div>
           </div>
-          <span class="team-role">Floor Lead</span>
-          <span class="badge on">On</span>
+          <span class="prac-role">Senior Therapist</span>
+          <span class="badge on">In</span>
         </div>
-        <div class="team-row">
-          <div class="team-avatar">JL</div>
-          <div class="team-info">
-            <div class="team-name">Jess L.</div>
-            <div class="team-time">10:00 AM – 6:00 PM</div>
+        <div class="prac-row">
+          <div class="prac-avatar">PK</div>
+          <div class="prac-info">
+            <div class="prac-name">Priya K.</div>
+            <div class="prac-detail">9:30 AM – 5:00 PM · 3 sessions</div>
           </div>
-          <span class="team-role">Sales</span>
-          <span class="badge on">On</span>
+          <span class="prac-role">Therapist</span>
+          <span class="badge on">In</span>
         </div>
-        <div class="team-row">
-          <div class="team-avatar">TK</div>
-          <div class="team-info">
-            <div class="team-name">Tom K.</div>
-            <div class="team-time">1:00 PM – 7:00 PM</div>
+        <div class="prac-row">
+          <div class="prac-avatar">NW</div>
+          <div class="prac-info">
+            <div class="prac-name">Nat W.</div>
+            <div class="prac-detail">12:00 PM – 7:00 PM · 2 sessions</div>
           </div>
-          <span class="team-role">Fulfillment</span>
-          <span class="badge">Incoming</span>
+          <span class="prac-role">Therapist</span>
+          <span class="badge">Arriving</span>
         </div>
         <div style="margin-top:16px;">
-          <button class="btn-secondary" style="font-size:11px;" onclick="toast('Opening schedule...')">View Full Schedule</button>
+          <button class="btn-secondary" style="font-size:11px;" onclick="toast('Opening schedule...')">Full Schedule</button>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- ── THIS WEEK ── -->
-  <div id="tab-week" class="tab-section">
-    <div class="week-grid">
-      <div class="day-card"><div class="day-name">Mon</div><div class="day-amt">$1,640</div><div class="day-txn">28 txn</div><div class="day-delta">↑ 4%</div></div>
-      <div class="day-card today"><div class="day-name">Tue · Today</div><div class="day-amt">$1,842</div><div class="day-txn">34 txn</div><div class="day-delta">↑ 12%</div></div>
-      <div class="day-card"><div class="day-name">Wed</div><div class="day-amt dim">—</div></div>
-      <div class="day-card"><div class="day-name">Thu</div><div class="day-amt dim">—</div></div>
-      <div class="day-card"><div class="day-name">Fri</div><div class="day-amt dim">—</div></div>
-      <div class="day-card"><div class="day-name">Sat</div><div class="day-amt dim">—</div></div>
-      <div class="day-card"><div class="day-name">Sun</div><div class="day-amt dim">—</div></div>
-    </div>
-    <div class="two-col" style="margin-top:16px;">
-      <div class="card">
-        <div class="card-label">Week so Far</div>
-        <ul class="plain-list">
-          <li><span>Revenue (2 days)</span><span style="font-weight:600;">$3,482</span></li>
-          <li><span>Transactions</span><span>62</span></li>
-          <li><span>Avg Ticket</span><span>$56.16</span></li>
-          <li><span>Online Revenue</span><span>$428</span></li>
-          <li><span>Best Day</span><span>Tuesday ↑</span></li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="card-label">vs Last Week</div>
-        <ul class="plain-list">
-          <li><span>Revenue</span><span style="color:var(--sage);font-weight:600;">↑ $412 (+13%)</span></li>
-          <li><span>Transactions</span><span style="color:var(--sage);">↑ 8</span></li>
-          <li><span>Avg Ticket</span><span style="color:var(--sage);">↑ $2.40</span></li>
-          <li><span>Top Category</span><span>Home Goods</span></li>
-          <li><span>Season Week</span><span class="list-muted">8 of 12</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── COLLECTION ── -->
-  <div id="tab-collection" class="tab-section">
+  <!-- ── BOOKINGS ── -->
+  <div id="tab-bookings" class="tab-section">
     <div class="two-col">
       <div class="card">
-        <div class="card-label">Low Stock</div>
-        <div class="inv-row"><span>Linen Throw (Sage)<span class="inv-sku">LT-SG</span></span><span class="qty critical">2 left</span></div>
-        <div class="inv-row"><span>Soy Candle 8oz<span class="inv-sku">SC-8Z</span></span><span class="qty low">4 left</span></div>
-        <div class="inv-row"><span>Cork Tray (Small)<span class="inv-sku">CT-SM</span></span><span class="qty low">3 left</span></div>
-        <div class="inv-row"><span>Beeswax Wrap Set<span class="inv-sku">BW-ST</span></span><span class="qty low">5 left</span></div>
-        <div style="margin-top:16px;">
-          <button class="btn-primary" style="font-size:11px;" onclick="toast('Generating reorder POs...')">Auto-Reorder All</button>
-        </div>
+        <div class="card-label">This Week</div>
+        <ul class="plain-list">
+          <li><span>Monday</span><span>6 sessions · $720</span></li>
+          <li><span>Tuesday · Today</span><span style="font-weight:600;">8 sessions · $960</span></li>
+          <li><span>Wednesday</span><span>7 booked</span></li>
+          <li><span>Thursday</span><span>5 booked</span></li>
+          <li><span>Friday</span><span>9 booked</span></li>
+        </ul>
       </div>
       <div class="card">
-        <div class="card-label">By Category</div>
+        <div class="card-label">Open Slots Today</div>
         <ul class="plain-list">
-          <li><span>Home Goods</span><span>142 units</span></li>
-          <li><span>Wellness & Candles</span><span>87 units</span></li>
-          <li><span>Textile & Apparel</span><span>64 units</span></li>
-          <li><span>Kitchen & Table</span><span>38 units</span></li>
-          <li><span>Gift & Seasonal</span><span>22 units</span></li>
-          <li><span style="font-weight:600;">Total</span><span style="font-weight:600;">353 units</span></li>
+          <li><span>12:00 PM — Room 2</span><span style="color:var(--accent);">Open</span></li>
+          <li><span>3:30 PM — Room 1</span><span style="color:var(--accent);">Open</span></li>
+          <li><span>4:00 PM — Room 2</span><span class="list-muted">Hold — cleaning</span></li>
+          <li><span>5:00 PM — Room 1</span><span class="list-muted">Elena off</span></li>
         </ul>
+        <div style="margin-top:16px;">
+          <button class="btn-primary" style="font-size:11px;" onclick="toast('Sending availability...')">Send Same-Day Promo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRACTITIONERS ── -->
+  <div id="tab-practitioners" class="tab-section">
+    <div class="card">
+      <div class="card-label">Team Overview</div>
+      <div class="prac-row">
+        <div class="prac-avatar">ER</div>
+        <div class="prac-info"><div class="prac-name">Elena R.</div><div class="prac-detail">Senior Therapist · Hot Stone, Deep Tissue, Prenatal</div></div>
+        <span class="badge on">In</span>
+      </div>
+      <div class="prac-row">
+        <div class="prac-avatar">PK</div>
+        <div class="prac-info"><div class="prac-name">Priya K.</div><div class="prac-detail">Therapist · Remedial, Sports, Relaxation</div></div>
+        <span class="badge on">In</span>
+      </div>
+      <div class="prac-row">
+        <div class="prac-avatar">NW</div>
+        <div class="prac-info"><div class="prac-name">Nat W.</div><div class="prac-detail">Therapist · Relaxation, Aromatherapy</div></div>
+        <span class="badge">Arriving 12pm</span>
       </div>
     </div>
   </div>
@@ -855,73 +548,55 @@ main {
   <div id="tab-clients" class="tab-section">
     <div class="two-col">
       <div class="card">
-        <div class="card-label">Client Notes</div>
+        <div class="card-label">Regular Clients</div>
         <div class="client-entry">
-          <div class="client-avatar">D</div>
-          <div>
-            <div class="client-name">Deborah H.</div>
-            <div class="client-note">Custom orders for holiday line. Third visit this season — linens and ceramics. Follow up by Friday.</div>
+          <div class="client-avatar">C</div>
+          <div class="client-body">
+            <div class="client-name">Clara H.</div>
+            <p class="client-note">Hot stone specialist client. 3 visits this month. Interested in a series package — follow up after today's session.</p>
           </div>
-          <div class="client-meta">Today<br><span class="tag action" style="margin-top:6px;display:inline-block;">Follow up</span></div>
         </div>
         <div class="client-entry">
           <div class="client-avatar">S</div>
-          <div>
+          <div class="client-body">
             <div class="client-name">Sarah M.</div>
-            <div class="client-note">Full diffuser set + woven basket. Mentioned gifting. Offered gift wrap. Loyal since last spring.</div>
+            <p class="client-note">Monthly deep tissue. Referred two friends last season. Loyalty card at 8/10 visits.</p>
           </div>
-          <div class="client-meta">Yesterday</div>
         </div>
       </div>
       <div class="card">
-        <div class="card-label">Vendor Orders</div>
+        <div class="card-label">Follow-ups Due</div>
         <ul class="plain-list">
-          <li><span>Artisan Goods Co.</span><span style="color:var(--terra);">$620 · due Fri</span></li>
-          <li><span>Bloom Supply</span><span style="color:var(--sage);" class="list-muted">Received ✓</span></li>
-          <li><span>Coastal Textiles</span><span>$1,140 · Jun 3</span></li>
-          <li><span>Earthware Studio</span><span>$380 · Jun 6</span></li>
+          <li><span>Clara H.</span><span style="color:var(--accent);">Series offer</span></li>
+          <li><span>James T.</span><span>Rebooking</span></li>
+          <li><span>Anika L.</span><span class="list-muted">Post-session check</span></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ── BACKSTAGE ── -->
-  <div id="tab-backstage" class="tab-section">
+  <!-- ── RETAIL ── -->
+  <div id="tab-retail" class="tab-section">
     <div class="two-col">
       <div class="card">
-        <div class="card-label">Today's Schedule</div>
-        <div class="team-row">
-          <div class="team-avatar">MR</div>
-          <div class="team-info"><div class="team-name">Mara R.</div><div class="team-time">9:00 AM – 5:00 PM · Floor Lead</div></div>
-          <span class="badge on">On</span>
-        </div>
-        <div class="team-row">
-          <div class="team-avatar">JL</div>
-          <div class="team-info"><div class="team-name">Jess L.</div><div class="team-time">10:00 AM – 6:00 PM · Sales</div></div>
-          <span class="badge on">On</span>
-        </div>
-        <div class="team-row">
-          <div class="team-avatar">TK</div>
-          <div class="team-info"><div class="team-name">Tom K.</div><div class="team-time">1:00 PM – 7:00 PM · Fulfillment</div></div>
-          <span class="badge">Incoming</span>
+        <div class="card-label">Product Stock</div>
+        <div class="inv-row"><span>Magnesium Body Lotion</span><span class="qty ok">14</span></div>
+        <div class="inv-row"><span>Calm Blend Roll-On</span><span class="qty ok">8</span></div>
+        <div class="inv-row"><span>Himalayan Salt Soak</span><span class="qty low">3 left</span></div>
+        <div class="inv-row"><span>Bamboo Eye Pillow</span><span class="qty ok">6</span></div>
+        <div class="inv-row"><span>Arnica Recovery Balm</span><span class="qty low">2 left</span></div>
+        <div style="margin-top:16px;">
+          <button class="btn-primary" style="font-size:11px;" onclick="toast('Creating order...')">Reorder Low Stock</button>
         </div>
       </div>
       <div class="card">
-        <div class="card-label">Team Notes</div>
-        <div class="moment">
-          <div class="moment-avatar">J</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Jess L.</span><span class="moment-time">9:42 AM</span></div>
-            <p class="moment-text">Custom order inquiry from Deborah H. Follow up by Friday.</p>
-          </div>
-        </div>
-        <div class="moment">
-          <div class="moment-avatar">M</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Mara R.</span><span class="moment-time">9:15 AM</span></div>
-            <p class="moment-text">Bloom Supply in. 14 units, all match PO. Shelves stocked.</p>
-          </div>
-        </div>
+        <div class="card-label">Retail Today</div>
+        <ul class="plain-list">
+          <li><span>Revenue</span><span style="font-weight:600;">$84</span></li>
+          <li><span>Items Sold</span><span>4</span></li>
+          <li><span>Attach Rate</span><span style="color:var(--sage);">3 of 8 sessions</span></li>
+          <li><span>Top Item</span><span>Calm Blend Roll-On</span></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -930,9 +605,10 @@ main {
   <div id="tab-automations" class="tab-section">
     <div class="card">
       <div class="card-label">Running Quietly</div>
-      <div class="auto-row"><div class="auto-icon ok">📊</div><div style="flex:1;"><div class="auto-name">Daily Close Report</div><div class="auto-desc">Pulls POS sales, compiles revenue by category, flags variances, emails summary at 8:00 PM.</div></div><div class="auto-status ok">Live</div></div>
-      <div class="auto-row"><div class="auto-icon ok">📦</div><div style="flex:1;"><div class="auto-name">Collection Sync</div><div class="auto-desc">Syncs POS inventory each morning at 7:00 AM. Items below reorder point surface on The Floor automatically.</div></div><div class="auto-status ok">Live</div></div>
-      <div class="auto-row"><div class="auto-icon warn">🔔</div><div style="flex:1;"><div class="auto-name">Low Stock Alerts</div><div class="auto-desc">Notifies floor lead via SMS when an item hits its reorder threshold. Needs a phone number in settings.</div></div><div class="auto-status warn">Setup needed</div></div>
+      <div class="auto-row"><div class="auto-icon ok">📅</div><div style="flex:1;"><div class="auto-name">Booking Confirmations</div><div class="auto-desc">Sends SMS confirmation 24 hours before each session. Reduces no-shows by an average of 40%.</div></div><div class="auto-status ok">Live</div></div>
+      <div class="auto-row"><div class="auto-icon ok">💌</div><div style="flex:1;"><div class="auto-name">Rebooking Nudge</div><div class="auto-desc">Sends a gentle follow-up 3 weeks after each visit. Includes practitioner name for continuity.</div></div><div class="auto-status ok">Live</div></div>
+      <div class="auto-row"><div class="auto-icon ok">📊</div><div style="flex:1;"><div class="auto-name">Weekly Wrap</div><div class="auto-desc">Monday morning summary — sessions completed, revenue, occupancy, and retail attach rate.</div></div><div class="auto-status ok">Live</div></div>
+      <div class="auto-row"><div class="auto-icon warn">🔔</div><div style="flex:1;"><div class="auto-name">Same-Day Slot Promo</div><div class="auto-desc">Fills open afternoon slots with an SMS promo to your waitlist. Needs SMS credits configured.</div></div><div class="auto-status warn">Setup needed</div></div>
     </div>
   </div>
 
@@ -947,9 +623,7 @@ function toast(msg) {
   el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), 2200);
 }
-
-const tabs = { floor:'tab-floor', week:'tab-week', collection:'tab-collection', clients:'tab-clients', backstage:'tab-backstage', automations:'tab-automations' };
-
+const tabs = { today:'tab-today', bookings:'tab-bookings', practitioners:'tab-practitioners', clients:'tab-clients', retail:'tab-retail', automations:'tab-automations' };
 function showTab(name) {
   Object.entries(tabs).forEach(([k,id]) => {
     const el = document.getElementById(id);
@@ -958,7 +632,6 @@ function showTab(name) {
     else { el.style.display = 'none'; el.classList.add('tab-section'); }
   });
 }
-
 document.querySelectorAll('.nav button[data-tab]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
@@ -966,8 +639,7 @@ document.querySelectorAll('.nav button[data-tab]').forEach(btn => {
     showTab(btn.dataset.tab);
   });
 });
-
-showTab('floor');
+showTab('today');
 </script>
 </body>
 </html>

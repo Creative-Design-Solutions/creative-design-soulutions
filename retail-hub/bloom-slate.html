@@ -3,37 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bloom — Cool Slate</title>
+<title>Atelier — Studio Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;1,300&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --linen:      #f0f2f5;
-  --parchment:  #e2e8f0;
-  --panel:      #f8f9fb;
-  --panel-warm: #edf1f7;
-  --ink:        #2c3344;
-  --warm:       #4a5568;
-  --muted:      #8896a8;
-  --faint:      #b8c5d4;
-  --charcoal:   #2c3344;
-  --line:       rgba(70,90,120,0.07);
-  --line-m:     rgba(70,90,120,0.13);
+  --bg:         #1a1a22;
+  --surface:    #222230;
+  --surface-2:  #262636;
+  --surface-hi: #2a2a3c;
+  --ink:        #e8e4f0;
+  --warm:       #b8b0cc;
+  --muted:      #6e6a88;
+  --faint:      #3c3a50;
+  --line:       rgba(200,200,220,0.07);
+  --line-m:     rgba(200,200,220,0.13);
+  --chrome:     rgba(200,200,220,0.22);
 
-  /* Cool Slate accent — muted steel, active nav only */
-  --accent:     #6b8fa8;
-  --accent-l:   #dce8f2;
+  /* Gold — one role: active nav */
+  --gold:       #d4a840;
+  --gold-l:     rgba(212,168,64,0.14);
 
-  /* Status colours */
-  --sage:       #5a8f82;
-  --sage-l:     #d8edea;
-  --terra:      #b86060;
-  --terra-l:    #f5e0e0;
+  /* Status */
+  --sage:       #72b898;
+  --sage-l:     rgba(114,184,152,0.14);
+  --terra:      #d47860;
+  --terra-l:    rgba(212,120,96,0.14);
+  --amber:      #d4a840;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: Inter, system-ui, sans-serif;
-  background: var(--linen);
+  background: var(--bg);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
@@ -41,15 +42,23 @@ body {
   line-height: 1.6;
 }
 
-/* ── Topbar ── */
+/* ── Topbar — slight gradient for depth ── */
 .topbar {
   height: 48px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #282834 0%, #1e1e28 100%);
+  border-bottom: 1px solid var(--chrome);
   display: flex;
   align-items: center;
   padding: 0 32px;
   gap: 20px;
+  position: relative;
+}
+.topbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212,168,64,0.3) 40%, rgba(200,200,220,0.2) 60%, transparent 100%);
 }
 .brand-mark {
   font-family: Cormorant, serif;
@@ -61,570 +70,252 @@ body {
   flex-shrink: 0;
 }
 .brand-sub {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-left: 10px;
-  flex-shrink: 0;
+  font-size: 9px; font-weight: 400; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--muted); margin-left: 10px; flex-shrink: 0;
 }
 .topbar-season {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  flex-shrink: 0;
+  font-size: 9px; font-weight: 400; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--muted); flex-shrink: 0;
 }
 .topbar-sep { width: 1px; height: 16px; background: var(--line-m); flex-shrink: 0; }
-.topbar-status {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
+.topbar-status { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .status-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
+  display: flex; align-items: center; gap: 5px;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
 }
-.status-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--faint);
-  flex-shrink: 0;
-}
-.status-dot.on { background: var(--sage); box-shadow: 0 0 5px rgba(90,143,130,0.5); }
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--faint); flex-shrink: 0; }
+.status-dot.on { background: var(--sage); box-shadow: 0 0 6px rgba(114,184,152,0.6); }
+.status-dot.gold { background: var(--gold); box-shadow: 0 0 6px rgba(212,168,64,0.5); }
 .topbar-right { margin-left: auto; }
 .tbar-btn {
-  font-family: Inter;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--warm);
-  background: none;
-  border: 1px solid var(--line-m);
-  border-radius: 4px;
-  padding: 6px 14px;
-  cursor: pointer;
-  transition: all 0.15s;
+  font-family: Inter; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  color: var(--gold); background: none; border: 1px solid rgba(212,168,64,0.3);
+  border-radius: 4px; padding: 6px 14px; cursor: pointer; transition: all 0.15s;
 }
-.tbar-btn:hover { border-color: var(--faint); color: var(--ink); background: var(--parchment); }
+.tbar-btn:hover { background: rgba(212,168,64,0.08); border-color: rgba(212,168,64,0.5); }
 
 /* ── Nav ── */
 .nav {
   height: 44px;
-  background: var(--linen);
+  background: var(--surface);
   border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  padding: 0 32px;
-  gap: 4px;
+  display: flex; align-items: center; padding: 0 32px; gap: 4px;
 }
 .nav button {
-  font-family: Inter;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  padding: 6px 16px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
+  font-family: Inter; font-size: 10px; font-weight: 400; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); background: none;
+  border: 1px solid transparent; border-radius: 999px; padding: 6px 16px;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
 }
 .nav button.active {
-  background: var(--accent-l);
-  color: var(--accent);
-  font-weight: 600;
-  border-color: rgba(107,143,168,0.3);
+  background: var(--gold-l); color: var(--gold); font-weight: 600;
+  border-color: rgba(212,168,64,0.3);
 }
-.nav button:hover:not(.active) {
-  background: var(--parchment);
-  color: var(--warm);
-}
-.nav-right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
+.nav button:hover:not(.active) { background: var(--surface-hi); color: var(--warm); }
+.nav-right { margin-left: auto; display: flex; align-items: center; }
 .nav-pill {
-  font-family: Inter;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  border: 1px solid var(--line-m);
-  border-radius: 999px;
-  padding: 5px 12px;
-  white-space: nowrap;
+  font-family: Inter; font-size: 9px; font-weight: 400; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-m);
+  border-radius: 999px; padding: 5px 12px; white-space: nowrap;
 }
 
-/* ── Main ── */
 main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 32px 64px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  max-width: 1200px; margin: 0 auto; padding: 24px 32px 64px;
+  display: flex; flex-direction: column; gap: 16px;
 }
 
-/* ── Cards ── */
+/* Cards with chrome-edged borders */
 .card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 24px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 16px; padding: 24px; position: relative; overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--chrome) 30%, var(--chrome) 70%, transparent 100%);
 }
 .card-label {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 16px;
+  font-size: 9px; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 16px;
 }
 
-/* ── Hero row ── */
-.hero-row {
-  display: grid;
-  grid-template-columns: 7fr 5fr;
-  gap: 16px;
-}
+.hero-row { display: grid; grid-template-columns: 7fr 5fr; gap: 16px; }
 
-/* ── Greeting card ── */
+/* Greeting card — gold left border */
 .greeting-card {
-  background: var(--panel-warm);
-  border: 1px solid var(--line-m);
-  border-left: 3px solid rgba(107,143,168,0.35);
-  border-radius: 16px;
-  padding: 24px;
+  background: var(--surface-hi); border: 1px solid var(--line-m);
+  border-left: 3px solid rgba(212,168,64,0.5); border-radius: 16px; padding: 24px;
+  position: relative; overflow: hidden;
 }
-.greeting-context {
-  font-size: 12px;
-  color: var(--warm);
-  margin-bottom: 12px;
-  letter-spacing: 0.01em;
+.greeting-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, rgba(212,168,64,0.4) 0%, var(--chrome) 50%, transparent 100%);
 }
+.greeting-context { font-size: 12px; color: var(--warm); margin-bottom: 12px; letter-spacing: 0.01em; }
 .greeting-headline {
-  font-family: Cormorant, serif;
-  font-weight: 300;
-  font-size: 32px;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  margin-bottom: 12px;
+  font-family: Cormorant, serif; font-weight: 300; font-size: 32px;
+  line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px;
 }
-.greeting-headline em { font-style: italic; }
-.greeting-body {
-  font-size: 14px;
-  color: var(--warm);
-  line-height: 1.6;
-  max-width: 520px;
-  margin-bottom: 20px;
-}
+.greeting-headline em { font-style: italic; color: var(--gold); }
+.greeting-body { font-size: 14px; color: var(--warm); line-height: 1.6; max-width: 520px; margin-bottom: 20px; }
 .greeting-body strong { color: var(--ink); font-weight: 600; }
-.greeting-body em { font-style: italic; color: var(--ink); }
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+.greeting-body em { font-style: italic; color: var(--amber); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .btn-primary {
-  font-family: Inter;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  background: var(--charcoal);
-  color: rgba(248,249,251,0.9);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 18px;
-  cursor: pointer;
-  transition: all 0.15s;
+  font-family: Inter; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  background: var(--gold); color: rgba(26,26,34,0.95); border: none;
+  border-radius: 8px; padding: 10px 18px; cursor: pointer; transition: all 0.15s;
 }
-.btn-primary:hover { background: var(--warm); }
+.btn-primary:hover { background: #e0b848; }
 .btn-secondary {
-  font-family: Inter;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  background: none;
-  color: var(--warm);
-  border: 1px solid var(--line-m);
-  border-radius: 8px;
-  padding: 10px 18px;
-  cursor: pointer;
-  transition: all 0.15s;
+  font-family: Inter; font-size: 11px; font-weight: 400; letter-spacing: 0.04em;
+  background: none; color: var(--warm); border: 1px solid var(--line-m);
+  border-radius: 8px; padding: 10px 18px; cursor: pointer; transition: all 0.15s;
 }
-.btn-secondary:hover { border-color: var(--faint); color: var(--ink); background: var(--parchment); }
+.btn-secondary:hover { border-color: var(--muted); color: var(--ink); background: var(--surface-hi); }
 
-/* ── Metrics card ── */
+/* Metrics */
 .metrics-card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 24px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px;
+  position: relative; overflow: hidden;
+}
+.metrics-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--chrome) 30%, var(--chrome) 70%, transparent 100%);
 }
 .metric-rows { display: flex; flex-direction: column; }
-.metric-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-}
+.metric-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .metric-row:last-child { border-bottom: none; padding-bottom: 0; }
 .metric-row:first-child { padding-top: 0; }
 .metric-left { display: flex; flex-direction: column; gap: 2px; }
-.metric-name {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.metric-delta {
-  font-size: 12px;
-  color: var(--sage);
-  letter-spacing: 0.02em;
-}
+.metric-name { font-size: 9px; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+.metric-delta { font-size: 12px; color: var(--sage); letter-spacing: 0.02em; }
 .metric-delta.down { color: var(--terra); }
-.metric-value {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1;
-  align-self: center;
-}
+.metric-value { font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1; align-self: center; }
 
-/* ── What's Moving ── */
-.moving-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.bar-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-.bar-row:last-child { margin-bottom: 0; }
-.bar-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.bar-name { font-size: 14px; color: var(--ink); }
-.bar-amt { font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
-.bar-track {
-  height: 4px;
-  background: var(--parchment);
-  border-radius: 99px;
-  overflow: hidden;
-}
-.bar-fill { height: 100%; border-radius: 99px; }
-.bar-fill.top { background: var(--accent); }
-.bar-fill.mid { background: var(--faint); }
-.bar-fill.low { background: var(--terra); opacity: 0.6; }
-
-/* ── Lower row ── */
-.lower-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-/* ── Shop Moments ── */
-.moment {
-  display: flex;
-  gap: 12px;
-  padding: 14px 0;
+/* Project list */
+.project-row {
+  display: flex; align-items: flex-start; gap: 14px; padding: 14px 0;
   border-bottom: 1px solid var(--line);
 }
-.moment:last-child { border-bottom: none; padding-bottom: 0; }
-.moment:first-child { padding-top: 0; }
-.moment-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--parchment);
+.project-row:first-child { padding-top: 0; }
+.project-row:last-child { border-bottom: none; padding-bottom: 0; }
+.project-phase {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
+  background: var(--surface-hi); color: var(--muted);
   border: 1px solid var(--line-m);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Cormorant, serif;
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--warm);
-  flex-shrink: 0;
 }
-.moment-body { flex: 1; min-width: 0; }
-.moment-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 3px;
-}
-.moment-who { font-size: 12px; font-weight: 600; color: var(--ink); }
-.moment-time { font-size: 12px; color: var(--muted); }
-.moment-text { font-size: 14px; color: var(--warm); line-height: 1.6; margin-bottom: 6px; }
-.tag {
-  display: inline-block;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: 999px;
-  border: 1px solid var(--line-m);
-  color: var(--muted);
-}
-.tag.action { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,130,0.2); }
-.tag.alert  { background: var(--terra-l); color: var(--terra); border-color: rgba(184,96,96,0.2); }
+.project-phase.active { background: var(--gold-l); color: var(--gold); border-color: rgba(212,168,64,0.25); }
+.project-phase.review { background: var(--sage-l); color: var(--sage); border-color: rgba(114,184,152,0.2); }
+.project-phase.hold   { background: var(--terra-l); color: var(--terra); border-color: rgba(212,120,96,0.2); }
+.project-info { flex: 1; }
+.project-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.project-client { font-size: 12px; color: var(--muted); }
+.project-value { font-size: 14px; font-weight: 600; color: var(--warm); margin-left: auto; white-space: nowrap; padding-left: 12px; }
 
-/* ── Team ── */
-.team-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-}
-.team-row:last-child { border-bottom: none; padding-bottom: 0; }
-.team-row:first-child { padding-top: 0; }
-.team-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--parchment);
-  border: 1px solid var(--line-m);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Cormorant, serif;
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--warm);
-  flex-shrink: 0;
-}
-.team-info { flex: 1; }
-.team-name { font-size: 14px; color: var(--ink); font-weight: 400; }
-.team-time { font-size: 12px; color: var(--muted); margin-top: 1px; }
-.team-role { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); margin-left: auto; flex-shrink: 0; }
-.badge {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 999px;
-  border: 1px solid var(--line-m);
-  color: var(--muted);
-  flex-shrink: 0;
-}
-.badge.on { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,130,0.2); }
+.lower-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-/* ── Week grid ── */
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(7,1fr);
-  gap: 10px;
+/* Deliverable rows */
+.deliv-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
 }
-.day-card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px 12px;
-  text-align: center;
-}
-.day-card.today { border-color: var(--line-m); background: var(--panel-warm); }
-.day-name { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-.day-amt { font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
-.day-amt.dim { font-size: 14px; font-weight: 400; color: var(--faint); }
-.day-txn { font-size: 12px; color: var(--muted); margin-top: 3px; }
-.day-delta { font-size: 12px; color: var(--sage); margin-top: 2px; }
+.deliv-row:first-child { padding-top: 0; }
+.deliv-row:last-child { border-bottom: none; padding-bottom: 0; }
+.deliv-name { font-size: 14px; color: var(--ink); }
+.deliv-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.deliv-status { font-size: 9px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; border: 1px solid var(--line-m); color: var(--muted); flex-shrink: 0; }
+.deliv-status.pending  { background: var(--gold-l); color: var(--gold); border-color: rgba(212,168,64,0.25); }
+.deliv-status.review   { background: var(--sage-l); color: var(--sage); border-color: rgba(114,184,152,0.2); }
+.deliv-status.overdue  { background: var(--terra-l); color: var(--terra); border-color: rgba(212,120,96,0.2); }
 
-/* ── Two-col util ── */
+/* Client entries */
+.client-row {
+  display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: center;
+}
+.client-row:first-child { padding-top: 0; }
+.client-row:last-child { border-bottom: none; padding-bottom: 0; }
+.client-avatar {
+  width: 32px; height: 32px; border-radius: 8px; background: var(--surface-hi);
+  border: 1px solid var(--line-m); display: flex; align-items: center; justify-content: center;
+  font-family: Cormorant, serif; font-size: 14px; font-weight: 300; color: var(--warm); flex-shrink: 0;
+}
+.client-info { flex: 1; }
+.client-name { font-size: 14px; color: var(--ink); }
+.client-detail { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.client-value { font-size: 12px; color: var(--warm); margin-left: auto; white-space: nowrap; }
+
+/* Plain list */
+.plain-list { list-style: none; }
+.plain-list li { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.plain-list li:first-child { padding-top: 0; }
+.plain-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.list-muted { font-size: 12px; color: var(--muted); }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-/* ── List ── */
-.plain-list { list-style: none; }
-.plain-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 14px;
-}
-.plain-list li:last-child { border-bottom: none; padding-bottom: 0; }
-.plain-list li:first-child { padding-top: 0; }
-.list-muted { font-size: 12px; color: var(--muted); }
-
-/* ── Inventory ── */
-.inv-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 14px;
-}
-.inv-row:last-child { border-bottom: none; padding-bottom: 0; }
-.inv-row:first-child { padding-top: 0; }
-.inv-sku { font-size: 12px; color: var(--muted); margin-left: 8px; }
-.qty { font-size: 12px; font-weight: 600; color: var(--muted); }
-.qty.low { color: var(--terra); }
-.qty.critical { color: #9e3030; }
-.qty.ok { color: var(--sage); }
-
-/* ── Automations ── */
-.auto-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
-}
-.auto-row:last-child { border-bottom: none; padding-bottom: 0; }
+/* Automations */
+.auto-row { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
 .auto-row:first-child { padding-top: 0; }
-.auto-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  flex-shrink: 0;
-  background: var(--parchment);
-}
+.auto-row:last-child { border-bottom: none; padding-bottom: 0; }
+.auto-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; background: var(--surface-hi); }
 .auto-icon.ok { background: var(--sage-l); }
 .auto-icon.warn { background: var(--terra-l); }
 .auto-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
 .auto-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
-.auto-status {
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 999px;
-  flex-shrink: 0;
-  border: 1px solid;
-  height: max-content;
-  align-self: flex-start;
-  margin-top: 2px;
-}
-.auto-status.ok { background: var(--sage-l); color: var(--sage); border-color: rgba(90,143,130,0.2); }
-.auto-status.warn { background: var(--terra-l); color: var(--terra); border-color: rgba(184,96,96,0.2); }
+.auto-status { font-size: 9px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; flex-shrink: 0; border: 1px solid; height: max-content; align-self: flex-start; margin-top: 2px; }
+.auto-status.ok { background: var(--sage-l); color: var(--sage); border-color: rgba(114,184,152,0.2); }
+.auto-status.warn { background: var(--terra-l); color: var(--terra); border-color: rgba(212,120,96,0.2); }
 
-/* ── Client entries ── */
-.client-entry {
-  display: flex;
-  gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-  align-items: flex-start;
-}
-.client-entry:first-child { padding-top: 0; }
-.client-entry:last-child { border-bottom: none; padding-bottom: 0; }
-.client-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--parchment);
-  border: 1px solid var(--line-m);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Cormorant, serif;
-  font-size: 15px;
-  font-weight: 300;
-  color: var(--warm);
-  flex-shrink: 0;
-}
-.client-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
-.client-note { font-size: 12px; color: var(--warm); line-height: 1.6; }
-.client-meta { margin-left: auto; text-align: right; font-size: 12px; color: var(--muted); white-space: nowrap; padding-left: 12px; }
-
-/* ── Toast ── */
 .toast {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  background: var(--charcoal);
-  color: rgba(248,249,251,0.88);
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-size: 12px;
-  letter-spacing: 0.03em;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: 0.2s;
-  pointer-events: none;
-  border: 1px solid rgba(255,255,255,0.06);
+  position: fixed; right: 24px; bottom: 24px;
+  background: rgba(212,168,64,0.12); color: var(--gold);
+  border-radius: 10px; padding: 12px 18px; font-size: 12px; letter-spacing: 0.03em;
+  opacity: 0; transform: translateY(6px); transition: 0.2s; pointer-events: none;
+  border: 1px solid rgba(212,168,64,0.25);
 }
 .toast.show { opacity: 1; transform: translateY(0); }
-
-/* ── Tab sections ── */
 .tab-section { display: none; }
 
-/* ── Responsive ── */
-@media(max-width:1024px) {
-  .hero-row { grid-template-columns: 1fr; }
-  .week-grid { grid-template-columns: repeat(4,1fr); }
-}
+@media(max-width:1024px) { .hero-row { grid-template-columns: 1fr; } }
 @media(max-width:768px) {
   .nav { overflow-x: auto; }
   .topbar { padding: 0 16px; gap: 10px; }
-  .topbar-season { display: none; }
-  .topbar-status { display: none; }
+  .topbar-season, .topbar-status { display: none; }
   .lower-row, .two-col { grid-template-columns: 1fr; }
-  .moving-grid { grid-template-columns: 1fr; }
 }
 @media(max-width:640px) {
   main { padding: 16px 14px 48px; gap: 12px; }
   .nav { padding: 0 12px; }
-  .week-grid { grid-template-columns: repeat(2,1fr); }
   .brand-sub { display: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
-  <span class="brand-mark">Bloom</span>
-  <span class="brand-sub">Boutique Operations</span>
+  <span class="brand-mark">Atelier</span>
+  <span class="brand-sub">Creative Studio</span>
   <div class="topbar-sep"></div>
-  <span class="topbar-season">Spring Collection · Week 8 of 12</span>
+  <span class="topbar-season">May 2026 · 6 Active Projects</span>
   <div class="topbar-sep"></div>
   <div class="topbar-status">
-    <div class="status-item"><span class="status-dot on"></span>Square</div>
-    <div class="status-item"><span class="status-dot on"></span>Shopify</div>
+    <div class="status-item"><span class="status-dot gold"></span>3 Pending Approval</div>
+    <div class="status-item"><span class="status-dot on"></span>Billing Synced</div>
   </div>
   <div class="topbar-right">
-    <button class="tbar-btn" onclick="toast('Running end of day...')">Close Out the Day</button>
+    <button class="tbar-btn" onclick="toast('Generating invoice batch...')">Send Invoices</button>
   </div>
 </div>
 
-<!-- NAV -->
 <nav class="nav">
-  <button class="active" data-tab="floor">The Floor</button>
-  <button data-tab="week">This Week</button>
-  <button data-tab="collection">Collection</button>
+  <button class="active" data-tab="studio">Studio</button>
+  <button data-tab="projects">Projects</button>
   <button data-tab="clients">Clients</button>
-  <button data-tab="backstage">Backstage</button>
+  <button data-tab="deliverables">Deliverables</button>
+  <button data-tab="finance">Finance</button>
   <button data-tab="automations">Automations</button>
   <div class="nav-right">
     <span class="nav-pill">Live Sync</span>
@@ -633,217 +324,209 @@ main {
 
 <main>
 
-  <!-- ── THE FLOOR ── -->
-  <div id="tab-floor">
-
+  <!-- ── STUDIO ── -->
+  <div id="tab-studio">
     <div class="hero-row">
 
-      <!-- Greeting -->
       <div class="greeting-card">
         <div class="card-label" style="margin-bottom:8px;">Good Morning</div>
-        <h2 class="greeting-headline">Good morning, <em>Mara.</em></h2>
-        <p class="greeting-context">Every season tells a story — this is yours for today.</p>
-        <p class="greeting-body">You're at <strong>$1,842</strong> across <strong>34 transactions</strong> — up 12% from last Tuesday. The <em>Linen Throw in Sage</em> is moving well, 7 units and still going. Three items need attention before the weekend. The window went up Monday and it's working.</p>
+        <h2 class="greeting-headline">Good morning, <em>Isabelle.</em></h2>
+        <p class="greeting-context">Six projects running. Three waiting on client eyes.</p>
+        <p class="greeting-body">The <em>Meridian Residence</em> deck is with the client — approval window closes Friday. You have <strong>$18,400</strong> in outstanding invoices, of which <strong>$6,200</strong> is 14 days overdue. The Kova brand refresh is on track for Thursday delivery.</p>
         <div class="actions">
-          <button class="btn-primary" onclick="toast('Running close report...')">Close Out the Day</button>
-          <button class="btn-secondary" onclick="toast('Printing summary...')">Print Summary</button>
-          <button class="btn-secondary" onclick="toast('Messaging team...')">Message Team</button>
+          <button class="btn-primary" onclick="toast('Opening project board...')">Open Project Board</button>
+          <button class="btn-secondary" onclick="toast('Chasing invoices...')">Chase Overdue</button>
+          <button class="btn-secondary" onclick="toast('Opening deliverables...')">What's Due</button>
         </div>
       </div>
 
-      <!-- Metrics -->
       <div class="metrics-card">
-        <div class="card-label">Right Now</div>
+        <div class="card-label">Studio Today</div>
         <div class="metric-rows">
           <div class="metric-row">
             <div class="metric-left">
-              <span class="metric-name">Revenue</span>
-              <span class="metric-delta">↑ 12% vs last Tue</span>
+              <span class="metric-name">Active Projects</span>
+              <span class="metric-delta">2 in review · 1 on hold</span>
             </div>
-            <span class="metric-value">$1,842</span>
+            <span class="metric-value">6</span>
           </div>
           <div class="metric-row">
             <div class="metric-left">
-              <span class="metric-name">Transactions</span>
-              <span class="metric-delta">↑ 6 from yesterday</span>
+              <span class="metric-name">MTD Revenue</span>
+              <span class="metric-delta">↑ $4,200 vs last May</span>
             </div>
-            <span class="metric-value">34</span>
+            <span class="metric-value">$31,800</span>
           </div>
           <div class="metric-row">
             <div class="metric-left">
-              <span class="metric-name">Avg Ticket</span>
-              <span class="metric-delta">↑ $4.20 from last week</span>
+              <span class="metric-name">Outstanding</span>
+              <span class="metric-delta" style="color:var(--terra);">$6,200 overdue</span>
             </div>
-            <span class="metric-value">$54</span>
+            <span class="metric-value">$18,400</span>
           </div>
           <div class="metric-row">
             <div class="metric-left">
-              <span class="metric-name">Online Orders</span>
-              <span class="metric-delta">3 shipped · 1 pending</span>
+              <span class="metric-name">Hours This Week</span>
+              <span class="metric-delta">↑ 4h vs last week</span>
             </div>
-            <span class="metric-value">4</span>
+            <span class="metric-value">38h</span>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- What's Moving -->
+    <!-- Active Projects -->
     <div class="card">
-      <div class="card-label">What's Moving</div>
-      <div class="moving-grid">
-        <div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Home Goods</span><span class="bar-amt">$842 · 46%</span></div>
-            <div class="bar-track"><div class="bar-fill top" style="width:46%"></div></div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Wellness & Candles</span><span class="bar-amt">$418 · 23%</span></div>
-            <div class="bar-track"><div class="bar-fill top" style="width:23%"></div></div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Textile & Apparel</span><span class="bar-amt">$294 · 16%</span></div>
-            <div class="bar-track"><div class="bar-fill mid" style="width:16%"></div></div>
-          </div>
+      <div class="card-label">Active Projects</div>
+      <div class="project-row">
+        <div class="project-phase review">Rev</div>
+        <div class="project-info">
+          <div class="project-name">Meridian Residence</div>
+          <div class="project-client">Interior Design · Concept deck with client since Monday</div>
         </div>
-        <div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Online Channel</span><span class="bar-amt">$214 · 12%</span></div>
-            <div class="bar-track"><div class="bar-fill mid" style="width:12%"></div></div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label"><span class="bar-name">Gift Cards</span><span class="bar-amt">$74 · 4%</span></div>
-            <div class="bar-track"><div class="bar-fill mid" style="width:4%"></div></div>
-          </div>
+        <span class="project-value">$12,400</span>
+      </div>
+      <div class="project-row">
+        <div class="project-phase active">WIP</div>
+        <div class="project-info">
+          <div class="project-name">Kova Brand Refresh</div>
+          <div class="project-client">Branding · Final assets due Thursday</div>
         </div>
+        <span class="project-value">$7,800</span>
+      </div>
+      <div class="project-row">
+        <div class="project-phase active">WIP</div>
+        <div class="project-info">
+          <div class="project-name">Arch & Co. Website</div>
+          <div class="project-client">Web Design · Development in progress</div>
+        </div>
+        <span class="project-value">$5,200</span>
+      </div>
+      <div class="project-row">
+        <div class="project-phase review">Rev</div>
+        <div class="project-info">
+          <div class="project-name">Solé Campaign</div>
+          <div class="project-client">Art Direction · Round 2 revisions requested</div>
+        </div>
+        <span class="project-value">$4,600</span>
+      </div>
+      <div class="project-row">
+        <div class="project-phase hold">Hold</div>
+        <div class="project-info">
+          <div class="project-name">Vantage Offices</div>
+          <div class="project-client">Interior Design · Awaiting client budget sign-off</div>
+        </div>
+        <span class="project-value">$9,000</span>
       </div>
     </div>
 
-    <!-- Moments + Team -->
     <div class="lower-row">
+      <!-- Deliverables due -->
       <div class="card">
-        <div class="card-label">Shop Moments</div>
-        <div class="moment">
-          <div class="moment-avatar">J</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Jess L.</span><span class="moment-time">9:42 AM</span></div>
-            <p class="moment-text">Deborah H. asked about custom orders for the holiday line. Third visit this season.</p>
-            <span class="tag action">Follow up Friday</span>
+        <div class="card-label">Due This Week</div>
+        <div class="deliv-row">
+          <div>
+            <div class="deliv-name">Kova — Final Brand Files</div>
+            <div class="deliv-sub">Logos, typography, colour guide · Thu 29</div>
           </div>
+          <span class="deliv-status pending">In progress</span>
         </div>
-        <div class="moment">
-          <div class="moment-avatar">M</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Mara R.</span><span class="moment-time">9:15 AM</span></div>
-            <p class="moment-text">Bloom Supply order checked in. 14 units, all match PO. Shelves stocked before open.</p>
-            <span class="tag">Ops</span>
+        <div class="deliv-row">
+          <div>
+            <div class="deliv-name">Meridian — Approval Decision</div>
+            <div class="deliv-sub">Concept deck · Deadline Fri 30</div>
           </div>
+          <span class="deliv-status review">Client hold</span>
         </div>
-        <div class="moment">
-          <div class="moment-avatar">J</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Jess L.</span><span class="moment-time">11:30 AM</span></div>
-            <p class="moment-text">Woven Basket return — customer drop-off. No defect visible. Holding for review.</p>
-            <span class="tag alert">Review needed</span>
+        <div class="deliv-row">
+          <div>
+            <div class="deliv-name">Solé — Round 2 Revisions</div>
+            <div class="deliv-sub">Campaign visuals · was due Mon 26</div>
           </div>
+          <span class="deliv-status overdue">Overdue</span>
+        </div>
+        <div class="deliv-row">
+          <div>
+            <div class="deliv-name">Arch & Co. — Homepage Draft</div>
+            <div class="deliv-sub">Web · Internal review by Fri</div>
+          </div>
+          <span class="deliv-status pending">On track</span>
         </div>
       </div>
 
+      <!-- Client status -->
       <div class="card">
-        <div class="card-label">On the Floor</div>
-        <div class="team-row">
-          <div class="team-avatar">MR</div>
-          <div class="team-info">
-            <div class="team-name">Mara R.</div>
-            <div class="team-time">9:00 AM – 5:00 PM</div>
+        <div class="card-label">Client Status</div>
+        <div class="client-row">
+          <div class="client-avatar">M</div>
+          <div class="client-info">
+            <div class="client-name">Meridian Group</div>
+            <div class="client-detail">Reviewing concept deck · 3 days</div>
           </div>
-          <span class="team-role">Floor Lead</span>
-          <span class="badge on">On</span>
+          <span class="client-value" style="color:var(--gold);">Awaiting</span>
         </div>
-        <div class="team-row">
-          <div class="team-avatar">JL</div>
-          <div class="team-info">
-            <div class="team-name">Jess L.</div>
-            <div class="team-time">10:00 AM – 6:00 PM</div>
+        <div class="client-row">
+          <div class="client-avatar">K</div>
+          <div class="client-info">
+            <div class="client-name">Kova Studio</div>
+            <div class="client-detail">Branding — delivery Thu</div>
           </div>
-          <span class="team-role">Sales</span>
-          <span class="badge on">On</span>
+          <span class="client-value" style="color:var(--sage);">On track</span>
         </div>
-        <div class="team-row">
-          <div class="team-avatar">TK</div>
-          <div class="team-info">
-            <div class="team-name">Tom K.</div>
-            <div class="team-time">1:00 PM – 7:00 PM</div>
+        <div class="client-row">
+          <div class="client-avatar">S</div>
+          <div class="client-info">
+            <div class="client-name">Solé Agency</div>
+            <div class="client-detail">Revisions requested · overdue</div>
           </div>
-          <span class="team-role">Fulfillment</span>
-          <span class="badge">Incoming</span>
+          <span class="client-value" style="color:var(--terra);">Needs work</span>
         </div>
-        <div style="margin-top:16px;">
-          <button class="btn-secondary" style="font-size:11px;" onclick="toast('Opening schedule...')">View Full Schedule</button>
+        <div class="client-row">
+          <div class="client-avatar">A</div>
+          <div class="client-info">
+            <div class="client-name">Arch & Co.</div>
+            <div class="client-detail">Web in development · week 3</div>
+          </div>
+          <span class="client-value">Active</span>
         </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ── THIS WEEK ── -->
-  <div id="tab-week" class="tab-section">
-    <div class="week-grid">
-      <div class="day-card"><div class="day-name">Mon</div><div class="day-amt">$1,640</div><div class="day-txn">28 txn</div><div class="day-delta">↑ 4%</div></div>
-      <div class="day-card today"><div class="day-name">Tue · Today</div><div class="day-amt">$1,842</div><div class="day-txn">34 txn</div><div class="day-delta">↑ 12%</div></div>
-      <div class="day-card"><div class="day-name">Wed</div><div class="day-amt dim">—</div></div>
-      <div class="day-card"><div class="day-name">Thu</div><div class="day-amt dim">—</div></div>
-      <div class="day-card"><div class="day-name">Fri</div><div class="day-amt dim">—</div></div>
-      <div class="day-card"><div class="day-name">Sat</div><div class="day-amt dim">—</div></div>
-      <div class="day-card"><div class="day-name">Sun</div><div class="day-amt dim">—</div></div>
-    </div>
-    <div class="two-col" style="margin-top:16px;">
-      <div class="card">
-        <div class="card-label">Week so Far</div>
-        <ul class="plain-list">
-          <li><span>Revenue (2 days)</span><span style="font-weight:600;">$3,482</span></li>
-          <li><span>Transactions</span><span>62</span></li>
-          <li><span>Avg Ticket</span><span>$56.16</span></li>
-          <li><span>Online Revenue</span><span>$428</span></li>
-          <li><span>Best Day</span><span>Tuesday ↑</span></li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="card-label">vs Last Week</div>
-        <ul class="plain-list">
-          <li><span>Revenue</span><span style="color:var(--sage);font-weight:600;">↑ $412 (+13%)</span></li>
-          <li><span>Transactions</span><span style="color:var(--sage);">↑ 8</span></li>
-          <li><span>Avg Ticket</span><span style="color:var(--sage);">↑ $2.40</span></li>
-          <li><span>Top Category</span><span>Home Goods</span></li>
-          <li><span>Season Week</span><span class="list-muted">8 of 12</span></li>
-        </ul>
       </div>
     </div>
   </div>
 
-  <!-- ── COLLECTION ── -->
-  <div id="tab-collection" class="tab-section">
-    <div class="two-col">
-      <div class="card">
-        <div class="card-label">Low Stock</div>
-        <div class="inv-row"><span>Linen Throw (Sage)<span class="inv-sku">LT-SG</span></span><span class="qty critical">2 left</span></div>
-        <div class="inv-row"><span>Soy Candle 8oz<span class="inv-sku">SC-8Z</span></span><span class="qty low">4 left</span></div>
-        <div class="inv-row"><span>Cork Tray (Small)<span class="inv-sku">CT-SM</span></span><span class="qty low">3 left</span></div>
-        <div class="inv-row"><span>Beeswax Wrap Set<span class="inv-sku">BW-ST</span></span><span class="qty low">5 left</span></div>
-        <div style="margin-top:16px;">
-          <button class="btn-primary" style="font-size:11px;" onclick="toast('Generating reorder POs...')">Auto-Reorder All</button>
-        </div>
+  <!-- ── PROJECTS ── -->
+  <div id="tab-projects" class="tab-section">
+    <div class="card">
+      <div class="card-label">All Projects</div>
+      <div class="project-row">
+        <div class="project-phase review">Rev</div>
+        <div class="project-info"><div class="project-name">Meridian Residence</div><div class="project-client">Interior Design · $12,400 · Awaiting approval</div></div>
+        <span class="project-value">$12,400</span>
       </div>
-      <div class="card">
-        <div class="card-label">By Category</div>
-        <ul class="plain-list">
-          <li><span>Home Goods</span><span>142 units</span></li>
-          <li><span>Wellness & Candles</span><span>87 units</span></li>
-          <li><span>Textile & Apparel</span><span>64 units</span></li>
-          <li><span>Kitchen & Table</span><span>38 units</span></li>
-          <li><span>Gift & Seasonal</span><span>22 units</span></li>
-          <li><span style="font-weight:600;">Total</span><span style="font-weight:600;">353 units</span></li>
-        </ul>
+      <div class="project-row">
+        <div class="project-phase active">WIP</div>
+        <div class="project-info"><div class="project-name">Kova Brand Refresh</div><div class="project-client">Branding · $7,800 · On track</div></div>
+        <span class="project-value">$7,800</span>
+      </div>
+      <div class="project-row">
+        <div class="project-phase active">WIP</div>
+        <div class="project-info"><div class="project-name">Arch & Co. Website</div><div class="project-client">Web Design · $5,200 · Week 3</div></div>
+        <span class="project-value">$5,200</span>
+      </div>
+      <div class="project-row">
+        <div class="project-phase review">Rev</div>
+        <div class="project-info"><div class="project-name">Solé Campaign</div><div class="project-client">Art Direction · $4,600 · Revisions</div></div>
+        <span class="project-value">$4,600</span>
+      </div>
+      <div class="project-row">
+        <div class="project-phase hold">Hold</div>
+        <div class="project-info"><div class="project-name">Vantage Offices</div><div class="project-client">Interior Design · $9,000 · Budget pending</div></div>
+        <span class="project-value">$9,000</span>
+      </div>
+      <div class="project-row">
+        <div class="project-phase" style="background:var(--surface-hi);">New</div>
+        <div class="project-info"><div class="project-name">Harlow Residences</div><div class="project-client">Interior Design · Proposal sent · $14,000 est.</div></div>
+        <span class="project-value" style="color:var(--muted);">Proposal</span>
       </div>
     </div>
   </div>
@@ -852,73 +535,89 @@ main {
   <div id="tab-clients" class="tab-section">
     <div class="two-col">
       <div class="card">
-        <div class="card-label">Client Notes</div>
-        <div class="client-entry">
-          <div class="client-avatar">D</div>
-          <div>
-            <div class="client-name">Deborah H.</div>
-            <div class="client-note">Custom orders for holiday line. Third visit this season — linens and ceramics. Follow up by Friday.</div>
-          </div>
-          <div class="client-meta">Today<br><span class="tag action" style="margin-top:6px;display:inline-block;">Follow up</span></div>
+        <div class="card-label">Active Clients</div>
+        <div class="client-row">
+          <div class="client-avatar">M</div>
+          <div class="client-info"><div class="client-name">Meridian Group</div><div class="client-detail">3 projects lifetime · $38,400 total</div></div>
+          <span class="client-value">Active</span>
         </div>
-        <div class="client-entry">
+        <div class="client-row">
+          <div class="client-avatar">K</div>
+          <div class="client-info"><div class="client-name">Kova Studio</div><div class="client-detail">1st project · referred by Meridian</div></div>
+          <span class="client-value">New</span>
+        </div>
+        <div class="client-row">
           <div class="client-avatar">S</div>
-          <div>
-            <div class="client-name">Sarah M.</div>
-            <div class="client-note">Full diffuser set + woven basket. Mentioned gifting. Offered gift wrap. Loyal since last spring.</div>
-          </div>
-          <div class="client-meta">Yesterday</div>
+          <div class="client-info"><div class="client-name">Solé Agency</div><div class="client-detail">2 projects · revision-heavy history</div></div>
+          <span class="client-value">Active</span>
+        </div>
+        <div class="client-row">
+          <div class="client-avatar">A</div>
+          <div class="client-info"><div class="client-name">Arch & Co.</div><div class="client-detail">Long-term · 4th project together</div></div>
+          <span class="client-value">Retained</span>
         </div>
       </div>
       <div class="card">
-        <div class="card-label">Vendor Orders</div>
+        <div class="card-label">Proposals Out</div>
         <ul class="plain-list">
-          <li><span>Artisan Goods Co.</span><span style="color:var(--terra);">$620 · due Fri</span></li>
-          <li><span>Bloom Supply</span><span style="color:var(--sage);" class="list-muted">Received ✓</span></li>
-          <li><span>Coastal Textiles</span><span>$1,140 · Jun 3</span></li>
-          <li><span>Earthware Studio</span><span>$380 · Jun 6</span></li>
+          <li><span>Harlow Residences</span><span style="color:var(--gold);">$14,000</span></li>
+          <li><span>Sent</span><span class="list-muted">May 22</span></li>
+          <li><span>Follow-up</span><span class="list-muted">Due May 29</span></li>
         </ul>
+        <div style="margin-top:16px;">
+          <button class="btn-secondary" style="font-size:11px;" onclick="toast('Sending follow-up...')">Follow Up Harlow</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ── BACKSTAGE ── -->
-  <div id="tab-backstage" class="tab-section">
+  <!-- ── DELIVERABLES ── -->
+  <div id="tab-deliverables" class="tab-section">
+    <div class="card">
+      <div class="card-label">All Deliverables</div>
+      <div class="deliv-row">
+        <div><div class="deliv-name">Kova — Final Brand Files</div><div class="deliv-sub">Thu May 29</div></div>
+        <span class="deliv-status pending">In progress</span>
+      </div>
+      <div class="deliv-row">
+        <div><div class="deliv-name">Meridian — Concept Approval</div><div class="deliv-sub">Fri May 30 — client decision</div></div>
+        <span class="deliv-status review">Client hold</span>
+      </div>
+      <div class="deliv-row">
+        <div><div class="deliv-name">Solé — Round 2 Revisions</div><div class="deliv-sub">Was due Mon May 26</div></div>
+        <span class="deliv-status overdue">Overdue</span>
+      </div>
+      <div class="deliv-row">
+        <div><div class="deliv-name">Arch & Co. — Homepage Draft</div><div class="deliv-sub">Internal review Fri May 30</div></div>
+        <span class="deliv-status pending">On track</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FINANCE ── -->
+  <div id="tab-finance" class="tab-section">
     <div class="two-col">
       <div class="card">
-        <div class="card-label">Today's Schedule</div>
-        <div class="team-row">
-          <div class="team-avatar">MR</div>
-          <div class="team-info"><div class="team-name">Mara R.</div><div class="team-time">9:00 AM – 5:00 PM · Floor Lead</div></div>
-          <span class="badge on">On</span>
-        </div>
-        <div class="team-row">
-          <div class="team-avatar">JL</div>
-          <div class="team-info"><div class="team-name">Jess L.</div><div class="team-time">10:00 AM – 6:00 PM · Sales</div></div>
-          <span class="badge on">On</span>
-        </div>
-        <div class="team-row">
-          <div class="team-avatar">TK</div>
-          <div class="team-info"><div class="team-name">Tom K.</div><div class="team-time">1:00 PM – 7:00 PM · Fulfillment</div></div>
-          <span class="badge">Incoming</span>
+        <div class="card-label">Outstanding Invoices</div>
+        <ul class="plain-list">
+          <li><span>Meridian — Milestone 2</span><span style="color:var(--terra);">$6,200 overdue</span></li>
+          <li><span>Solé — Campaign Phase 1</span><span style="color:var(--gold);">$4,800 due Fri</span></li>
+          <li><span>Vantage — Concept Fee</span><span>$3,400 due Jun 5</span></li>
+          <li><span>Arch & Co. — Month 3</span><span>$4,000 due Jun 1</span></li>
+        </ul>
+        <div style="margin-top:16px;">
+          <button class="btn-primary" style="font-size:11px;" onclick="toast('Sending reminders...')">Chase Overdue</button>
         </div>
       </div>
       <div class="card">
-        <div class="card-label">Team Notes</div>
-        <div class="moment">
-          <div class="moment-avatar">J</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Jess L.</span><span class="moment-time">9:42 AM</span></div>
-            <p class="moment-text">Custom order inquiry from Deborah H. Follow up by Friday.</p>
-          </div>
-        </div>
-        <div class="moment">
-          <div class="moment-avatar">M</div>
-          <div class="moment-body">
-            <div class="moment-meta"><span class="moment-who">Mara R.</span><span class="moment-time">9:15 AM</span></div>
-            <p class="moment-text">Bloom Supply in. 14 units, all match PO. Shelves stocked.</p>
-          </div>
-        </div>
+        <div class="card-label">May at a Glance</div>
+        <ul class="plain-list">
+          <li><span>Revenue Collected</span><span style="font-weight:600;">$31,800</span></li>
+          <li><span>Outstanding</span><span style="color:var(--gold);">$18,400</span></li>
+          <li><span>Overdue</span><span style="color:var(--terra);">$6,200</span></li>
+          <li><span>Projected (Jun)</span><span>$28,000</span></li>
+          <li><span>Avg Project Value</span><span>$7,580</span></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -927,9 +626,10 @@ main {
   <div id="tab-automations" class="tab-section">
     <div class="card">
       <div class="card-label">Running Quietly</div>
-      <div class="auto-row"><div class="auto-icon ok">📊</div><div style="flex:1;"><div class="auto-name">Daily Close Report</div><div class="auto-desc">Pulls POS sales, compiles revenue by category, flags variances, emails summary at 8:00 PM.</div></div><div class="auto-status ok">Live</div></div>
-      <div class="auto-row"><div class="auto-icon ok">📦</div><div style="flex:1;"><div class="auto-name">Collection Sync</div><div class="auto-desc">Syncs POS inventory each morning at 7:00 AM. Items below reorder point surface on The Floor automatically.</div></div><div class="auto-status ok">Live</div></div>
-      <div class="auto-row"><div class="auto-icon warn">🔔</div><div style="flex:1;"><div class="auto-name">Low Stock Alerts</div><div class="auto-desc">Notifies floor lead via SMS when an item hits its reorder threshold. Needs a phone number in settings.</div></div><div class="auto-status warn">Setup needed</div></div>
+      <div class="auto-row"><div class="auto-icon ok">💌</div><div style="flex:1;"><div class="auto-name">Invoice Reminders</div><div class="auto-desc">Sends a payment reminder 3 days before due, then again at 7 days overdue. Reduces average collection time significantly.</div></div><div class="auto-status ok">Live</div></div>
+      <div class="auto-row"><div class="auto-icon ok">📋</div><div style="flex:1;"><div class="auto-name">Project Status Digest</div><div class="auto-desc">Monday morning briefing — active projects, what's due this week, client approvals pending.</div></div><div class="auto-status ok">Live</div></div>
+      <div class="auto-row"><div class="auto-icon ok">📤</div><div style="flex:1;"><div class="auto-name">Proposal Follow-up</div><div class="auto-desc">Sends a gentle check-in 7 days after a proposal goes out if there's been no response.</div></div><div class="auto-status ok">Live</div></div>
+      <div class="auto-row"><div class="auto-icon warn">🔗</div><div style="flex:1;"><div class="auto-name">Xero Sync</div><div class="auto-desc">Pushes issued invoices and received payments to your accounting software automatically.</div></div><div class="auto-status warn">Setup needed</div></div>
     </div>
   </div>
 
@@ -944,9 +644,7 @@ function toast(msg) {
   el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), 2200);
 }
-
-const tabs = { floor:'tab-floor', week:'tab-week', collection:'tab-collection', clients:'tab-clients', backstage:'tab-backstage', automations:'tab-automations' };
-
+const tabs = { studio:'tab-studio', projects:'tab-projects', clients:'tab-clients', deliverables:'tab-deliverables', finance:'tab-finance', automations:'tab-automations' };
 function showTab(name) {
   Object.entries(tabs).forEach(([k,id]) => {
     const el = document.getElementById(id);
@@ -955,7 +653,6 @@ function showTab(name) {
     else { el.style.display = 'none'; el.classList.add('tab-section'); }
   });
 }
-
 document.querySelectorAll('.nav button[data-tab]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
@@ -963,8 +660,7 @@ document.querySelectorAll('.nav button[data-tab]').forEach(btn => {
     showTab(btn.dataset.tab);
   });
 });
-
-showTab('floor');
+showTab('studio');
 </script>
 </body>
 </html>
