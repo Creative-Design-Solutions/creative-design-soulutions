@@ -41,23 +41,30 @@
     /* ── HERO ── */
     .lt-hero { padding: 10rem 4rem 5rem; max-width: 900px; margin: 0 auto; text-align: center; }
     .section-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1.2rem; }
-    .lt-hero h1 { font-family: 'Pinyon Script', cursive; font-size: clamp(4rem, 9vw, 7rem); font-weight: 400; line-height: 1; letter-spacing: 0.02em; margin-bottom: 1.2rem; }
+    .lt-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; font-style: italic; line-height: 1.1; letter-spacing: 0.01em; margin-bottom: 0.9rem; }
     .lt-hero h1 em {
-      font-style: normal;
+      font-style: italic;
       background: linear-gradient(135deg, #a07830 0%, #d4a840 22%, #f5e090 45%, #c49030 65%, #e8c060 82%, #a06820 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .lt-hero p { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.7; color: var(--muted); max-width: 520px; margin: 0 auto; }
+    .lt-hero p { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: var(--muted); max-width: 480px; margin: 0 auto; }
 
-    /* ── TOOL SECTIONS ── */
-    .tool-section { max-width: 1100px; margin: 0 auto 6rem; padding: 0 3rem; }
-    .tool-header { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3rem; align-items: start; margin-bottom: 2rem; }
-    .tool-copy h2 { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 600; line-height: 1.1; margin-bottom: 0.75rem; }
-    .tool-copy h2 em { color: var(--gold); font-style: italic; }
-    .tool-copy p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
-    .tool-tag { display: inline-block; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 99px; padding: 0.25rem 0.7rem; margin-bottom: 0.8rem; }
+    /* ── TOOLS ROW ── */
+    .tools-row {
+      padding: 0 4rem 6rem;
+      display: grid;
+      grid-template-columns: minmax(0, 600px) 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .tool-panel { display: flex; flex-direction: column; }
+    .tool-copy-sm { margin-bottom: 1.2rem; }
+    .tool-copy-sm h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; line-height: 1.1; margin-bottom: 0.4rem; }
+    .tool-copy-sm h2 em { color: var(--gold); font-style: italic; }
+    .tool-copy-sm p { font-size: 0.86rem; color: var(--muted); line-height: 1.7; }
+    .tool-tag { display: inline-block; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 99px; padding: 0.25rem 0.7rem; margin-bottom: 0.7rem; }
     .tag-live { background: #e3efe5; color: #4f7857; border: 1px solid rgba(79,120,87,0.2); }
     .tag-soon { background: rgba(200,146,42,0.1); color: var(--gold); border: 1px solid var(--line); }
 
@@ -207,58 +214,48 @@
 <!-- HERO — copy placeholder, fill in your own words -->
 <section class="lt-hero">
   <h1><em>The Little Things</em></h1>
-  <p><!-- YOUR SUBHEADING --></p>
+  <p>Little things that feel helpful for the tasks that need a little companion.</p>
 </section>
 
-<!-- ── GLASS STICKY NOTES ── -->
-<section class="tool-section" id="stickies">
-  <div class="tool-header">
-    <div class="tool-copy">
+<!-- ── TOOLS ROW — stickies left, vault right ── -->
+<div class="tools-row">
+
+  <!-- LEFT: Glass Stickies -->
+  <div class="tool-panel" id="stickies">
+    <div class="tool-copy-sm">
       <span class="tool-tag tag-live">Live</span>
       <h2>Glass <em>Stickies</em></h2>
-      <p><!-- YOUR DESCRIPTION --></p>
+      <p>Drag, drop, type. Your digital sticky board — persistent between visits.</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:0.5rem;">
-      <!-- board controls are inside the board itself -->
+    <div id="sticky-board">
+      <div class="board-controls">
+        <div class="board-color-dot selected" data-color="#5b8af5" style="background:#5b8af5;" title="Blue"></div>
+        <div class="board-color-dot" data-color="#a78bfa" style="background:#a78bfa;" title="Purple"></div>
+        <div class="board-color-dot" data-color="#34d399" style="background:#34d399;" title="Green"></div>
+        <div class="board-color-dot" data-color="#c9768e" style="background:#c9768e;" title="Rose"></div>
+        <div class="board-color-dot" data-color="#f472b6" style="background:#f472b6;" title="Pink"></div>
+        <button class="board-add" id="board-add-btn" title="New sticky">+</button>
+      </div>
+      <div class="board-hint">drag · click to type · + for new</div>
     </div>
   </div>
 
-  <div id="sticky-board">
-    <div class="board-controls">
-      <div class="board-color-dot selected" data-color="#5b8af5" style="background:#5b8af5;" title="Blue"></div>
-      <div class="board-color-dot" data-color="#a78bfa" style="background:#a78bfa;" title="Purple"></div>
-      <div class="board-color-dot" data-color="#34d399" style="background:#34d399;" title="Green"></div>
-      <div class="board-color-dot" data-color="#c9768e" style="background:#c9768e;" title="Rose"></div>
-      <div class="board-color-dot" data-color="#f472b6" style="background:#f472b6;" title="Pink"></div>
-      <button class="board-add" id="board-add-btn" title="New sticky">+</button>
-    </div>
-    <div class="board-hint">drag · click to type · + for new</div>
-  </div>
-</section>
-
-<div class="tool-divider"></div>
-
-<!-- ── PASSWORD VAULT ── -->
-<section class="tool-section" id="vault">
-  <div class="tool-header">
-    <div class="tool-copy">
+  <!-- RIGHT: Password Vault -->
+  <div class="tool-panel" id="vault">
+    <div class="tool-copy-sm">
       <span class="tool-tag tag-live">Live</span>
       <h2>Password <em>Vault</em></h2>
-      <p><!-- YOUR DESCRIPTION --></p>
+      <p>Secure credential storage — sign in to access your saved entries.</p>
     </div>
+    <iframe
+      src="https://creative-design-solutions.github.io/Practice-Portal/vault.html"
+      title="Credential Vault"
+      style="width:100%;height:480px;border:none;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.08);"
+      loading="lazy"
+    ></iframe>
   </div>
-  <iframe
-    src="https://creative-design-solutions.github.io/Practice-Portal/vault.html"
-    title="Credential Vault"
-    style="width:100%;height:520px;border:none;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.08);"
-    loading="lazy"
-  ></iframe>
-</section>
 
-<div class="tool-divider"></div>
-
-<!-- ── ADD MORE TOOLS HERE ── -->
-<!-- Duplicate the tool-section block above to add new tools -->
+</div>
 
 <!-- CTA — copy placeholder -->
 <section class="lt-cta">
@@ -284,7 +281,7 @@ document.querySelectorAll('.board-color-dot').forEach(dot => {
     activeColor = dot.dataset.color;
   });
 });
-document.getElementById('board-add-btn').addEventListener('click', () => addNote());
+document.getElementById('board-add-btn').addEventListener('click', () => makeNote());
 
 function makeNote(data) {
   const bw = board.clientWidth  || 800;
@@ -334,8 +331,8 @@ function makeDraggable(el) {
     el.style.zIndex = ++zTop;
     const r = el.getBoundingClientRect();
     const br = board.getBoundingClientRect();
-    ox = e.clientX - (r.left - br.left);
-    oy = e.clientY - (r.top  - br.top);
+    ox = e.clientX - r.left;
+    oy = e.clientY - r.top;
     e.preventDefault();
   });
 
@@ -347,8 +344,8 @@ function makeDraggable(el) {
     const t = e.touches[0];
     const r = el.getBoundingClientRect();
     const br = board.getBoundingClientRect();
-    ox = t.clientX - (r.left - br.left);
-    oy = t.clientY - (r.top  - br.top);
+    ox = t.clientX - r.left;
+    oy = t.clientY - r.top;
   }, { passive: true });
 
   window.addEventListener('mousemove', e => {
