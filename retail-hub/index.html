@@ -4,221 +4,444 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bloom — Boutique Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --deep:     #3d1f2d;
-  --ink:      #2d1520;
-  --muted:    #9a7080;
-  --cream:    #fdf6f8;
-  --panel:    #ffffff;
-  --line:     rgba(180,100,120,.1);
-  --copper:   #c4687a;
-  --copper-l: #fce8ed;
-  --ok:       #6a9e7a;
-  --warn:     #c07050;
-  --sky:      #f5eef0;
+  --linen:      #f6f1e9;
+  --parchment:  #ede7da;
+  --charcoal:   #2c2820;
+  --ink:        #1e1a16;
+  --warm-mid:   #6b5e52;
+  --muted:      #9a8e84;
+  --faint:      #c8bfb6;
+  --brass:      #b08840;
+  --brass-l:    #f5eddb;
+  --brass-m:    #d4a855;
+  --terra:      #c4714a;
+  --terra-l:    #f7e8e0;
+  --sage:       #7a9a78;
+  --sage-l:     #e8f0e6;
+  --panel:      #fdfaf6;
+  --panel-b:    rgba(255,252,248,.92);
+  --line:       rgba(150,110,80,.1);
+  --line-b:     rgba(150,110,80,.06);
 }
-* { box-sizing: border-box; margin: 0; }
-body { font-family: Syne, system-ui; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+body { font-family: Inter, system-ui; background: var(--linen); color: var(--ink); -webkit-font-smoothing: antialiased; font-size: 14px; }
 
 /* ── Topbar ── */
-.topbar { height: 38px; background: var(--deep); display: flex; align-items: center; gap: 8px; padding: 0 22px; color: #eef0fa; }
-.dot { width: 7px; height: 7px; border-radius: 50%; background: #9aa3ad; }
-.dot.on { background: #67bf75; box-shadow: 0 0 8px #67bf75; }
-.pill { font-size: 10px; text-transform: uppercase; letter-spacing: .14em; border: 1px solid rgba(255,255,255,.09); padding: 7px 11px; border-radius: 5px; color: rgba(238,240,250,.7); background: rgba(255,255,255,.045); }
-.app { margin-left: auto; display: flex; gap: 8px; }
-.tbar-btn { font-family: Syne; cursor: pointer; transition: background .15s, color .15s; }
-.tbar-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
-.gear-btn { font-family: Syne; cursor: pointer; font-size: 13px; padding: 5px 10px; transition: background .15s; }
-.gear-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
-.tbar-mobile { display: none; }
+.topbar {
+  height: 40px;
+  background: var(--charcoal);
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 24px;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.t-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.2); flex-shrink: 0; }
+.t-dot.on { background: #7abf7a; box-shadow: 0 0 7px rgba(122,191,122,.7); }
+.t-pill {
+  font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase;
+  color: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.08);
+  padding: 5px 10px; border-radius: 4px; background: rgba(255,255,255,.04);
+  font-family: Inter;
+}
+.t-sep { width: 1px; height: 18px; background: rgba(255,255,255,.07); margin: 0 4px; }
+.t-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.t-btn {
+  font-family: Inter; font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.08);
+  padding: 5px 11px; border-radius: 4px; background: none; cursor: pointer;
+  transition: all .15s;
+}
+.t-btn:hover { background: rgba(255,255,255,.08); color: rgba(255,255,255,.8); }
+.t-btn.brass { color: var(--brass-m); border-color: rgba(176,136,64,.25); background: rgba(176,136,64,.07); }
+.t-btn.brass:hover { background: rgba(176,136,64,.15); }
+
+/* ── Season strip ── */
+.season-strip {
+  background: var(--parchment);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 56px;
+}
+.season-inner {
+  max-width: 1180px; margin: auto;
+  display: flex; align-items: center; gap: 20px;
+}
+.season-label {
+  font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--brass); font-weight: 600; white-space: nowrap;
+}
+.season-track {
+  flex: 1; height: 2px; background: var(--line); border-radius: 99px; overflow: hidden;
+  max-width: 200px;
+}
+.season-fill { height: 100%; width: 62%; background: linear-gradient(90deg, var(--brass), var(--brass-m)); border-radius: 99px; }
+.season-note { font-size: 9.5px; color: var(--muted); letter-spacing: .06em; white-space: nowrap; }
+.season-badges { margin-left: auto; display: flex; gap: 8px; }
+.s-badge {
+  font-size: 9px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600;
+  padding: 4px 10px; border-radius: 99px; border: 1px solid;
+}
+.s-badge.ok { background: var(--sage-l); color: var(--sage); border-color: rgba(122,154,120,.25); }
+.s-badge.warm { background: var(--brass-l); color: var(--brass); border-color: rgba(176,136,64,.25); }
+.s-badge.note { background: var(--terra-l); color: var(--terra); border-color: rgba(196,113,74,.25); }
 
 /* ── Header ── */
-header { padding: 52px 56px 42px; border-bottom: 1px solid var(--line); }
-.header-inner { max-width: 1180px; margin: auto; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
-.eyebrow { font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 12px; font-style: italic; letter-spacing: .18em; }
-.title { font-family: Cormorant, serif; font-size: 72px; font-weight: 300; line-height: .9; letter-spacing: -.04em; }
-.title em { color: var(--copper); font-style: italic; }
-.sub { max-width: 370px; color: var(--muted); font-size: 14px; line-height: 1.65; }
-.header-badges { display: flex; gap: 8px; flex-wrap: wrap; }
-.hbadge { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; background: var(--copper-l); color: var(--copper); border: 1px solid rgba(196,104,122,.2); border-radius: 99px; padding: 6px 12px; font-weight: 700; }
-.hbadge.ok { background: #eef5ef; color: #5a8a6a; border-color: rgba(90,138,106,.2); }
+header {
+  padding: 48px 56px 36px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+.header-inner {
+  max-width: 1180px; margin: auto;
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 32px;
+}
+.eyebrow {
+  font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--brass); font-weight: 600; margin-bottom: 14px;
+  font-family: Inter;
+}
+.title {
+  font-family: Cormorant, serif;
+  font-size: 80px; font-weight: 300;
+  line-height: .88; letter-spacing: -.03em;
+}
+.title em { color: var(--brass); font-style: italic; font-weight: 400; }
+.header-right { text-align: right; }
+.header-sub {
+  font-size: 13px; color: var(--muted); line-height: 1.7;
+  max-width: 320px; text-align: right; margin-bottom: 16px;
+}
+.header-meta {
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--faint);
+}
 
 /* ── Nav ── */
-.nav { background: #3d1f2d; background-image: linear-gradient(180deg, #4a2538 0%, #331828 100%); border-bottom: 1px solid rgba(80,10,30,.3); box-shadow: 0 8px 24px rgba(60,10,30,.15); padding: 9px 56px; position: relative; overflow: hidden; }
-.nav::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(220,140,160,.6), transparent); opacity: .9; }
-.nav-inner { max-width: 1180px; margin: auto; display: flex; gap: 8px; align-items: center; }
-.nav button { font-family: Syne; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.08); padding: 7px 10px; font-size: 10px; font-weight: 700; letter-spacing: .06em; color: rgba(255,220,230,.85); cursor: pointer; border-radius: 999px; transition: background .18s, color .18s, transform .18s, border-color .18s; }
-.nav button.active { background: #ffffff; color: #3d1f2d; border-color: rgba(255,255,255,.9); box-shadow: 0 4px 12px rgba(80,10,30,.25); }
-.nav button:hover { background: rgba(255,255,255,.14); color: #fff; transform: translateY(-1px); border-color: rgba(255,255,255,.3); }
-.nav button.active:hover { background: #fff0f4; color: #3d1f2d; }
-.nav button:nth-of-type(2), .nav button:nth-of-type(4) { position: relative; margin-left: 14px; }
-.nav button:nth-of-type(2)::before, .nav button:nth-of-type(4)::before { content: ""; position: absolute; left: -12px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(180deg, transparent, rgba(220,140,160,.5), transparent); }
-.nav-status { margin-left: auto; display: flex; align-items: center; gap: 9px; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,220,230,.85); }
-.nav-status span { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(220,140,160,.3); background: rgba(255,255,255,.08); border-radius: 999px; padding: 8px 10px; }
-.nav-status i { width: 6px; height: 6px; border-radius: 50%; background: #e8a0b8; box-shadow: 0 0 7px rgba(232,160,184,.9); display: block; }
+.nav {
+  background: var(--charcoal);
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  padding: 10px 56px;
+  position: relative; overflow: hidden;
+}
+.nav::before {
+  content: ""; position: absolute; inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(176,136,64,.5), transparent);
+}
+.nav-inner { max-width: 1180px; margin: auto; display: flex; gap: 6px; align-items: center; }
+.nav button {
+  font-family: Inter; font-size: 10px; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.4);
+  border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04);
+  padding: 7px 16px; border-radius: 999px; cursor: pointer;
+  transition: all .18s; white-space: nowrap;
+}
+.nav button.active {
+  background: var(--brass); color: var(--charcoal); border-color: var(--brass);
+  font-weight: 600; box-shadow: 0 4px 12px rgba(176,136,64,.3);
+}
+.nav button:hover:not(.active) {
+  background: rgba(255,255,255,.09); color: rgba(255,255,255,.75);
+  border-color: rgba(255,255,255,.15);
+}
+.nav-status {
+  margin-left: auto; display: flex; gap: 10px; align-items: center;
+  font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
+}
+.nav-status span {
+  display: flex; align-items: center; gap: 6px;
+  color: rgba(255,255,255,.35); border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.03); border-radius: 999px; padding: 6px 11px;
+}
+.nav-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 6px var(--sage); }
 
 /* ── Main ── */
-main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
+main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 64px; }
 
 /* ── Cards ── */
-.card { background: rgba(255,252,254,.88); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 18px 40px rgba(60,20,40,.04); }
+.card {
+  background: var(--panel-b);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 16px rgba(60,40,20,.04), 0 1px 3px rgba(60,40,20,.03);
+}
+.card-label {
+  font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--faint); font-weight: 600; margin-bottom: 14px;
+}
 
-/* ── Hero layout ── */
-.hero { display: grid; grid-template-columns: 1.35fr .65fr; gap: 18px; }
+/* ── Hero ── */
+.hero { display: grid; grid-template-columns: 1.4fr .6fr; gap: 16px; }
 
-/* ── Metrics row ── */
-.daily { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
-.metric label { font-size: 10px; text-transform: uppercase; letter-spacing: .18em; color: var(--muted); font-weight: 700; }
-.metric b { display: block; font-size: 31px; margin-top: 8px; letter-spacing: -.04em; }
-.metric span { font-size: 12px; color: var(--copper); }
+/* ── Story card ── */
+.story-title {
+  font-family: Cormorant, serif;
+  font-size: 40px; font-weight: 300; line-height: 1.05; margin-bottom: 12px;
+}
+.story-title em { color: var(--brass); font-style: italic; }
+.story-body { font-size: 13px; color: var(--warm-mid); line-height: 1.75; }
+.story-body strong { color: var(--ink); font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.btn-primary {
+  font-family: Inter; background: var(--charcoal); color: rgba(255,255,255,.9);
+  border: none; border-radius: 8px; padding: 11px 18px;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em; cursor: pointer;
+  transition: background .15s;
+}
+.btn-primary:hover { background: var(--brass); color: var(--charcoal); }
+.btn-secondary {
+  font-family: Inter; background: none; color: var(--warm-mid);
+  border: 1px solid var(--line); border-radius: 8px; padding: 11px 18px;
+  font-size: 11px; font-weight: 500; letter-spacing: .04em; cursor: pointer;
+  transition: all .15s;
+}
+.btn-secondary:hover { border-color: var(--brass); color: var(--brass); background: var(--brass-l); }
 
-/* ── Brief ── */
-.brief h2, .alerts h2 { font-family: Cormorant, serif; font-size: 36px; font-weight: 300; margin-bottom: 8px; }
-.brief p { color: var(--muted); line-height: 1.6; }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-.primary, .secondary { font-family: Syne; border: 0; border-radius: 9px; padding: 12px 14px; font-size: 12px; font-weight: 700; letter-spacing: .06em; cursor: pointer; }
-.primary { background: var(--deep); color: white; }
-.secondary { background: #eef0f5; color: var(--ink); border: 1px solid var(--line); }
+/* ── Right Now card ── */
+.now-metrics { display: flex; flex-direction: column; gap: 0; }
+.now-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px solid var(--line-b);
+}
+.now-row:last-child { border-bottom: none; }
+.now-label { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.now-val { font-family: Cormorant, serif; font-size: 26px; font-weight: 400; letter-spacing: -.03em; }
+.now-sub { font-size: 10px; color: var(--brass); margin-top: 1px; display: block; text-align: right; }
 
-/* ── Alerts ── */
-.alerts ul { list-style: none; margin-top: 14px; }
-.alerts li { padding: 13px 0; border-top: 1px solid var(--line); display: flex; gap: 12px; }
-.badge { font-size: 10px; font-weight: 800; border-radius: 99px; padding: 5px 8px; height: max-content; }
-.warn-badge { background: #f8e6ea; color: #a04060; }
-.good-badge { background: #e4f0e6; color: #4f7857; }
-.info-badge { background: #f0e8f4; color: #6a4a8a; }
+/* ── Velocity ── */
+.velocity { margin-top: 16px; }
+.vel-title { font-family: Cormorant, serif; font-size: 22px; font-weight: 300; margin-bottom: 16px; }
+.vel-title em { color: var(--brass); font-style: italic; }
+.vel-bars { display: flex; flex-direction: column; gap: 13px; }
+.vel-row { display: flex; flex-direction: column; gap: 5px; }
+.vel-label { display: flex; justify-content: space-between; }
+.vel-name { font-size: 12px; color: var(--ink); font-weight: 500; }
+.vel-amt { font-size: 11px; color: var(--muted); }
+.vel-track { height: 5px; background: var(--parchment); border-radius: 99px; overflow: hidden; }
+.vel-fill { height: 100%; border-radius: 99px; }
+.vel-fill.a { background: linear-gradient(90deg, #b08840, #d4a855); }
+.vel-fill.b { background: linear-gradient(90deg, #7a9a78, #9ab898); }
+.vel-fill.c { background: linear-gradient(90deg, #c4714a, #d98a68); }
+.vel-fill.d { background: linear-gradient(90deg, #9a8e84, #b8afa6); }
+.vel-fill.e { background: linear-gradient(90deg, #b08840, #d4a855); opacity: .5; }
 
-/* ── Streams ── */
-.streams { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 18px; }
-.stream { min-height: 162px; }
-.stream label { font-size: 10px; text-transform: uppercase; letter-spacing: .18em; color: var(--muted); font-weight: 700; }
-.stream h3 { font-size: 18px; margin: 10px 0 8px; }
-.stream p { font-size: 12px; color: var(--muted); line-height: 1.5; }
-.stream .mini { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; display: flex; justify-content: space-between; }
+/* ── Moments ── */
+.moments { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.moment-card { }
+.moment-entry {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line-b);
+  display: flex; gap: 12px;
+}
+.moment-entry:last-child { border-bottom: none; }
+.moment-who {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--brass-l); display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--brass); flex-shrink: 0;
+  font-family: Cormorant, serif; font-size: 13px;
+}
+.moment-body { flex: 1; }
+.moment-name { font-size: 11px; font-weight: 600; color: var(--warm-mid); margin-bottom: 2px; }
+.moment-time { font-size: 10px; color: var(--faint); float: right; }
+.moment-text { font-size: 12px; color: var(--warm-mid); line-height: 1.6; }
+.moment-tag {
+  display: inline-block; margin-top: 5px;
+  font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+  font-weight: 600; padding: 3px 8px; border-radius: 99px; border: 1px solid;
+}
+.tag-client { background: var(--brass-l); color: var(--brass); border-color: rgba(176,136,64,.2); }
+.tag-ops { background: var(--sage-l); color: var(--sage); border-color: rgba(122,154,120,.2); }
+.tag-flag { background: var(--terra-l); color: var(--terra); border-color: rgba(196,113,74,.2); }
 
-/* ── Two-col section ── */
-.section { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+/* ── Team strip ── */
+.team-strip { margin-top: 16px; }
+.team-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 0; border-bottom: 1px solid var(--line-b);
+}
+.team-row:first-child { border-top: 1px solid var(--line-b); }
+.team-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--parchment); display: flex; align-items: center; justify-content: center;
+  font-family: Cormorant, serif; font-size: 14px; font-weight: 500; color: var(--warm-mid);
+  flex-shrink: 0; border: 1px solid var(--line);
+}
+.team-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.team-time { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.team-role { margin-left: auto; font-size: 9.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); }
+.team-status {
+  font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 8px; border-radius: 99px; border: 1px solid;
+}
+.st-on { background: var(--sage-l); color: var(--sage); border-color: rgba(122,154,120,.2); }
+.st-in { background: var(--brass-l); color: var(--brass); border-color: rgba(176,136,64,.2); }
+
+/* ── Week view ── */
+.week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 0; }
+.day-card {
+  background: var(--panel-b); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px 14px; text-align: center;
+}
+.day-card.today { border-color: var(--brass); box-shadow: 0 0 0 1px rgba(176,136,64,.15); }
+.day-name { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px; }
+.day-amt { font-family: Cormorant, serif; font-size: 24px; font-weight: 400; color: var(--ink); }
+.day-amt.dim { color: var(--muted); font-size: 18px; }
+.day-txn { font-size: 10px; color: var(--muted); margin-top: 3px; }
+.day-delta { font-size: 10px; color: var(--sage); margin-top: 2px; }
+.day-delta.down { color: var(--terra); }
+
+/* ── Collection ── */
+.collection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.inv-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0; border-bottom: 1px solid var(--line-b); font-size: 13px;
+}
+.inv-row:last-child { border-bottom: none; }
+.inv-sku { font-size: 10px; color: var(--faint); margin-left: 8px; }
+.inv-qty { font-weight: 600; }
+.inv-qty.low { color: var(--terra); }
+.inv-qty.critical { color: #b84040; }
+.inv-qty.ok { color: var(--sage); }
+
+/* ── Clients ── */
+.client-entry {
+  padding: 14px 0; border-bottom: 1px solid var(--line-b);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.client-entry:last-child { border-bottom: none; }
+.client-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--parchment); display: flex; align-items: center; justify-content: center;
+  font-family: Cormorant, serif; font-size: 16px; font-weight: 400; color: var(--warm-mid);
+  flex-shrink: 0; border: 1px solid var(--line);
+}
+.client-name { font-size: 13px; font-weight: 500; }
+.client-note { font-size: 11.5px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.client-meta { margin-left: auto; text-align: right; font-size: 10px; color: var(--faint); white-space: nowrap; }
+
+/* ── Automation rows ── */
+.auto-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 0; border-bottom: 1px solid var(--line-b);
+}
+.auto-row:last-child { border-bottom: none; }
+.auto-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
+}
+.auto-icon.ok { background: var(--sage-l); }
+.auto-icon.warn { background: var(--terra-l); }
+.auto-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.auto-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.auto-status {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  border-radius: 99px; padding: 5px 10px; flex-shrink: 0; border: 1px solid; height: max-content;
+}
+.auto-status.ok { background: var(--sage-l); color: var(--sage); border-color: rgba(122,154,120,.2); }
+.auto-status.warn { background: var(--terra-l); color: var(--terra); border-color: rgba(196,113,74,.2); }
+
+/* ── Utilities ── */
+.tab-section { display: none; }
+.section { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .list { list-style: none; }
-.list li { display: flex; justify-content: space-between; align-items: baseline; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.list li {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px solid var(--line-b); font-size: 13px;
+}
 .list li:last-child { border-bottom: none; }
 .list-muted { font-size: 11px; color: var(--muted); }
 
-/* ── Category bars ── */
-.cat-bars { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
-.cat-row { display: flex; flex-direction: column; gap: 4px; }
-.cat-label { display: flex; justify-content: space-between; font-size: 12px; }
-.cat-label span:last-child { color: var(--muted); font-size: 11px; }
-.cat-track { height: 6px; background: var(--sky); border-radius: 99px; overflow: hidden; }
-.cat-fill { height: 100%; background: linear-gradient(90deg, #e8a0b8, #c4687a); border-radius: 99px; opacity: .7; }
-
-/* ── Shift row ── */
-.shift-list { list-style: none; margin-top: 14px; }
-.shift-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 13px; }
-.shift-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--copper-l); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #a04060; flex-shrink: 0; }
-.shift-name { font-weight: 600; }
-.shift-time { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.shift-role { margin-left: auto; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
-
-/* ── Automation rows ── */
-.auto-row { display: flex; align-items: flex-start; gap: 14px; padding: 15px 0; border-top: 1px solid var(--line); }
-.auto-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-.auto-icon.ok { background: #e4f0e6; }
-.auto-icon.warn { background: #f8e6ea; }
-.auto-body { flex: 1; }
-.auto-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
-.auto-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
-.auto-status { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; border-radius: 99px; padding: 5px 10px; flex-shrink: 0; }
-.auto-status.ok { background: #e4f0e6; color: #4f7857; }
-.auto-status.warn { background: #f8e6ea; color: #a04060; }
-
-/* ── Low stock ── */
-.stock-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-top: 1px solid var(--line); font-size: 13px; }
-.stock-qty { font-weight: 700; }
-.stock-qty.low { color: #b06a3a; }
-.stock-qty.critical { color: #b56b61; }
-
 /* ── Toast ── */
-.toast { position: fixed; right: 22px; bottom: 22px; background: var(--deep); color: white; border-radius: 14px; padding: 14px 16px; font-size: 12px; opacity: 0; transform: translateY(10px); transition: .25s; pointer-events: none; }
+.toast {
+  position: fixed; right: 22px; bottom: 22px;
+  background: var(--charcoal); color: rgba(255,255,255,.85);
+  border-radius: 12px; padding: 13px 18px; font-size: 12px;
+  opacity: 0; transform: translateY(8px); transition: .22s; pointer-events: none;
+  border: 1px solid rgba(255,255,255,.07); letter-spacing: .03em;
+}
 .toast.show { opacity: 1; transform: translateY(0); }
-
-/* ── Tabs ── */
-.tab-section { display: none; }
-.tab-section.active { display: contents; }
 
 /* ── Responsive ── */
 @media(max-width: 900px) {
-  .hero, .section { grid-template-columns: 1fr; }
-  .streams, .daily { grid-template-columns: 1fr 1fr; }
-  .title { font-size: 54px; }
-}
-@media(max-width: 980px) {
-  .nav-status { display: none; }
-  .nav-inner { overflow: auto; }
-  .nav button { white-space: nowrap; }
+  .hero, .section, .collection-grid, .moments { grid-template-columns: 1fr; }
+  .week-grid { grid-template-columns: repeat(4, 1fr); }
+  .title { font-size: 56px; }
+  .season-strip { padding: 10px 20px; }
+  .season-badges { display: none; }
 }
 @media(max-width: 640px) {
-  .topbar { gap: 5px; padding: 0 10px; font-size: 9px; }
-  .dot { width: 5px; height: 5px; }
-  .app { display: none; }
-  .tbar-mobile { display: inline-flex; }
-  header { padding: 22px 18px 18px; }
-  .header-inner { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .title { font-size: 42px; }
-  .sub { max-width: 100%; font-size: 13px; margin-top: 4px; }
-  .nav { padding: 7px 10px; }
-  .nav-inner { flex-wrap: wrap; gap: 5px; overflow: visible; }
-  .nav button { flex: 0 0 calc(33.33% - 4px); text-align: center; padding: 8px 4px; font-size: 9px; letter-spacing: .03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .nav button:nth-of-type(2), .nav button:nth-of-type(4) { margin-left: 0; }
-  .nav button:nth-of-type(2)::before, .nav button:nth-of-type(4)::before { display: none; }
-  main { padding: 16px 12px 40px; }
-  .streams { grid-template-columns: 1fr 1fr; }
-  .daily { grid-template-columns: 1fr 1fr; }
+  header { padding: 28px 18px 22px; }
+  .header-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .header-right { text-align: left; }
+  .header-sub { text-align: left; }
+  .title { font-size: 44px; }
+  .nav { padding: 8px 12px; }
+  .nav-inner { overflow-x: auto; }
+  .nav button { white-space: nowrap; }
+  .nav-status { display: none; }
+  main { padding: 20px 14px 50px; }
+  .topbar { padding: 0 12px; gap: 6px; }
+  .week-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
 <body>
 
+<!-- TOPBAR -->
 <div class="topbar">
-  <span class="dot on"></span>
-  <span class="pill">Square synced</span>
-  <span class="dot"></span>
-  <span class="pill">Shopify connected</span>
-  <button class="pill tbar-btn tbar-mobile" onclick="toast('Opening POS...')">Open POS</button>
-  <button class="pill tbar-btn tbar-mobile" onclick="toast('Running close...')">Run Close</button>
-  <button class="pill gear-btn tbar-mobile" onclick="toast('Settings')">⚙</button>
-  <div class="app">
-    <button class="pill tbar-btn" onclick="toast('Opening POS...')">Open POS</button>
-    <button class="pill tbar-btn" onclick="toast('Running close...')">Run Close</button>
-    <button class="pill tbar-btn" onclick="toast('Settings')">Settings</button>
+  <span class="t-dot on"></span>
+  <span class="t-pill">Square Synced</span>
+  <span class="t-sep"></span>
+  <span class="t-dot on"></span>
+  <span class="t-pill">Shopify Live</span>
+  <div class="t-right">
+    <button class="t-btn" onclick="toast('Opening POS...')">Open POS</button>
+    <button class="t-btn" onclick="toast('Running end-of-day...')">End of Day</button>
+    <button class="t-btn brass" onclick="toast('Opening settings...')">Settings</button>
   </div>
 </div>
 
+<!-- SEASON STRIP -->
+<div class="season-strip">
+  <div class="season-inner">
+    <span class="season-label">Spring Collection</span>
+    <div class="season-track"><div class="season-fill"></div></div>
+    <span class="season-note">Week 8 of 12</span>
+    <div class="season-badges">
+      <span class="s-badge ok">Square synced</span>
+      <span class="s-badge warm">Window refreshed Mon</span>
+      <span class="s-badge note">3 low stock</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
 <header>
   <div class="header-inner">
     <div>
-      <div class="eyebrow">Boutique Daily Hub</div>
+      <div class="eyebrow">Boutique Operations</div>
       <h1 class="title"><em>Bloom</em></h1>
-      <p class="sub">Sales, inventory, team, and quiet automations — everything your boutique runs on, in one beautiful place.</p>
     </div>
-    <div class="header-badges">
-      <span class="hbadge ok">Square Synced</span>
-      <span class="hbadge">Close Pending</span>
+    <div class="header-right">
+      <p class="header-sub">Every season tells a story. This is where the numbers and the feeling meet — quietly, in the background.</p>
+      <div class="header-meta">Tuesday · May 27, 2025</div>
     </div>
   </div>
 </header>
 
+<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <button class="active" data-tab="today">Today</button>
-    <button data-tab="sales">Sales</button>
-    <button data-tab="inventory">Inventory</button>
-    <button data-tab="vendors">Vendors</button>
-    <button data-tab="team">Team</button>
+    <button class="active" data-tab="floor">The Floor</button>
+    <button data-tab="week">This Week</button>
+    <button data-tab="collection">Collection</button>
+    <button data-tab="clients">Clients</button>
+    <button data-tab="backstage">Backstage</button>
     <button data-tab="automations">Automations</button>
     <div class="nav-status">
-      <span><i></i>Live sync</span>
+      <span><span class="nav-dot"></span>Live sync</span>
       <span>Close pending</span>
     </div>
   </div>
@@ -226,355 +449,327 @@ main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
 
 <main>
 
-  <!-- ── TODAY ── -->
-  <div id="tab-today">
+  <!-- ── THE FLOOR (Today) ── -->
+  <div id="tab-floor">
+
     <div class="hero">
-      <div class="card brief">
-        <div class="eyebrow">Tuesday, May 27</div>
-        <h2>Good morning.</h2>
-        <p>You're at <strong>$1,842</strong> in revenue across <strong>34 transactions</strong> — up 12% from last Tuesday. Top-moving item today is the <em>Linen Throw (Sage)</em>. Low stock alert on 3 items. Close out when you're ready.</p>
+      <div class="card">
+        <div class="card-label">Today's Story</div>
+        <h2 class="story-title">Good morning, <em>Mara.</em></h2>
+        <p class="story-body">You're at <strong>$1,842</strong> across <strong>34 transactions</strong> — up 12% from last Tuesday. The <em>Linen Throw in Sage</em> is your story today — 7 units and still moving. Three items are running low before the weekend. The window went up Monday and it's working.</p>
         <div class="actions">
-          <button class="primary" onclick="toast('Generating close report...')">Run Close Report</button>
-          <button class="secondary" onclick="toast('Printing daily summary...')">Print Summary</button>
-          <button class="secondary" onclick="toast('Messaging team...')">Message Team</button>
+          <button class="btn-primary" onclick="toast('Running end-of-day close...')">Run Close Report</button>
+          <button class="btn-secondary" onclick="toast('Printing floor summary...')">Print Summary</button>
+          <button class="btn-secondary" onclick="toast('Messaging the team...')">Message Team</button>
         </div>
-      </div>
-      <div class="card alerts">
-        <h2>Heads Up</h2>
-        <ul>
-          <li>
-            <span class="badge warn-badge">Low Stock</span>
-            <div>
-              <div style="font-size:13px;font-weight:600;">3 items below reorder point</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:2px;">Linen Throw (Sage), Soy Candle 8oz, Cork Tray</div>
-            </div>
-          </li>
-          <li>
-            <span class="badge info-badge">Invoice</span>
-            <div>
-              <div style="font-size:13px;font-weight:600;">Artisan Goods Co. — due Friday</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:2px;">$620.00 · PO #ART-0524</div>
-            </div>
-          </li>
-          <li>
-            <span class="badge good-badge">Received</span>
-            <div>
-              <div style="font-size:13px;font-weight:600;">Bloom Supply order arrived</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:2px;">14 units · checked in by Mara at 9:15 AM</div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="daily">
-      <div class="card metric">
-        <label>Revenue Today</label>
-        <b>$1,842</b>
-        <span>↑ 12% vs last Tue</span>
-      </div>
-      <div class="card metric">
-        <label>Transactions</label>
-        <b>34</b>
-        <span>↑ 6 from yesterday</span>
-      </div>
-      <div class="card metric">
-        <label>Avg Ticket</label>
-        <b>$54.18</b>
-        <span>↑ $4.20 from last week</span>
-      </div>
-      <div class="card metric">
-        <label>Items Sold</label>
-        <b>89</b>
-        <span>↑ 11 units from yesterday</span>
-      </div>
-    </div>
-
-    <div class="streams">
-      <div class="card stream">
-        <label>Top Sellers</label>
-        <h3>Today</h3>
-        <p>Linen Throw (Sage) · 7 units<br>Soy Candle 8oz · 5 units<br>Cork Tray · 4 units</p>
-        <div class="mini">
-          <span>3 items · $286 combined</span>
-          <span style="color:var(--copper)">↑ trending</span>
-        </div>
-      </div>
-      <div class="card stream">
-        <label>Online Orders</label>
-        <h3>4 New</h3>
-        <p>3 shipped · 1 awaiting fulfillment. Avg processing time this week: 1.2 days.</p>
-        <div class="mini">
-          <span>$214 total</span>
-          <span>Shopify</span>
-        </div>
-      </div>
-      <div class="card stream">
-        <label>Returns</label>
-        <h3>1 Open</h3>
-        <p>Woven Basket — customer drop-off pending. No defects reported this week.</p>
-        <div class="mini">
-          <span>$48 pending</span>
-          <span style="color:var(--muted)">review needed</span>
-        </div>
-      </div>
-      <div class="card stream">
-        <label>Customer Notes</label>
-        <h3>2 Today</h3>
-        <p>"Asked about custom orders for the holiday line." Special request logged for follow-up Friday.</p>
-        <div class="mini">
-          <span>Logged by Jess</span>
-          <span style="color:var(--copper)">follow up →</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Today's Team</div>
-        <ul class="shift-list">
-          <li class="shift-item">
-            <div class="shift-avatar">MR</div>
-            <div><div class="shift-name">Mara R.</div><div class="shift-time">9:00 AM – 5:00 PM</div></div>
-            <span class="shift-role">Floor Lead</span>
-          </li>
-          <li class="shift-item">
-            <div class="shift-avatar">JL</div>
-            <div><div class="shift-name">Jess L.</div><div class="shift-time">10:00 AM – 6:00 PM</div></div>
-            <span class="shift-role">Sales</span>
-          </li>
-          <li class="shift-item">
-            <div class="shift-avatar">TK</div>
-            <div><div class="shift-name">Tom K.</div><div class="shift-time">1:00 PM – 7:00 PM</div></div>
-            <span class="shift-role">Fulfillment</span>
-          </li>
-        </ul>
       </div>
       <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Low Stock Items</div>
-        <div class="stock-item">
-          <span>Linen Throw (Sage)</span>
-          <span class="stock-qty critical">2 left</span>
+        <div class="card-label">Right Now</div>
+        <div class="now-metrics">
+          <div class="now-row">
+            <div>
+              <div class="now-label">Revenue</div>
+              <span class="now-sub">↑ 12% vs last Tue</span>
+            </div>
+            <div class="now-val">$1,842</div>
+          </div>
+          <div class="now-row">
+            <div>
+              <div class="now-label">Transactions</div>
+              <span class="now-sub">↑ 6 from yesterday</span>
+            </div>
+            <div class="now-val">34</div>
+          </div>
+          <div class="now-row">
+            <div>
+              <div class="now-label">Avg Ticket</div>
+              <span class="now-sub">↑ $4.20 from last week</span>
+            </div>
+            <div class="now-val">$54</div>
+          </div>
+          <div class="now-row">
+            <div>
+              <div class="now-label">Online Orders</div>
+              <span class="now-sub">3 shipped · 1 pending</span>
+            </div>
+            <div class="now-val">4</div>
+          </div>
         </div>
-        <div class="stock-item">
-          <span>Soy Candle 8oz</span>
-          <span class="stock-qty low">4 left</span>
+      </div>
+    </div>
+
+    <!-- Collection Velocity -->
+    <div class="card velocity" style="margin-top:16px;">
+      <div class="card-label">Collection Velocity — Today</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div class="vel-bars">
+          <div class="vel-row">
+            <div class="vel-label"><span class="vel-name">Home Goods</span><span class="vel-amt">$842 · 46%</span></div>
+            <div class="vel-track"><div class="vel-fill a" style="width:46%"></div></div>
+          </div>
+          <div class="vel-row">
+            <div class="vel-label"><span class="vel-name">Wellness & Candles</span><span class="vel-amt">$418 · 23%</span></div>
+            <div class="vel-track"><div class="vel-fill b" style="width:23%"></div></div>
+          </div>
+          <div class="vel-row">
+            <div class="vel-label"><span class="vel-name">Textile & Apparel</span><span class="vel-amt">$294 · 16%</span></div>
+            <div class="vel-track"><div class="vel-fill c" style="width:16%"></div></div>
+          </div>
         </div>
-        <div class="stock-item">
-          <span>Cork Tray (Small)</span>
-          <span class="stock-qty low">3 left</span>
+        <div class="vel-bars">
+          <div class="vel-row">
+            <div class="vel-label"><span class="vel-name">Online Channel</span><span class="vel-amt">$214 · 12%</span></div>
+            <div class="vel-track"><div class="vel-fill d" style="width:12%"></div></div>
+          </div>
+          <div class="vel-row">
+            <div class="vel-label"><span class="vel-name">Gift Cards</span><span class="vel-amt">$74 · 4%</span></div>
+            <div class="vel-track"><div class="vel-fill e" style="width:4%"></div></div>
+          </div>
         </div>
-        <div class="stock-item">
-          <span>Woven Basket (Natural)</span>
-          <span class="stock-qty" style="color:var(--muted)">9 left</span>
+      </div>
+    </div>
+
+    <!-- Shop Moments + Team -->
+    <div class="moments">
+      <div class="card">
+        <div class="card-label">Shop Moments</div>
+        <div class="moment-entry">
+          <div class="moment-who">J</div>
+          <div class="moment-body">
+            <div><span class="moment-name">Jess L.</span><span class="moment-time">9:42 AM</span></div>
+            <div class="moment-text">Deborah H. asked about custom orders for the holiday line. She's been in three times this season.</div>
+            <span class="moment-tag tag-client">Follow up Friday</span>
+          </div>
+        </div>
+        <div class="moment-entry">
+          <div class="moment-who">M</div>
+          <div class="moment-body">
+            <div><span class="moment-name">Mara R.</span><span class="moment-time">9:15 AM</span></div>
+            <div class="moment-text">Bloom Supply order checked in. 14 units, all match PO. Shelves stocked before open.</div>
+            <span class="moment-tag tag-ops">Ops</span>
+          </div>
+        </div>
+        <div class="moment-entry">
+          <div class="moment-who">J</div>
+          <div class="moment-body">
+            <div><span class="moment-name">Jess L.</span><span class="moment-time">11:30 AM</span></div>
+            <div class="moment-text">Woven Basket return — customer drop-off. No defect visible. Holding for review.</div>
+            <span class="moment-tag tag-flag">Review needed</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">On the Floor Today</div>
+        <div class="team-strip">
+          <div class="team-row">
+            <div class="team-avatar">MR</div>
+            <div>
+              <div class="team-name">Mara R.</div>
+              <div class="team-time">9:00 AM – 5:00 PM</div>
+            </div>
+            <span class="team-role">Floor Lead</span>
+            <span class="team-status st-on">On</span>
+          </div>
+          <div class="team-row">
+            <div class="team-avatar">JL</div>
+            <div>
+              <div class="team-name">Jess L.</div>
+              <div class="team-time">10:00 AM – 6:00 PM</div>
+            </div>
+            <span class="team-role">Sales</span>
+            <span class="team-status st-on">On</span>
+          </div>
+          <div class="team-row">
+            <div class="team-avatar">TK</div>
+            <div>
+              <div class="team-name">Tom K.</div>
+              <div class="team-time">1:00 PM – 7:00 PM</div>
+            </div>
+            <span class="team-role">Fulfillment</span>
+            <span class="team-status st-in">Incoming</span>
+          </div>
         </div>
         <div style="margin-top:16px;">
-          <button class="secondary" style="font-size:11px;padding:10px 14px;" onclick="toast('Opening vendor POs...')">Create Reorder POs →</button>
+          <button class="btn-secondary" style="font-size:11px;" onclick="toast('Opening schedule...')">View Full Schedule</button>
         </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── THIS WEEK ── -->
+  <div id="tab-week" class="tab-section">
+    <div class="week-grid" style="margin-top:0;">
+      <div class="day-card">
+        <div class="day-name">Mon</div>
+        <div class="day-amt">$1,640</div>
+        <div class="day-txn">28 txn</div>
+        <div class="day-delta">↑ 4%</div>
+      </div>
+      <div class="day-card today">
+        <div class="day-name">Tue · Today</div>
+        <div class="day-amt">$1,842</div>
+        <div class="day-txn">34 txn</div>
+        <div class="day-delta">↑ 12%</div>
+      </div>
+      <div class="day-card"><div class="day-name">Wed</div><div class="day-amt dim">—</div></div>
+      <div class="day-card"><div class="day-name">Thu</div><div class="day-amt dim">—</div></div>
+      <div class="day-card"><div class="day-name">Fri</div><div class="day-amt dim">—</div></div>
+      <div class="day-card"><div class="day-name">Sat</div><div class="day-amt dim">—</div></div>
+      <div class="day-card"><div class="day-name">Sun</div><div class="day-amt dim">—</div></div>
+    </div>
+    <div class="section" style="margin-top:16px;">
+      <div class="card">
+        <div class="card-label">Week so Far</div>
+        <ul class="list">
+          <li><span>Revenue (2 days)</span><span style="font-weight:600;">$3,482</span></li>
+          <li><span>Transactions</span><span>62</span></li>
+          <li><span>Avg Ticket</span><span>$56.16</span></li>
+          <li><span>Online revenue</span><span>$428</span></li>
+          <li><span>Best day</span><span>Tuesday ↑</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label">vs. Last Week (same days)</div>
+        <ul class="list">
+          <li><span>Revenue</span><span style="color:var(--sage);font-weight:600;">↑ $412 (+13%)</span></li>
+          <li><span>Transactions</span><span style="color:var(--sage);">↑ 8</span></li>
+          <li><span>Avg Ticket</span><span style="color:var(--sage);">↑ $2.40</span></li>
+          <li><span>Top category</span><span>Home Goods</span></li>
+          <li><span>Season week</span><span class="list-muted">8 of 12</span></li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- ── SALES ── -->
-  <div id="tab-sales" class="tab-section">
-    <div class="section" style="margin-top:0;">
+  <!-- ── COLLECTION ── -->
+  <div id="tab-collection" class="tab-section">
+    <div class="collection-grid" style="margin-top:0;">
       <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Sales by Category</div>
-        <div class="cat-bars">
-          <div class="cat-row">
-            <div class="cat-label"><span>Home Goods</span><span>$842 · 46%</span></div>
-            <div class="cat-track"><div class="cat-fill" style="width:46%"></div></div>
-          </div>
-          <div class="cat-row">
-            <div class="cat-label"><span>Wellness & Candles</span><span>$418 · 23%</span></div>
-            <div class="cat-track"><div class="cat-fill" style="width:23%"></div></div>
-          </div>
-          <div class="cat-row">
-            <div class="cat-label"><span>Textile & Apparel</span><span>$294 · 16%</span></div>
-            <div class="cat-track"><div class="cat-fill" style="width:16%"></div></div>
-          </div>
-          <div class="cat-row">
-            <div class="cat-label"><span>Online Channel</span><span>$214 · 12%</span></div>
-            <div class="cat-track"><div class="cat-fill" style="width:12%"></div></div>
-          </div>
-          <div class="cat-row">
-            <div class="cat-label"><span>Gift Cards</span><span>$74 · 4%</span></div>
-            <div class="cat-track"><div class="cat-fill" style="width:4%"></div></div>
-          </div>
+        <div class="card-label">Low Stock — Act Now</div>
+        <div class="inv-row"><span>Linen Throw (Sage)<span class="inv-sku">LT-SG</span></span><span class="inv-qty critical">2 left — reorder</span></div>
+        <div class="inv-row"><span>Soy Candle 8oz<span class="inv-sku">SC-8Z</span></span><span class="inv-qty low">4 left</span></div>
+        <div class="inv-row"><span>Cork Tray (Small)<span class="inv-sku">CT-SM</span></span><span class="inv-qty low">3 left</span></div>
+        <div class="inv-row"><span>Beeswax Wrap Set<span class="inv-sku">BW-ST</span></span><span class="inv-qty low">5 left</span></div>
+        <div style="margin-top:18px;">
+          <button class="btn-primary" style="font-size:11px;" onclick="toast('Generating reorder POs...')">Auto-Reorder All</button>
         </div>
       </div>
       <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Weekly Trend</div>
-        <ul class="list">
-          <li><span>Monday</span><span>$1,640</span></li>
-          <li><span>Tuesday</span><span style="font-weight:700;">$1,842 ↑</span></li>
-          <li><span>Wednesday</span><span class="list-muted">—</span></li>
-          <li><span>Thursday</span><span class="list-muted">—</span></li>
-          <li><span>Friday</span><span class="list-muted">—</span></li>
-          <li><span>Saturday</span><span class="list-muted">—</span></li>
-          <li><span>Week Total (so far)</span><span style="font-weight:700;">$3,482</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="section">
-      <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Top 10 SKUs — Today</div>
-        <ul class="list">
-          <li><span>Linen Throw (Sage)</span><span>7 · $385</span></li>
-          <li><span>Soy Candle 8oz</span><span>5 · $175</span></li>
-          <li><span>Cork Tray (Small)</span><span>4 · $116</span></li>
-          <li><span>Ceramic Planter 6"</span><span>3 · $147</span></li>
-          <li><span>Woven Basket (Natural)</span><span>3 · $138</span></li>
-          <li><span>Beeswax Wrap Set</span><span>3 · $66</span></li>
-          <li><span>Linen Napkins (4-pack)</span><span>2 · $58</span></li>
-          <li><span>Diffuser Blend — Calm</span><span>2 · $54</span></li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Channel Breakdown</div>
-        <ul class="list">
-          <li><span>In-Store (POS)</span><span style="font-weight:700;">$1,628 · 88%</span></li>
-          <li><span>Online (Shopify)</span><span>$214 · 12%</span></li>
-          <li><span>Cash transactions</span><span class="list-muted">11%</span></li>
-          <li><span>Card transactions</span><span class="list-muted">89%</span></li>
-        </ul>
-        <div style="margin-top:20px;">
-          <div class="eyebrow" style="margin-bottom:10px;">Payment Mix</div>
-          <div class="cat-bars">
-            <div class="cat-row">
-              <div class="cat-label"><span>Visa / MC</span><span>62%</span></div>
-              <div class="cat-track"><div class="cat-fill" style="width:62%"></div></div>
-            </div>
-            <div class="cat-row">
-              <div class="cat-label"><span>Amex</span><span>17%</span></div>
-              <div class="cat-track"><div class="cat-fill" style="width:17%"></div></div>
-            </div>
-            <div class="cat-row">
-              <div class="cat-label"><span>Cash</span><span>11%</span></div>
-              <div class="cat-track"><div class="cat-fill" style="width:11%"></div></div>
-            </div>
-            <div class="cat-row">
-              <div class="cat-label"><span>Other</span><span>10%</span></div>
-              <div class="cat-track"><div class="cat-fill" style="width:10%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── INVENTORY ── -->
-  <div id="tab-inventory" class="tab-section">
-    <div class="section" style="margin-top:0;">
-      <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Low Stock Alerts</div>
-        <div class="stock-item"><span>Linen Throw (Sage)</span><span class="stock-qty critical">2 left — reorder now</span></div>
-        <div class="stock-item"><span>Soy Candle 8oz</span><span class="stock-qty low">4 left</span></div>
-        <div class="stock-item"><span>Cork Tray (Small)</span><span class="stock-qty low">3 left</span></div>
-        <div class="stock-item"><span>Beeswax Wrap Set</span><span class="stock-qty low">5 left</span></div>
-        <div class="stock-item"><span>Diffuser Blend — Calm</span><span class="stock-qty" style="color:var(--muted)">8 left</span></div>
-        <div style="margin-top:16px;">
-          <button class="primary" style="font-size:11px;padding:10px 14px;" onclick="toast('Generating reorder POs...')">Auto-Generate Reorder POs</button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">By Category</div>
+        <div class="card-label">By Category</div>
         <ul class="list">
           <li><span>Home Goods</span><span>142 units</span></li>
           <li><span>Wellness & Candles</span><span>87 units</span></li>
           <li><span>Textile & Apparel</span><span>64 units</span></li>
           <li><span>Kitchen & Table</span><span>38 units</span></li>
           <li><span>Gift & Seasonal</span><span>22 units</span></li>
-          <li><span>Total on hand</span><span style="font-weight:700;">353 units</span></li>
+          <li><span style="font-weight:600;">Total on hand</span><span style="font-weight:600;">353 units</span></li>
         </ul>
       </div>
     </div>
-    <div class="card" style="margin-top:18px;">
-      <div class="eyebrow" style="margin-bottom:10px;">Full Inventory</div>
-      <ul class="list">
-        <li><span>Ceramic Planter 6"</span><span class="list-muted">SKU: CP-06</span><span>24 units</span></li>
-        <li><span>Woven Basket (Natural)</span><span class="list-muted">SKU: WB-NT</span><span>9 units</span></li>
-        <li><span>Linen Napkins (4-pack)</span><span class="list-muted">SKU: LN-4P</span><span>17 units</span></li>
-        <li><span>Linen Throw (Sage)</span><span class="list-muted">SKU: LT-SG</span><span class="stock-qty critical">2 units</span></li>
-        <li><span>Soy Candle 8oz</span><span class="list-muted">SKU: SC-8Z</span><span class="stock-qty low">4 units</span></li>
-        <li><span>Cork Tray (Small)</span><span class="list-muted">SKU: CT-SM</span><span class="stock-qty low">3 units</span></li>
-        <li><span>Diffuser Blend — Calm</span><span class="list-muted">SKU: DB-CM</span><span>8 units</span></li>
-        <li><span>Beeswax Wrap Set</span><span class="list-muted">SKU: BW-ST</span><span class="stock-qty low">5 units</span></li>
-      </ul>
+    <div class="card" style="margin-top:16px;">
+      <div class="card-label">Full Collection</div>
+      <div class="inv-row"><span>Ceramic Planter 6"<span class="inv-sku">CP-06</span></span><span class="inv-qty ok">24 units</span></div>
+      <div class="inv-row"><span>Woven Basket (Natural)<span class="inv-sku">WB-NT</span></span><span class="inv-qty ok">9 units</span></div>
+      <div class="inv-row"><span>Linen Napkins (4-pack)<span class="inv-sku">LN-4P</span></span><span class="inv-qty ok">17 units</span></div>
+      <div class="inv-row"><span>Linen Throw (Sage)<span class="inv-sku">LT-SG</span></span><span class="inv-qty critical">2 units</span></div>
+      <div class="inv-row"><span>Soy Candle 8oz<span class="inv-sku">SC-8Z</span></span><span class="inv-qty low">4 units</span></div>
+      <div class="inv-row"><span>Cork Tray (Small)<span class="inv-sku">CT-SM</span></span><span class="inv-qty low">3 units</span></div>
+      <div class="inv-row"><span>Diffuser Blend — Calm<span class="inv-sku">DB-CM</span></span><span class="inv-qty ok">8 units</span></div>
+      <div class="inv-row"><span>Beeswax Wrap Set<span class="inv-sku">BW-ST</span></span><span class="inv-qty low">5 units</span></div>
     </div>
   </div>
 
-  <!-- ── VENDORS ── -->
-  <div id="tab-vendors" class="tab-section">
+  <!-- ── CLIENTS ── -->
+  <div id="tab-clients" class="tab-section">
     <div class="section" style="margin-top:0;">
       <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Open Purchase Orders</div>
-        <ul class="list">
-          <li><span>Artisan Goods Co.</span><span>$620 · due Fri</span></li>
-          <li><span>Bloom Supply</span><span class="list-muted">Received ✓</span></li>
-          <li><span>Coastal Textiles</span><span>$1,140 · due Jun 3</span></li>
-          <li><span>Earthware Studio</span><span>$380 · due Jun 6</span></li>
-        </ul>
-        <div style="margin-top:16px;">
-          <button class="secondary" style="font-size:11px;padding:10px 14px;" onclick="toast('Creating new PO...')">New Purchase Order</button>
+        <div class="card-label">Client Notes — This Week</div>
+        <div class="client-entry">
+          <div class="client-avatar">D</div>
+          <div>
+            <div class="client-name">Deborah H.</div>
+            <div class="client-note">Asked about custom orders for holiday line. Third visit this season. Interested in linens and ceramics. Follow up by Friday.</div>
+          </div>
+          <div class="client-meta">Today<br><span class="moment-tag tag-client" style="display:inline-block;margin-top:4px;">Follow up</span></div>
+        </div>
+        <div class="client-entry">
+          <div class="client-avatar">S</div>
+          <div>
+            <div class="client-name">Sarah M.</div>
+            <div class="client-note">Purchased the full diffuser set + woven basket. Mentioned gifting — offered the gift wrap service. Loyal since last spring.</div>
+          </div>
+          <div class="client-meta">Yesterday<br><span class="moment-tag tag-ops" style="display:inline-block;margin-top:4px;">Returning</span></div>
+        </div>
+        <div class="client-entry">
+          <div class="client-avatar">R</div>
+          <div>
+            <div class="client-name">R. Chen</div>
+            <div class="client-note">Interior designer — picked up 6 ceramic planters for a client project. Will return for the sage throws if restocked by Friday.</div>
+          </div>
+          <div class="client-meta">Mon<br><span class="moment-tag tag-client" style="display:inline-block;margin-top:4px;">Trade</span></div>
         </div>
       </div>
       <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Vendor List</div>
+        <div class="card-label">Vendor Orders</div>
         <ul class="list">
-          <li><span>Artisan Goods Co.</span><span class="list-muted">Lead time 5 days</span></li>
-          <li><span>Bloom Supply</span><span class="list-muted">Lead time 3 days</span></li>
-          <li><span>Coastal Textiles</span><span class="list-muted">Lead time 10 days</span></li>
-          <li><span>Earthware Studio</span><span class="list-muted">Lead time 7 days</span></li>
-          <li><span>Roots & Co.</span><span class="list-muted">Lead time 4 days</span></li>
+          <li><span>Artisan Goods Co.</span><span style="color:var(--terra);">$620 · due Fri</span></li>
+          <li><span>Bloom Supply</span><span style="color:var(--sage);" class="list-muted">Received ✓</span></li>
+          <li><span>Coastal Textiles</span><span>$1,140 · Jun 3</span></li>
+          <li><span>Earthware Studio</span><span>$380 · Jun 6</span></li>
+          <li><span>Roots & Co.</span><span class="list-muted">No open orders</span></li>
         </ul>
         <div style="margin-top:16px;">
-          <button class="secondary" style="font-size:11px;padding:10px 14px;" onclick="toast('Adding vendor...')">Add Vendor</button>
+          <button class="btn-secondary" style="font-size:11px;" onclick="toast('Creating new PO...')">New Purchase Order</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── TEAM ── -->
-  <div id="tab-team" class="tab-section">
+  <!-- ── BACKSTAGE (Team) ── -->
+  <div id="tab-backstage" class="tab-section">
     <div class="section" style="margin-top:0;">
       <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Today's Schedule</div>
-        <ul class="shift-list">
-          <li class="shift-item">
-            <div class="shift-avatar">MR</div>
-            <div><div class="shift-name">Mara R.</div><div class="shift-time">9:00 AM – 5:00 PM · Floor Lead</div></div>
-            <span class="badge good-badge">On shift</span>
-          </li>
-          <li class="shift-item">
-            <div class="shift-avatar">JL</div>
-            <div><div class="shift-name">Jess L.</div><div class="shift-time">10:00 AM – 6:00 PM · Sales</div></div>
-            <span class="badge good-badge">On shift</span>
-          </li>
-          <li class="shift-item">
-            <div class="shift-avatar">TK</div>
-            <div><div class="shift-name">Tom K.</div><div class="shift-time">1:00 PM – 7:00 PM · Fulfillment</div></div>
-            <span class="badge info-badge">Incoming</span>
-          </li>
-        </ul>
+        <div class="card-label">Today's Schedule</div>
+        <div class="team-strip">
+          <div class="team-row">
+            <div class="team-avatar">MR</div>
+            <div><div class="team-name">Mara R.</div><div class="team-time">9:00 AM – 5:00 PM · Floor Lead</div></div>
+            <span class="team-status st-on">On</span>
+          </div>
+          <div class="team-row">
+            <div class="team-avatar">JL</div>
+            <div><div class="team-name">Jess L.</div><div class="team-time">10:00 AM – 6:00 PM · Sales</div></div>
+            <span class="team-status st-on">On</span>
+          </div>
+          <div class="team-row">
+            <div class="team-avatar">TK</div>
+            <div><div class="team-name">Tom K.</div><div class="team-time">1:00 PM – 7:00 PM · Fulfillment</div></div>
+            <span class="team-status st-in">Incoming</span>
+          </div>
+        </div>
         <div style="margin-top:16px;">
-          <button class="secondary" style="font-size:11px;padding:10px 14px;" onclick="toast('Opening schedule...')">View Full Schedule</button>
+          <button class="btn-secondary" style="font-size:11px;" onclick="toast('Opening schedule...')">View Full Schedule</button>
         </div>
       </div>
       <div class="card">
-        <div class="eyebrow" style="margin-bottom:10px;">Team Notes</div>
-        <ul class="list">
-          <li style="flex-direction:column;align-items:flex-start;gap:4px;">
-            <span style="font-weight:600;font-size:12px;">Jess L. — 9:42 AM</span>
-            <span style="font-size:12px;color:var(--muted);line-height:1.5;">Customer asked about custom orders for the holiday line. Name: Deborah H. Follow up by Friday.</span>
-          </li>
-          <li style="flex-direction:column;align-items:flex-start;gap:4px;">
-            <span style="font-weight:600;font-size:12px;">Mara R. — 9:15 AM</span>
-            <span style="font-size:12px;color:var(--muted);line-height:1.5;">Bloom Supply order checked in. 14 units received, all match PO. Stocked shelves.</span>
-          </li>
-        </ul>
+        <div class="card-label">Team Notes</div>
+        <div class="moment-entry">
+          <div class="moment-who">J</div>
+          <div class="moment-body">
+            <div><span class="moment-name">Jess L.</span><span class="moment-time">9:42 AM</span></div>
+            <div class="moment-text">Custom order inquiry from Deborah H. — holiday line. Follow up by Friday.</div>
+          </div>
+        </div>
+        <div class="moment-entry">
+          <div class="moment-who">M</div>
+          <div class="moment-body">
+            <div><span class="moment-name">Mara R.</span><span class="moment-time">9:15 AM</span></div>
+            <div class="moment-text">Bloom Supply order in. 14 units checked, all match PO. Shelves stocked.</div>
+          </div>
+        </div>
         <div style="margin-top:16px;">
-          <button class="secondary" style="font-size:11px;padding:10px 14px;" onclick="toast('Adding note...')">Add Team Note</button>
+          <button class="btn-secondary" style="font-size:11px;" onclick="toast('Adding note...')">Add Team Note</button>
         </div>
       </div>
     </div>
@@ -583,14 +778,37 @@ main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
   <!-- ── AUTOMATIONS ── -->
   <div id="tab-automations" class="tab-section">
     <div class="card" style="margin-top:0;">
-      <div class="eyebrow" style="margin-bottom:4px;">Running Automations</div>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:4px;">These run in the background daily — no manual work needed.</p>
-      <div class="auto-row"><div class="auto-icon ok">📊</div><div class="auto-body"><div class="auto-name">Daily close report</div><div class="auto-desc">Pulls POS sales, compiles revenue by category, flags discrepancies, and emails a summary at 8:00 PM. Last ran: Monday May 26.</div></div><div class="auto-status ok">Live</div></div>
-      <div class="auto-row"><div class="auto-icon ok">📦</div><div class="auto-body"><div class="auto-name">Inventory sync</div><div class="auto-desc">Syncs POS inventory counts each morning. Flags items below reorder point and marks them on today's dashboard. Runs at 7:00 AM daily.</div></div><div class="auto-status ok">Live</div></div>
-      <div class="auto-row"><div class="auto-icon ok">🛒</div><div class="auto-body"><div class="auto-name">Online order import</div><div class="auto-desc">Pulls new Shopify orders every hour. Creates fulfillment task in team notes. Marks shipped once tracking updates.</div></div><div class="auto-status ok">Live</div></div>
-      <div class="auto-row"><div class="auto-icon ok">📋</div><div class="auto-body"><div class="auto-name">Weekly sales email</div><div class="auto-desc">Sends a summary of the week's sales, top items, and team performance every Sunday at 7:00 AM.</div></div><div class="auto-status ok">Live</div></div>
-      <div class="auto-row"><div class="auto-icon warn">🔔</div><div class="auto-body"><div class="auto-name">Low stock alerts</div><div class="auto-desc">Notifies floor lead via SMS when an item hits the reorder threshold. Needs phone number configured in settings.</div></div><div class="auto-status warn">Setup needed</div></div>
-      <div class="auto-row"><div class="auto-icon ok">💳</div><div class="auto-body"><div class="auto-name">Vendor invoice tracker</div><div class="auto-desc">Logs incoming invoices and tracks due dates. Sends a reminder 3 days before payment is due. Integrated with QuickBooks.</div></div><div class="auto-status ok">Live</div></div>
+      <div class="card-label" style="margin-bottom:12px;">Running Quietly</div>
+      <div class="auto-row">
+        <div class="auto-icon ok">📊</div>
+        <div class="auto-body"><div class="auto-name">Daily close report</div><div class="auto-desc">Pulls POS sales, compiles revenue by category, flags variances, and emails a summary at 8:00 PM. Last ran: Mon May 26.</div></div>
+        <div class="auto-status ok">Live</div>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">📦</div>
+        <div class="auto-body"><div class="auto-name">Collection sync</div><div class="auto-desc">Syncs POS inventory each morning. Items below reorder point surface on The Floor automatically. Runs 7:00 AM daily.</div></div>
+        <div class="auto-status ok">Live</div>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">🛍️</div>
+        <div class="auto-body"><div class="auto-name">Shopify order import</div><div class="auto-desc">Pulls new orders hourly. Creates fulfillment tasks in Backstage. Marks shipped once tracking updates.</div></div>
+        <div class="auto-status ok">Live</div>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">✉️</div>
+        <div class="auto-body"><div class="auto-name">Weekly season summary</div><div class="auto-desc">Sends a week-in-review each Sunday at 7:00 AM — top items, collection velocity, client notes worth revisiting.</div></div>
+        <div class="auto-status ok">Live</div>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon warn">🔔</div>
+        <div class="auto-body"><div class="auto-name">Low stock alerts</div><div class="auto-desc">Notifies floor lead via SMS when an item hits its reorder threshold. Needs a phone number in settings to activate.</div></div>
+        <div class="auto-status warn">Setup needed</div>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">🧾</div>
+        <div class="auto-body"><div class="auto-name">Vendor invoice reminders</div><div class="auto-desc">Tracks open POs and sends a reminder 3 days before payment is due. Integrated with QuickBooks.</div></div>
+        <div class="auto-status ok">Live</div>
+      </div>
     </div>
   </div>
 
@@ -607,26 +825,24 @@ function toast(msg) {
 }
 
 const tabs = {
-  today:       'tab-today',
-  sales:       'tab-sales',
-  inventory:   'tab-inventory',
-  vendors:     'tab-vendors',
-  team:        'tab-team',
+  floor:       'tab-floor',
+  week:        'tab-week',
+  collection:  'tab-collection',
+  clients:     'tab-clients',
+  backstage:   'tab-backstage',
   automations: 'tab-automations',
 };
 
-const allTabEls = Object.values(tabs).map(id => document.getElementById(id));
-
 function showTab(name) {
-  allTabEls.forEach(el => {
-    if (el) {
-      if (el.id === tabs[name]) {
-        el.style.display = '';
-        el.classList.remove('tab-section');
-      } else {
-        el.style.display = 'none';
-        el.classList.add('tab-section');
-      }
+  Object.entries(tabs).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (key === name) {
+      el.style.display = '';
+      el.classList.remove('tab-section');
+    } else {
+      el.style.display = 'none';
+      el.classList.add('tab-section');
     }
   });
 }
@@ -639,8 +855,7 @@ document.querySelectorAll('.nav button[data-tab]').forEach(btn => {
   });
 });
 
-// Initialize: show today tab
-showTab('today');
+showTab('floor');
 </script>
 
 </body>
