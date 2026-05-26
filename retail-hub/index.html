@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Flow — Business OS</title>
+<title>Bloom — Boutique Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --deep:   #1e2235;
-  --ink:    #1e2235;
-  --muted:  #7a8190;
-  --cream:  #faf9f7;
-  --panel:  #ffffff;
-  --line:   rgba(30,34,53,.09);
-  --copper: #b06a3a;
-  --copper-l: #f6ede5;
-  --ok:     #5e8f68;
-  --warn:   #b56b61;
-  --sky:    #eef0f5;
+  --deep:     #3d1f2d;
+  --ink:      #2d1520;
+  --muted:    #9a7080;
+  --cream:    #fdf6f8;
+  --panel:    #ffffff;
+  --line:     rgba(180,100,120,.1);
+  --copper:   #c4687a;
+  --copper-l: #fce8ed;
+  --ok:       #6a9e7a;
+  --warn:     #c07050;
+  --sky:      #f5eef0;
 }
 * { box-sizing: border-box; margin: 0; }
 body { font-family: Syne, system-ui; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
@@ -37,33 +37,33 @@ body { font-family: Syne, system-ui; background: var(--cream); color: var(--ink)
 /* ── Header ── */
 header { padding: 52px 56px 42px; border-bottom: 1px solid var(--line); }
 .header-inner { max-width: 1180px; margin: auto; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
-.eyebrow { font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 12px; }
+.eyebrow { font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: var(--copper); font-weight: 700; margin-bottom: 12px; font-style: italic; letter-spacing: .18em; }
 .title { font-family: Cormorant, serif; font-size: 72px; font-weight: 300; line-height: .9; letter-spacing: -.04em; }
 .title em { color: var(--copper); font-style: italic; }
 .sub { max-width: 370px; color: var(--muted); font-size: 14px; line-height: 1.65; }
 .header-badges { display: flex; gap: 8px; flex-wrap: wrap; }
-.hbadge { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; background: var(--copper-l); color: var(--copper); border: 1px solid rgba(176,106,58,.2); border-radius: 99px; padding: 6px 12px; font-weight: 700; }
-.hbadge.ok { background: #e3efe5; color: #4f7857; border-color: rgba(79,120,87,.2); }
+.hbadge { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; background: var(--copper-l); color: var(--copper); border: 1px solid rgba(196,104,122,.2); border-radius: 99px; padding: 6px 12px; font-weight: 700; }
+.hbadge.ok { background: #eef5ef; color: #5a8a6a; border-color: rgba(90,138,106,.2); }
 
 /* ── Nav ── */
-.nav { background: #1e2235; background-image: linear-gradient(180deg, #252840 0%, #191c2e 100%); border-bottom: 1px solid rgba(0,0,30,.3); box-shadow: 0 8px 24px rgba(0,0,0,.1); padding: 9px 56px; position: relative; overflow: hidden; }
-.nav::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(176,106,58,.5), transparent); opacity: .8; }
+.nav { background: #3d1f2d; background-image: linear-gradient(180deg, #4a2538 0%, #331828 100%); border-bottom: 1px solid rgba(80,10,30,.3); box-shadow: 0 8px 24px rgba(60,10,30,.15); padding: 9px 56px; position: relative; overflow: hidden; }
+.nav::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(220,140,160,.6), transparent); opacity: .9; }
 .nav-inner { max-width: 1180px; margin: auto; display: flex; gap: 8px; align-items: center; }
-.nav button { font-family: Syne; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.07); padding: 7px 10px; font-size: 10px; font-weight: 700; letter-spacing: .06em; color: rgba(220,225,250,.8); cursor: pointer; border-radius: 999px; transition: background .18s, color .18s, transform .18s, border-color .18s; }
-.nav button.active { background: #ffffff; color: #1e2235; border-color: rgba(255,255,255,.9); box-shadow: 0 4px 12px rgba(0,0,0,.18); }
-.nav button:hover { background: rgba(255,255,255,.14); color: #fff; transform: translateY(-1px); border-color: rgba(255,255,255,.25); }
-.nav button.active:hover { background: #f4f2ff; color: #1e2235; }
+.nav button { font-family: Syne; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.08); padding: 7px 10px; font-size: 10px; font-weight: 700; letter-spacing: .06em; color: rgba(255,220,230,.85); cursor: pointer; border-radius: 999px; transition: background .18s, color .18s, transform .18s, border-color .18s; }
+.nav button.active { background: #ffffff; color: #3d1f2d; border-color: rgba(255,255,255,.9); box-shadow: 0 4px 12px rgba(80,10,30,.25); }
+.nav button:hover { background: rgba(255,255,255,.14); color: #fff; transform: translateY(-1px); border-color: rgba(255,255,255,.3); }
+.nav button.active:hover { background: #fff0f4; color: #3d1f2d; }
 .nav button:nth-of-type(2), .nav button:nth-of-type(4) { position: relative; margin-left: 14px; }
-.nav button:nth-of-type(2)::before, .nav button:nth-of-type(4)::before { content: ""; position: absolute; left: -12px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(180deg, transparent, rgba(176,106,58,.5), transparent); }
-.nav-status { margin-left: auto; display: flex; align-items: center; gap: 9px; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: rgba(220,225,250,.8); }
-.nav-status span { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(176,106,58,.25); background: rgba(255,255,255,.07); border-radius: 999px; padding: 8px 10px; }
-.nav-status i { width: 6px; height: 6px; border-radius: 50%; background: #67bf75; box-shadow: 0 0 7px rgba(103,191,117,.9); display: block; }
+.nav button:nth-of-type(2)::before, .nav button:nth-of-type(4)::before { content: ""; position: absolute; left: -12px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(180deg, transparent, rgba(220,140,160,.5), transparent); }
+.nav-status { margin-left: auto; display: flex; align-items: center; gap: 9px; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,220,230,.85); }
+.nav-status span { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(220,140,160,.3); background: rgba(255,255,255,.08); border-radius: 999px; padding: 8px 10px; }
+.nav-status i { width: 6px; height: 6px; border-radius: 50%; background: #e8a0b8; box-shadow: 0 0 7px rgba(232,160,184,.9); display: block; }
 
 /* ── Main ── */
 main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
 
 /* ── Cards ── */
-.card { background: rgba(255,253,250,.85); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 18px 40px rgba(30,34,53,.04); }
+.card { background: rgba(255,252,254,.88); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 18px 40px rgba(60,20,40,.04); }
 
 /* ── Hero layout ── */
 .hero { display: grid; grid-template-columns: 1.35fr .65fr; gap: 18px; }
@@ -86,9 +86,9 @@ main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
 .alerts ul { list-style: none; margin-top: 14px; }
 .alerts li { padding: 13px 0; border-top: 1px solid var(--line); display: flex; gap: 12px; }
 .badge { font-size: 10px; font-weight: 800; border-radius: 99px; padding: 5px 8px; height: max-content; }
-.warn-badge { background: #f3e2d7; color: #8b4d35; }
-.good-badge { background: #e2efe4; color: #4f7857; }
-.info-badge { background: #e5e8f5; color: #3a4a8b; }
+.warn-badge { background: #f8e6ea; color: #a04060; }
+.good-badge { background: #e4f0e6; color: #4f7857; }
+.info-badge { background: #f0e8f4; color: #6a4a8a; }
 
 /* ── Streams ── */
 .streams { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 18px; }
@@ -111,12 +111,12 @@ main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
 .cat-label { display: flex; justify-content: space-between; font-size: 12px; }
 .cat-label span:last-child { color: var(--muted); font-size: 11px; }
 .cat-track { height: 6px; background: var(--sky); border-radius: 99px; overflow: hidden; }
-.cat-fill { height: 100%; background: var(--copper); border-radius: 99px; opacity: .65; }
+.cat-fill { height: 100%; background: linear-gradient(90deg, #e8a0b8, #c4687a); border-radius: 99px; opacity: .7; }
 
 /* ── Shift row ── */
 .shift-list { list-style: none; margin-top: 14px; }
 .shift-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 13px; }
-.shift-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--copper-l); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--copper); flex-shrink: 0; }
+.shift-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--copper-l); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #a04060; flex-shrink: 0; }
 .shift-name { font-weight: 600; }
 .shift-time { font-size: 11px; color: var(--muted); margin-top: 1px; }
 .shift-role { margin-left: auto; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
@@ -124,14 +124,14 @@ main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
 /* ── Automation rows ── */
 .auto-row { display: flex; align-items: flex-start; gap: 14px; padding: 15px 0; border-top: 1px solid var(--line); }
 .auto-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-.auto-icon.ok { background: #e2efe4; }
-.auto-icon.warn { background: #f3e2d7; }
+.auto-icon.ok { background: #e4f0e6; }
+.auto-icon.warn { background: #f8e6ea; }
 .auto-body { flex: 1; }
 .auto-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
 .auto-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
 .auto-status { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; border-radius: 99px; padding: 5px 10px; flex-shrink: 0; }
-.auto-status.ok { background: #e2efe4; color: #4f7857; }
-.auto-status.warn { background: #f3e2d7; color: #8b4d35; }
+.auto-status.ok { background: #e4f0e6; color: #4f7857; }
+.auto-status.warn { background: #f8e6ea; color: #a04060; }
 
 /* ── Low stock ── */
 .stock-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-top: 1px solid var(--line); font-size: 13px; }
@@ -182,9 +182,9 @@ main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
 
 <div class="topbar">
   <span class="dot on"></span>
-  <span class="pill">POS synced</span>
+  <span class="pill">Square synced</span>
   <span class="dot"></span>
-  <span class="pill">Inventory current</span>
+  <span class="pill">Shopify connected</span>
   <button class="pill tbar-btn tbar-mobile" onclick="toast('Opening POS...')">Open POS</button>
   <button class="pill tbar-btn tbar-mobile" onclick="toast('Running close...')">Run Close</button>
   <button class="pill gear-btn tbar-mobile" onclick="toast('Settings')">⚙</button>
@@ -198,12 +198,12 @@ main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 54px; }
 <header>
   <div class="header-inner">
     <div>
-      <div class="eyebrow">Daily Operations Hub</div>
-      <h1 class="title"><em>Flow</em></h1>
-      <p class="sub">Everything your shop needs in one place — sales, inventory, team, and the automations running quietly behind it all.</p>
+      <div class="eyebrow">Boutique Daily Hub</div>
+      <h1 class="title"><em>Bloom</em></h1>
+      <p class="sub">Sales, inventory, team, and quiet automations — everything your boutique runs on, in one beautiful place.</p>
     </div>
     <div class="header-badges">
-      <span class="hbadge ok">POS Synced</span>
+      <span class="hbadge ok">Square Synced</span>
       <span class="hbadge">Close Pending</span>
     </div>
   </div>
