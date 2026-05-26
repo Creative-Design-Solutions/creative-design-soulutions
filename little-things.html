@@ -17,16 +17,16 @@
 
     /* ── NAV ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem; background: rgba(253,248,242,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
     .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
     .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
     .has-dropdown { position: relative; }
     .has-dropdown > a { display: flex; align-items: center; gap: 0.3rem; }
     .caret { font-size: 0.55rem; opacity: 0.6; transition: transform 0.2s; }
     .has-dropdown:hover .caret { transform: rotate(180deg); }
-    .dropdown { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%) translateY(-4px); min-width: 170px; background: #fdf8f2; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 12px 32px rgba(26,18,8,0.12); list-style: none; padding: 0.5rem 0; opacity: 0; pointer-events: none; transition: opacity 0.18s, transform 0.18s; }
+    .dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-4px); min-width: 170px; background: #fdf8f2; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 12px 32px rgba(26,18,8,0.12); list-style: none; padding: 0.75rem 0 0.5rem; opacity: 0; pointer-events: none; transition: opacity 0.18s, transform 0.18s; }
     .has-dropdown:hover .dropdown, .has-dropdown.open .dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
     .dropdown li { padding: 0; }
     .dropdown a { display: block; padding: 0.6rem 1.1rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
@@ -185,7 +185,7 @@
     <li class="has-dropdown">
       <a href="systems.html">Systems <span class="caret">▾</span></a>
       <ul class="dropdown">
-        <li><a href="systems.html">All Systems</a></li>
+        <li><a href="systems.html">Business Hubs</a></li>
         <li><div class="drop-divider"></div></li>
         <li class="drop-special"><a href="little-things.html" class="active">✦ Little Things</a></li>
       </ul>

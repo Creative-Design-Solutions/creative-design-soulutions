@@ -54,6 +54,7 @@
       font-weight: 600;
       color: var(--navy);
       letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     .nav-logo span {
@@ -62,6 +63,7 @@
 
     .nav-links {
       display: flex;
+      align-items: center;
       gap: 2.5rem;
       list-style: none;
     }
@@ -86,19 +88,18 @@
     .has-dropdown:hover .caret { transform: rotate(180deg); }
     .dropdown {
       position: absolute;
-      top: calc(100% + 0.75rem);
+      top: 100%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateY(-4px);
       min-width: 170px;
       background: #fdf8f2;
       border: 1px solid var(--line);
       border-radius: 8px;
       box-shadow: 0 12px 32px rgba(26,18,8,0.12);
       list-style: none;
-      padding: 0.5rem 0;
+      padding: 0.75rem 0 0.5rem;
       opacity: 0;
       pointer-events: none;
-      transform: translateX(-50%) translateY(-4px);
       transition: opacity 0.18s, transform 0.18s;
     }
     .has-dropdown:hover .dropdown,
@@ -1072,7 +1073,7 @@
     <li class="has-dropdown">
       <a href="systems.html">Systems <span class="caret">▾</span></a>
       <ul class="dropdown">
-        <li><a href="systems.html">All Systems</a></li>
+        <li><a href="systems.html">Business Hubs</a></li>
         <li><div class="drop-divider"></div></li>
         <li class="drop-special"><a href="little-things.html">✦ Little Things</a></li>
       </ul>
