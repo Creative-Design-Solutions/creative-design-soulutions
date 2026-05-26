@@ -384,7 +384,16 @@
       line-height: 1.8;
       color: var(--muted);
       font-weight: 300;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0;
+    }
+
+    .service-label {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      font-weight: 400;
     }
 
     .service-list {
@@ -714,8 +723,9 @@
       border-top: 1px solid rgba(74,143,194,0.2);
       padding: 3rem 4rem;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4rem;
     }
 
     .footer-logo {
@@ -733,6 +743,8 @@
       opacity: 0.6;
       margin-top: 0.3rem;
     }
+
+    .footer-copy-mobile { display: none; }
 
     .footer-links {
       display: flex;
@@ -752,6 +764,53 @@
     .footer-links a:hover {
       color: var(--sky);
     }
+
+    .krimmer-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .krimmer-halo {
+      position: relative;
+      width: 104px;
+      height: 104px;
+      margin-bottom: 0.4rem;
+    }
+
+    .krimmer-halo img {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      height: 70px;
+      width: auto;
+    }
+
+    .hs {
+      position: absolute;
+      line-height: 1;
+      animation: hs-twinkle 2.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes hs-twinkle {
+      from { opacity: 0.35; transform: scale(0.75); }
+      to   { opacity: 1;    transform: scale(1.25); }
+    }
+
+    .hs1  { top:  1px; left: 48px; font-size:10px; color:#c8a96e; animation-delay:0s;    }
+    .hs2  { top:  8px; left: 72px; font-size: 7px; color:#9fc4d8; animation-delay:0.3s;  }
+    .hs3  { top: 25px; left: 89px; font-size: 9px; color:#d4a0b5; animation-delay:0.6s;  }
+    .hs4  { top: 47px; left: 94px; font-size:11px; color:#c8a96e; animation-delay:0.9s;  }
+    .hs5  { top: 62px; left: 91px; font-size: 7px; color:#d4a0b5; animation-delay:1.05s; }
+    .hs6  { top: 76px; left: 82px; font-size: 9px; color:#9fc4d8; animation-delay:1.2s;  }
+    .hs7  { top: 88px; left: 68px; font-size: 8px; color:#c8a96e; animation-delay:1.35s; }
+    .hs8  { top: 96px; left: 50px; font-size:10px; color:#d4a0b5; animation-delay:1.5s;  }
+    .hs9  { top: 88px; left: 29px; font-size: 8px; color:#c8a96e; animation-delay:1.65s; }
+    .hs10 { top: 76px; left: 14px; font-size: 9px; color:#9fc4d8; animation-delay:1.8s;  }
+    .hs11 { top: 62px; left:  5px; font-size: 7px; color:#d4a0b5; animation-delay:1.95s; }
+    .hs12 { top: 47px; left:  0px; font-size:11px; color:#c8a96e; animation-delay:0.8s;  }
+    .hs13 { top: 25px; left:  6px; font-size: 8px; color:#9fc4d8; animation-delay:1.1s;  }
+    .hs14 { top:  8px; left: 23px; font-size: 7px; color:#d4a0b5; animation-delay:1.4s;  }
 
     .footer-copy {
       font-size: 0.72rem;
@@ -849,16 +908,120 @@
       filter: drop-shadow(0 0 4px rgba(200,146,42,0.85)) drop-shadow(0 0 10px rgba(200,146,42,0.4));
     }
 
+    /* ── MOBILE ── */
+    @media (max-width: 680px) {
+
+      /* Nav */
+      nav {
+        padding: 1rem 1.4rem;
+      }
+      .nav-links { display: none; }
+      .nav-cta {
+        font-size: 0.72rem;
+        padding: 0.5rem 1rem;
+      }
+
+      /* Hero */
+      .hero {
+        padding: 7rem 1.6rem 4rem;
+        min-height: auto;
+      }
+      .hero h1 {
+        font-size: clamp(2rem, 9vw, 2.8rem);
+      }
+      .hero-sub {
+        font-size: 0.95rem;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+      .hero::before { display: none; }
+
+      /* Sections */
+      .stair-1, .stair-3, .stair-4, .stair-5 {
+        padding: 3.5rem 1.6rem;
+      }
+
+      /* Services */
+      .services-header { margin-bottom: 2rem; }
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+      .service-card {
+        padding: 2rem 1.6rem;
+      }
+
+      /* Process steps */
+      .process-steps {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-start;
+      }
+      .process-steps::before { display: none; }
+      .step { text-align: left; padding: 0; }
+      .step-num { margin: 0 0 1rem; }
+
+      /* Why two-col → single col */
+      .why {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .why-left, .why-right {
+        padding: 3.5rem 1.6rem;
+      }
+
+      /* About */
+      .about-inner {
+        flex-direction: column;
+        gap: 3rem;
+      }
+
+      /* Contact form */
+      .cta { padding: 3.5rem 1.6rem; }
+      .cta-form-row {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      /* Footer */
+      footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.6rem;
+        padding: 3rem 1.6rem;
+        text-align: center;
+      }
+      footer > * { align-self: center !important; }
+      .footer-links              { display: none; }
+      .krimmer-center            { order: 1; align-items: center; }
+      .krimmer-center .footer-copy { display: none; }
+      .footer-left               { order: 2; text-align: center !important; }
+      .footer-copy-mobile        { display: block; margin-top: 0.5rem; font-size: 0.72rem; color: var(--muted); opacity: 0.6; }
+      .footer-tagline            { margin-top: 0.2rem; }
+
+      /* Trust bar */
+      .trust {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem 1rem;
+        padding: 1.2rem 1.6rem;
+      }
+    }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo" style="display:flex;align-items:center;gap:0.6rem;font-size:1.1rem;"><svg viewBox="82 65 236 270" xmlns="http://www.w3.org/2000/svg" style="height:2rem;width:auto;flex-shrink:0;" class="metatron-spin"><line x1="200.0" y1="200.0" x2="200.0" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="255.4" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="255.4" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="200.0" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="255.4" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="255.4" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="200.0" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="255.4" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="200.0" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="200.0" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="136.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="136.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="136.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="136.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="264.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="264.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="264.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="328.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="328.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="89.1" y1="264.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><circle cx="200.0" cy="200.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="200.0" cy="136.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="255.4" cy="168.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="255.4" cy="232.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="200.0" cy="264.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="144.6" cy="232.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="144.6" cy="168.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="200.0" cy="72.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="310.9" cy="136.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="310.9" cy="264.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="200.0" cy="328.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="89.1" cy="264.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="89.1" cy="136.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/></svg>Creative Design <span>SOUL</span>utions</div>
+  <div class="nav-logo" style="display:flex;align-items:center;font-size:1.1rem;"><svg viewBox="50 32 300 336" xmlns="http://www.w3.org/2000/svg" style="height:2.6rem;width:auto;flex-shrink:0;margin-right:0.6rem;" class="metatron-spin"><line x1="200.0" y1="200.0" x2="200.0" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="255.4" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="255.4" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="200.0" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="200.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="255.4" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="255.4" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="200.0" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="136.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="255.4" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="200.0" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="168.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="200.0" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="255.4" y1="232.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="144.6" y2="232.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="264.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="144.6" y2="168.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="232.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="200.0" y2="72.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="144.6" y1="168.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="310.9" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="72.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="136.0" x2="310.9" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="136.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="136.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="136.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="264.0" x2="200.0" y2="328.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="264.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="310.9" y1="264.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="328.0" x2="89.1" y2="264.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200.0" y1="328.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="89.1" y1="264.0" x2="89.1" y2="136.0" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><circle cx="200.0" cy="200.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="200.0" cy="136.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="255.4" cy="168.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="255.4" cy="232.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="200.0" cy="264.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="144.6" cy="232.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="144.6" cy="168.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="200.0" cy="72.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="310.9" cy="136.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="310.9" cy="264.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="200.0" cy="328.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="89.1" cy="264.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/><circle cx="89.1" cy="136.0" r="32" fill="none" stroke="#c8922a" stroke-width="1.8" opacity="1.0"/></svg>Creative Design <span>SOUL</span>utions</div>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
+    <li><a href="systems.html">Systems</a></li>
     <li><a href="#why">About</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Let's Talk</a>
 </nav>
@@ -872,7 +1035,7 @@
       <em>breathing together.</em>
     </h1>
     <p class="hero-sub">
-      We build businesses that speak to you, explore workflows that sustain rhythm with you, websites that embody how you serve, and systems that free you to do the work only you can do and love — co-created with care, made to feel like you.
+      We partner with businesses, explore workflows that sustain rhythm with you, websites that embody how you serve, and systems that free you to do the work only you can do and love — co-created with care.
     </p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Start a Conversation</a>
@@ -884,49 +1047,29 @@
 <!-- SERVICES -->
 <section class="services stair-1" id="services">
   <div class="services-header">
-    <p class="section-label">What we do</p>
+    <p class="section-label">How we serve</p>
     <p class="about-body" style="max-width:660px;margin:1.5rem auto 0;">We're a small business helping clients on a case by case basis, devoted to bringing creative workflow automation, AI integration, and custom web design to your practice or business. We'd love to meet with, learn about you, and see how we can help.</p>
   </div>
   <div class="services-grid">
     <div class="service-card">
-      <div class="service-number">01</div>
+      <div class="service-number">01 <span class="service-label">Creativity</span></div>
       <h3>Websites &amp; Design</h3>
       <p>Custom sites built around how you serve — beautiful, intentional, and yours to own.</p>
-      <ul class="service-list">
-        <li>Brand identity &amp; design</li>
-        <li>Custom web design</li>
-        <li>Staff &amp; client portals</li>
-      </ul>
     </div>
     <div class="service-card">
-      <div class="service-number">02</div>
+      <div class="service-number">02 <span class="service-label">Flow</span></div>
       <h3>Workflow Automation</h3>
       <p>Systems that remove the friction — so your team spends less time on admin and more on what matters.</p>
-      <ul class="service-list">
-        <li>Process mapping</li>
-        <li>Automated pipelines</li>
-        <li>Tool integrations</li>
-      </ul>
     </div>
     <div class="service-card">
-      <div class="service-number">03</div>
+      <div class="service-number">03 <span class="service-label">Partnership</span></div>
       <h3>AI Integration</h3>
       <p>Practical AI woven into your existing workflows — not replacing people, amplifying them.</p>
-      <ul class="service-list">
-        <li>AI-assisted workflows</li>
-        <li>Custom tools &amp; agents</li>
-        <li>Team onboarding</li>
-      </ul>
     </div>
     <div class="service-card">
-      <div class="service-number">04</div>
+      <div class="service-number">04 <span class="service-label">Little Things</span></div>
       <h3>Apps &amp; Systems</h3>
       <p>Custom-built apps for the problems off-the-shelf software doesn't quite solve.</p>
-      <ul class="service-list">
-        <li>Business apps</li>
-        <li>Data &amp; reporting tools</li>
-        <li>Ongoing support</li>
-      </ul>
     </div>
   </div>
 </section>
@@ -974,7 +1117,6 @@
     <p>Thank you — we'll be in touch soon.</p>
     <span>Or reach us directly at bryan@creativedesignsoulutions.com</span>
   </div>
-  <p class="cta-note">Or email directly: <a href="mailto:bryan@creativedesignsoulutions.com" style="color:inherit;">bryan@creativedesignsoulutions.com</a></p>
 </section>
 
 <script>
@@ -1004,16 +1146,36 @@
 
 <!-- FOOTER -->
 <footer>
-  <div>
+  <div class="footer-left" style="align-self:flex-end;">
     <div class="footer-logo">Creative Design <span>SOUL</span>utions</div>
     <div class="footer-tagline">Websites · Workflows · AI Tools for Small Business</div>
+    <div class="footer-copy-mobile">© 2026 Creative Design SOULutions</div>
   </div>
-  <ul class="footer-links">
+  <ul class="footer-links" style="align-self:flex-end;">
     <li><a href="#services">Services</a></li>
     <li><a href="#why">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="footer-copy">© 2026 Creative Design SOULutions</div>
+  <div class="krimmer-center" style="align-self:flex-end;">
+    <div class="krimmer-halo">
+      <span class="hs hs1">✦</span>
+      <span class="hs hs2">✧</span>
+      <span class="hs hs3">✦</span>
+      <span class="hs hs4">✩</span>
+      <span class="hs hs5">✧</span>
+      <span class="hs hs6">✦</span>
+      <span class="hs hs7">✧</span>
+      <span class="hs hs8">✦</span>
+      <span class="hs hs9">✩</span>
+      <span class="hs hs10">✦</span>
+      <span class="hs hs11">✧</span>
+      <span class="hs hs12">✦</span>
+      <span class="hs hs13">✧</span>
+      <span class="hs hs14">✦</span>
+      <img src="krimmer-kramar.png" alt="Krimmer Kramar">
+    </div>
+    <div class="footer-copy">© 2026 Creative Design SOULutions</div>
+  </div>
 </footer>
 
 </body>
