@@ -69,6 +69,46 @@
     }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
 
+    .has-dropdown { position: relative; }
+    .has-dropdown > a { display: flex; align-items: center; gap: 0.3rem; }
+    .caret { font-size: 0.55rem; opacity: 0.6; transition: transform 0.2s; }
+    .has-dropdown:hover .caret { transform: rotate(180deg); }
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 0.75rem);
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      min-width: 170px;
+      background: #fdf8f2;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(26,18,8,0.12);
+      list-style: none;
+      padding: 0.5rem 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .has-dropdown:hover .dropdown,
+    .has-dropdown.open .dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .dropdown li { padding: 0; }
+    .dropdown a {
+      display: block;
+      padding: 0.6rem 1.1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .dropdown a:hover { color: var(--gold); background: rgba(200,146,42,0.04); }
+    .dropdown .drop-divider { height: 1px; background: var(--line); margin: 0.35rem 0.8rem; }
+    .dropdown .drop-special a { color: var(--gold); font-weight: 600; }
+
     .nav-cta {
       font-size: 0.72rem;
       font-weight: 600;
@@ -417,7 +457,14 @@
   </a>
   <ul class="nav-links">
     <li><a href="index.html#services">Services</a></li>
-    <li><a href="systems.html" class="active">Systems</a></li>
+    <li class="has-dropdown">
+      <a href="systems.html" class="active">Systems <span class="caret">▾</span></a>
+      <ul class="dropdown">
+        <li><a href="systems.html">All Systems</a></li>
+        <li><div class="drop-divider"></div></li>
+        <li class="drop-special"><a href="little-things.html">✦ Little Things</a></li>
+      </ul>
+    </li>
     <li><a href="index.html#why">About</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
@@ -539,5 +586,20 @@
 </section>
 
 <style>@keyframes spin-slow { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }</style>
+<script>
+  document.querySelectorAll('.has-dropdown > a').forEach(link => {
+    link.addEventListener('click', e => {
+      const li = link.closest('.has-dropdown');
+      const isOpen = li.classList.contains('open');
+      document.querySelectorAll('.has-dropdown').forEach(el => el.classList.remove('open'));
+      if (!isOpen) { e.preventDefault(); li.classList.add('open'); }
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.has-dropdown')) {
+      document.querySelectorAll('.has-dropdown').forEach(el => el.classList.remove('open'));
+    }
+  });
+</script>
 </body>
 </html>

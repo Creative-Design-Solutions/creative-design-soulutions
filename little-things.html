@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Little Things — Creative Design SOULutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:  #1a1208;
+      --gold:  #c8922a;
+      --amber: #e8a83a;
+      --cream: #fdf8f2;
+      --warm:  #f5ede0;
+      --text:  #1a1208;
+      --muted: #6b5d4f;
+      --line:  rgba(200,146,42,0.2);
+      --sky:   #4a8fc2;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(253,248,242,0.92); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .has-dropdown { position: relative; }
+    .has-dropdown > a { display: flex; align-items: center; gap: 0.3rem; }
+    .caret { font-size: 0.55rem; opacity: 0.6; transition: transform 0.2s; }
+    .has-dropdown:hover .caret { transform: rotate(180deg); }
+    .dropdown {
+      position: absolute; top: calc(100% + 0.75rem); left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      min-width: 170px; background: #fdf8f2;
+      border: 1px solid var(--line); border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(26,18,8,0.12);
+      list-style: none; padding: 0.5rem 0;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .has-dropdown:hover .dropdown, .has-dropdown.open .dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .dropdown li { padding: 0; }
+    .dropdown a { display: block; padding: 0.6rem 1.1rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+    .dropdown a:hover { color: var(--gold); background: rgba(200,146,42,0.04); }
+    .dropdown .drop-divider { height: 1px; background: var(--line); margin: 0.35rem 0.8rem; }
+    .dropdown .drop-special a { color: var(--gold); font-weight: 600; }
+    .nav-cta { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); text-decoration: none; border: 1.5px solid var(--sky); padding: 0.5rem 1.4rem; border-radius: 2px; transition: all 0.2s; }
+    .nav-cta:hover { background: var(--sky); color: white; }
+
+    /* ── HERO ── */
+    .lt-hero {
+      padding: 10rem 4rem 5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .section-label {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 1.2rem;
+    }
+    .lt-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 1.5rem;
+    }
+    .lt-hero h1 em { color: var(--gold); font-style: italic; }
+    .lt-hero p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 300; line-height: 1.7;
+      color: var(--muted); max-width: 600px; margin: 0 auto 1rem;
+    }
+    .lt-hero .sub {
+      font-size: 0.88rem; font-family: 'Inter', sans-serif;
+      color: var(--muted); opacity: 0.75; line-height: 1.7;
+      max-width: 520px; margin: 0 auto;
+    }
+
+    /* ── TOOL SECTIONS ── */
+    .tool-section {
+      max-width: 1100px;
+      margin: 0 auto 6rem;
+      padding: 0 3rem;
+    }
+    .tool-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 2rem; margin-bottom: 2.5rem;
+    }
+    .tool-copy { max-width: 420px; }
+    .tool-copy h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem; font-weight: 600; line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+    .tool-copy h2 em { color: var(--gold); font-style: italic; }
+    .tool-copy p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem; }
+    .tool-tag {
+      display: inline-block; font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      border-radius: 99px; padding: 0.25rem 0.7rem; margin-bottom: 0.8rem;
+    }
+    .tag-live { background: #e3efe5; color: #4f7857; border: 1px solid rgba(79,120,87,0.2); }
+    .tag-addon { background: rgba(200,146,42,0.1); color: var(--gold); border: 1px solid var(--line); }
+
+    /* ── DEMO FRAME ── */
+    .demo-frame {
+      background: var(--warm);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 2.5rem;
+      min-height: 400px;
+    }
+
+    /* ═══════════════════════════════
+       POST-IT DEMO
+    ═══════════════════════════════ */
+    #postit-board {
+      position: relative;
+      min-height: 420px;
+      background: #f0e8da;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .board-label {
+      position: absolute; top: 1rem; left: 1.4rem;
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(100,80,50,0.35); font-weight: 600;
+      pointer-events: none;
+    }
+    .board-toolbar {
+      display: flex; gap: 0.5rem; padding: 0.75rem 1rem;
+      background: rgba(255,255,255,0.4); border-bottom: 1px solid rgba(200,160,80,0.15);
+      align-items: center;
+    }
+    .color-btn {
+      width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.7);
+      cursor: pointer; transition: transform 0.15s, border-color 0.15s;
+    }
+    .color-btn:hover, .color-btn.active { transform: scale(1.25); border-color: rgba(0,0,0,0.3); }
+    .add-note-btn {
+      margin-left: auto;
+      font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--gold); color: white;
+      border: none; border-radius: 99px; padding: 0.4rem 1rem;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .add-note-btn:hover { background: #a8781e; }
+    .clear-btn {
+      font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 500;
+      color: var(--muted); background: none; border: none; cursor: pointer;
+      letter-spacing: 0.05em; opacity: 0.6;
+    }
+    .clear-btn:hover { opacity: 1; }
+
+    .post-it {
+      position: absolute;
+      width: 180px;
+      min-height: 160px;
+      border-radius: 3px;
+      padding: 1.1rem 1rem 0.8rem;
+      box-shadow: 3px 4px 12px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+      cursor: grab;
+      user-select: none;
+      transition: box-shadow 0.15s, transform 0.1s;
+    }
+    .post-it:active { cursor: grabbing; box-shadow: 6px 8px 24px rgba(0,0,0,0.18); transform: rotate(0.5deg) scale(1.02); }
+    .post-it textarea {
+      width: 100%; min-height: 100px; border: none; background: transparent;
+      font-family: 'Caveat', cursive; font-size: 1.05rem; line-height: 1.5;
+      color: rgba(30,20,10,0.8); resize: none; outline: none;
+      cursor: text;
+    }
+    .post-it .note-delete {
+      position: absolute; top: 0.4rem; right: 0.5rem;
+      font-size: 0.8rem; color: rgba(0,0,0,0.2);
+      cursor: pointer; line-height: 1; background: none; border: none;
+      transition: color 0.15s;
+    }
+    .post-it .note-delete:hover { color: rgba(0,0,0,0.5); }
+    .post-it .note-tab {
+      position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+      width: 60%; height: 10px; border-radius: 3px 3px 0 0;
+      opacity: 0.7;
+    }
+
+    /* ═══════════════════════════════
+       PASSWORD VAULT DEMO
+    ═══════════════════════════════ */
+    #vault-wrap {
+      max-width: 580px; margin: 0 auto;
+    }
+    .vault-lock {
+      text-align: center; padding: 3rem 2rem;
+    }
+    .vault-lock .lock-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+    .vault-lock h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 600; margin-bottom: 0.5rem;
+    }
+    .vault-lock p { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .vault-lock .hint { font-size: 0.72rem; color: var(--muted); opacity: 0.6; margin-top: 0.5rem; }
+    .vault-input-row { display: flex; gap: 0.5rem; max-width: 320px; margin: 0 auto; }
+    .vault-input {
+      flex: 1; padding: 0.7rem 1rem; border: 1.5px solid var(--line);
+      border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      background: rgba(255,255,255,0.7); color: var(--text); outline: none;
+      transition: border-color 0.2s;
+    }
+    .vault-input:focus { border-color: var(--gold); }
+    .vault-unlock-btn {
+      padding: 0.7rem 1.1rem; background: var(--gold); color: white;
+      border: none; border-radius: 8px; font-family: 'Inter', sans-serif;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .vault-unlock-btn:hover { background: #a8781e; }
+    .vault-error { font-size: 0.75rem; color: #c0392b; margin-top: 0.4rem; min-height: 1em; }
+
+    .vault-open { display: none; }
+    .vault-open.visible { display: block; }
+
+    .vault-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.2rem;
+    }
+    .vault-header h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
+    .vault-search {
+      padding: 0.5rem 0.9rem; border: 1.5px solid var(--line);
+      border-radius: 99px; font-family: 'Inter', sans-serif; font-size: 0.8rem;
+      background: rgba(255,255,255,0.7); color: var(--text); outline: none;
+      width: 180px; transition: border-color 0.2s;
+    }
+    .vault-search:focus { border-color: var(--gold); }
+    .vault-lock-btn {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; background: none; border: 1px solid var(--line);
+      border-radius: 99px; padding: 0.35rem 0.8rem; color: var(--muted);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .vault-lock-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    .vault-entries { display: flex; flex-direction: column; gap: 0.5rem; }
+    .vault-entry {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(255,255,255,0.7); border: 1px solid var(--line);
+      border-radius: 12px; padding: 0.85rem 1rem;
+      transition: box-shadow 0.15s;
+    }
+    .vault-entry:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    .entry-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .entry-body { flex: 1; min-width: 0; }
+    .entry-name { font-size: 0.88rem; font-weight: 600; }
+    .entry-user { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+    .entry-pass {
+      font-size: 0.78rem; font-family: monospace;
+      color: var(--muted); letter-spacing: 0.08em;
+      margin-top: 2px; cursor: pointer;
+    }
+    .entry-pass.revealed { color: var(--text); letter-spacing: 0.04em; }
+    .entry-actions { display: flex; gap: 0.4rem; }
+    .entry-btn {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 0.3rem 0.6rem;
+      border-radius: 99px; border: 1px solid var(--line);
+      background: none; color: var(--muted); cursor: pointer;
+      transition: all 0.15s; white-space: nowrap;
+    }
+    .entry-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .entry-btn.copied { background: #e3efe5; color: #4f7857; border-color: rgba(79,120,87,0.3); }
+
+    .vault-disclaimer {
+      font-size: 0.7rem; color: var(--muted); opacity: 0.55;
+      text-align: center; margin-top: 1rem; line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════
+       COMING SOON TOOL PLACEHOLDER
+    ═══════════════════════════════ */
+    .tool-placeholder {
+      background: rgba(255,255,255,0.5);
+      border: 2px dashed var(--line);
+      border-radius: 14px;
+      padding: 3rem 2rem;
+      text-align: center;
+      min-height: 240px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.75rem;
+    }
+    .tool-placeholder .ph-icon { font-size: 2.5rem; opacity: 0.35; }
+    .tool-placeholder p { font-size: 0.85rem; color: var(--muted); max-width: 300px; line-height: 1.6; }
+    .tool-placeholder strong { font-size: 1rem; color: var(--text); font-weight: 600; }
+
+    /* ── Divider ── */
+    .tool-divider {
+      max-width: 1100px; margin: 0 auto 5rem;
+      padding: 0 3rem;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ── CTA ── */
+    .lt-cta {
+      text-align: center;
+      padding: 5rem 3rem 8rem;
+      background: var(--warm);
+      border-top: 1px solid var(--line);
+    }
+    .lt-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700; margin-bottom: 1rem; line-height: 1.2;
+    }
+    .lt-cta h2 em { color: var(--gold); font-style: italic; }
+    .lt-cta p { font-size: 0.92rem; color: var(--muted); max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+    .btn-cta {
+      display: inline-block;
+      background: var(--gold); color: white;
+      font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2.2rem; border-radius: 3px;
+      transition: background 0.2s;
+    }
+    .btn-cta:hover { background: #a8781e; }
+
+    /* ── Responsive ── */
+    @media(max-width: 860px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .lt-hero { padding: 8rem 1.5rem 4rem; }
+      .tool-section { padding: 0 1.5rem; margin-bottom: 4rem; }
+      .tool-header { flex-direction: column; }
+      .tool-divider { padding: 0 1.5rem; }
+    }
+    @media(max-width: 600px) {
+      .nav-links { display: none; }
+      .demo-frame { padding: 1.25rem; }
+      #postit-board { min-height: 380px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="50 32 300 336" xmlns="http://www.w3.org/2000/svg" style="height:2.6rem;width:auto;animation:spin-slow 18s linear infinite;transform-origin:center;transform-box:fill-box;filter:drop-shadow(0 0 4px rgba(200,146,42,0.85))"><style>@keyframes spin-slow{to{transform:rotate(360deg)}}</style><line x1="200" y1="200" x2="200" y2="136" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="255.4" y2="168" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="255.4" y2="232" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="200" y2="264" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="144.6" y2="232" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="144.6" y2="168" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="200" y2="72" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="310.9" y2="136" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="310.9" y2="264" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="200" y2="328" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="89.1" y2="264" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><line x1="200" y1="200" x2="89.1" y2="136" stroke="#c8922a" stroke-width="1.2" opacity="0.85"/><circle cx="200" cy="200" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="200" cy="136" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="255.4" cy="168" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="255.4" cy="232" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="200" cy="264" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="144.6" cy="232" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="144.6" cy="168" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="200" cy="72" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="310.9" cy="136" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="310.9" cy="264" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="200" cy="328" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="89.1" cy="264" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/><circle cx="89.1" cy="136" r="32" fill="none" stroke="#c8922a" stroke-width="1.8"/></svg>
+    Creative Design <span>SOUL</span>utions
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li class="has-dropdown">
+      <a href="systems.html">Systems <span class="caret">▾</span></a>
+      <ul class="dropdown">
+        <li><a href="systems.html">All Systems</a></li>
+        <li><div class="drop-divider"></div></li>
+        <li class="drop-special"><a href="little-things.html" class="active">✦ Little Things</a></li>
+      </ul>
+    </li>
+    <li><a href="index.html#why">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta">Let's Talk</a>
+</nav>
+
+<!-- HERO -->
+<section class="lt-hero">
+  <span class="section-label">Little Things</span>
+  <h1>Small tools that give<br>the mess <em>a place to rest.</em></h1>
+  <p>Not every problem needs a full system. Sometimes you just need one thing — built right, built for you, sitting quietly in the corner doing its job.</p>
+  <p class="sub">These add-ons live inside your workflow package or can be added on. Each one is customizable — the color, the layout, what it does, what it says. They're little. That's the point.</p>
+</section>
+
+<!-- ── TOOL 1: POST-ITS ── -->
+<section class="tool-section" id="postits">
+  <div class="tool-header">
+    <div class="tool-copy">
+      <span class="tool-tag tag-live">Live Demo</span>
+      <h2>Custom <em>Post-its</em></h2>
+      <p>A digital sticky board that actually feels like sticky notes — draggable, colorable, and persistent. Lives in your hub or staff portal. Your team leaves notes, you see them. No chat app needed.</p>
+      <p style="font-size:0.8rem;color:var(--muted);opacity:0.7;">Notes here save to your browser. In the real version, they sync across your team.</p>
+    </div>
+  </div>
+  <div class="demo-frame" style="padding: 0; overflow: hidden; border-radius: 16px;">
+    <div class="board-toolbar">
+      <span style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-right:0.25rem;">Color</span>
+      <button class="color-btn active" data-color="#fff9a3" style="background:#fff9a3;" title="Yellow"></button>
+      <button class="color-btn" data-color="#b5e8c8" style="background:#b5e8c8;" title="Mint"></button>
+      <button class="color-btn" data-color="#ffc8c8" style="background:#ffc8c8;" title="Blush"></button>
+      <button class="color-btn" data-color="#c8d8ff" style="background:#c8d8ff;" title="Periwinkle"></button>
+      <button class="color-btn" data-color="#ffd8a8" style="background:#ffd8a8;" title="Peach"></button>
+      <button class="color-btn" data-color="#e0d0ff" style="background:#e0d0ff;" title="Lavender"></button>
+      <button class="clear-btn" onclick="clearNotes()">Clear all</button>
+      <button class="add-note-btn" onclick="addNote()">+ Add Note</button>
+    </div>
+    <div id="postit-board">
+      <span class="board-label">Your board</span>
+    </div>
+  </div>
+</section>
+
+<div class="tool-divider"></div>
+
+<!-- ── TOOL 2: PASSWORD VAULT ── -->
+<section class="tool-section" id="vault">
+  <div class="tool-header">
+    <div class="tool-copy">
+      <span class="tool-tag tag-live">Live Demo</span>
+      <h2>Password <em>Vault</em></h2>
+      <p>A clean, private credential store built into your staff portal. One master password, all your logins in one place. Copyable with a click, searchable, and yours to organize.</p>
+      <p style="font-size:0.8rem;color:var(--muted);opacity:0.7;">Demo password: <strong style="color:var(--gold);">vault2025</strong></p>
+    </div>
+  </div>
+  <div class="demo-frame">
+    <div id="vault-wrap">
+      <div class="vault-lock" id="vault-locked">
+        <div class="lock-icon">🔒</div>
+        <h3>Your Vault is Locked</h3>
+        <p>Enter your master password to access saved credentials.</p>
+        <div class="vault-input-row">
+          <input class="vault-input" id="vault-pw" type="password" placeholder="Master password" autocomplete="off" />
+          <button class="vault-unlock-btn" onclick="unlockVault()">Unlock</button>
+        </div>
+        <div class="vault-error" id="vault-err"></div>
+        <p class="hint">Demo password: vault2025</p>
+      </div>
+      <div class="vault-open" id="vault-unlocked">
+        <div class="vault-header">
+          <h3>🔓 Your Vault</h3>
+          <input class="vault-search" type="text" placeholder="Search..." oninput="filterVault(this.value)" />
+          <button class="vault-lock-btn" onclick="lockVault()">Lock</button>
+        </div>
+        <div class="vault-entries" id="vault-entries"></div>
+        <p class="vault-disclaimer">This is a UI demo — no real credentials are stored. In your actual vault, entries are encrypted with your master password and never leave your server.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tool-divider"></div>
+
+<!-- ── TOOL 3: AI ASSISTANT (COMING SOON) ── -->
+<section class="tool-section" id="ai-agent">
+  <div class="tool-header">
+    <div class="tool-copy">
+      <span class="tool-tag tag-addon">Coming Soon</span>
+      <h2>Built-in <em>AI Agent</em></h2>
+      <p>A conversational assistant embedded directly in your hub. Ask it to draft an email, look up a vendor invoice, summarize the week's sales, or just talk through a decision. It knows your business because it's built into your system.</p>
+      <p style="font-size:0.8rem;color:var(--muted);opacity:0.7;">Powered by Claude. Runs on your own Cloudflare Worker — no subscription platform, no middleman. Add-on to any workflow package.</p>
+    </div>
+  </div>
+  <div class="demo-frame">
+    <div class="tool-placeholder">
+      <div class="ph-icon">🤖</div>
+      <strong>AI Agent</strong>
+      <p>Draft emails, pull reports, answer questions about your business. Embedded in your hub and private to your team.</p>
+      <p style="font-size:0.72rem;opacity:0.6;">Live demo coming — <a href="index.html#contact" style="color:var(--gold);">reach out if you want early access.</a></p>
+    </div>
+  </div>
+</section>
+
+<div class="tool-divider"></div>
+
+<!-- ── TOOL 4: DAILY NOTEPAD ── -->
+<section class="tool-section" id="notepad">
+  <div class="tool-header">
+    <div class="tool-copy">
+      <span class="tool-tag tag-live">Live Demo</span>
+      <h2>Daily <em>Notepad</em></h2>
+      <p>A simple daily page that clears each morning. What happened today, what to carry forward, a place for the thought you don't want to lose. Saves automatically. No friction.</p>
+      <p style="font-size:0.8rem;color:var(--muted);opacity:0.7;">Saves to your browser — try it. In the real version it lives in your hub and rolls over each day.</p>
+    </div>
+  </div>
+  <div class="demo-frame">
+    <div id="notepad-wrap" style="max-width:540px;margin:0 auto;">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1rem;">
+        <div>
+          <div style="font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.3rem;" id="notepad-date"></div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:600;">Today's Page</div>
+        </div>
+        <button onclick="clearNotepad()" style="font-size:0.68rem;color:var(--muted);background:none;border:none;cursor:pointer;opacity:0.6;letter-spacing:0.08em;">Clear</button>
+      </div>
+      <textarea id="notepad-ta" style="width:100%;min-height:260px;border:none;background:rgba(255,255,255,0.5);border-radius:12px;padding:1.2rem;font-family:'Caveat',cursive;font-size:1.12rem;line-height:1.7;color:var(--text);resize:none;outline:none;border:1px solid var(--line);" placeholder="What's on your mind today?&#10;&#10;Pick up where you left off, think through a decision, or just write it down before it disappears."></textarea>
+      <div style="font-size:0.65rem;color:var(--muted);opacity:0.5;margin-top:0.5rem;text-align:right;" id="notepad-saved"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="lt-cta">
+  <span class="section-label">Make it yours</span>
+  <h2>Every little thing<br>can be <em>customized for you.</em></h2>
+  <p>Colors, layout, what it tracks, what it says. These tools are built around how your team actually works — not the other way around.</p>
+  <a href="index.html#contact" class="btn-cta">Let's talk about what you need</a>
+</section>
+
+<script>
+// ─── POST-ITS ───────────────────────────────────
+let activeColor = '#fff9a3';
+let notes = JSON.parse(localStorage.getItem('cds-notes') || '[]');
+const board = document.getElementById('postit-board');
+
+document.querySelectorAll('.color-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeColor = btn.dataset.color;
+  });
+});
+
+function darken(hex) {
+  const c = parseInt(hex.slice(1), 16);
+  const r = Math.max(0, (c >> 16) - 30);
+  const g = Math.max(0, ((c >> 8) & 0xff) - 30);
+  const b = Math.max(0, (c & 0xff) - 30);
+  return `rgb(${r},${g},${b})`;
+}
+
+function addNote(data) {
+  const bw = board.clientWidth || 600;
+  const bh = board.clientHeight || 420;
+  const note = data || {
+    id: Date.now(),
+    color: activeColor,
+    text: '',
+    x: 60 + Math.random() * (bw - 240),
+    y: 50 + Math.random() * (bh - 200),
+    rot: (Math.random() - 0.5) * 4,
+  };
+
+  const el = document.createElement('div');
+  el.className = 'post-it';
+  el.dataset.id = note.id;
+  el.style.cssText = `background:${note.color};left:${note.x}px;top:${note.y}px;transform:rotate(${note.rot}deg);`;
+
+  const tab = document.createElement('div');
+  tab.className = 'note-tab';
+  tab.style.background = darken(note.color);
+
+  const del = document.createElement('button');
+  del.className = 'note-delete';
+  del.textContent = '✕';
+  del.onclick = () => { el.remove(); saveNotes(); };
+
+  const ta = document.createElement('textarea');
+  ta.value = note.text;
+  ta.placeholder = 'Write something…';
+  ta.oninput = saveNotes;
+
+  el.appendChild(tab);
+  el.appendChild(del);
+  el.appendChild(ta);
+  board.appendChild(el);
+  makeDraggable(el);
+  if (!data) { ta.focus(); saveNotes(); }
+}
+
+function makeDraggable(el) {
+  let ox, oy, dragging = false;
+  el.addEventListener('mousedown', e => {
+    if (e.target.tagName === 'TEXTAREA' || e.target.classList.contains('note-delete')) return;
+    dragging = true;
+    const r = el.getBoundingClientRect();
+    const br = board.getBoundingClientRect();
+    ox = e.clientX - (r.left - br.left);
+    oy = e.clientY - (r.top - br.top);
+    el.style.zIndex = ++window._zTop || 10;
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const br = board.getBoundingClientRect();
+    el.style.left = Math.max(0, Math.min(br.width - 180, e.clientX - br.left - ox)) + 'px';
+    el.style.top = Math.max(0, Math.min(br.height - 140, e.clientY - br.top - oy)) + 'px';
+  });
+  window.addEventListener('mouseup', () => { if (dragging) { dragging = false; saveNotes(); } });
+}
+
+function saveNotes() {
+  const saved = [];
+  board.querySelectorAll('.post-it').forEach(el => {
+    saved.push({
+      id: el.dataset.id,
+      color: el.style.background,
+      text: el.querySelector('textarea').value,
+      x: parseFloat(el.style.left),
+      y: parseFloat(el.style.top),
+      rot: parseFloat(el.style.transform.replace('rotate(', '').replace('deg)', '')) || 0,
+    });
+  });
+  localStorage.setItem('cds-notes', JSON.stringify(saved));
+}
+
+function clearNotes() {
+  board.querySelectorAll('.post-it').forEach(el => el.remove());
+  localStorage.removeItem('cds-notes');
+}
+
+// Load saved notes
+if (notes.length) {
+  notes.forEach(n => addNote(n));
+} else {
+  // Seed with sample notes
+  setTimeout(() => {
+    addNote({ id: 1, color: '#fff9a3', text: 'Follow up with Deborah re: custom holiday order by Friday', x: 55, y: 58, rot: -1.5 });
+    addNote({ id: 2, color: '#b5e8c8', text: 'Bloom Supply arrives Tuesday AM 🌿', x: 260, y: 80, rot: 1.2 });
+    addNote({ id: 3, color: '#ffd8a8', text: 'Check with Tom about the Saturday shift swap', x: 440, y: 50, rot: -0.8 });
+    addNote({ id: 4, color: '#e0d0ff', text: 'Reorder:\n– Linen Throw (Sage)\n– Cork Tray (Sm)\n– Soy Candle 8oz', x: 160, y: 210, rot: 0.6 });
+  }, 100);
+}
+
+// ─── VAULT ───────────────────────────────────
+const vaultData = [
+  { icon: '🛒', bg: '#e8f4e8', name: 'Square POS', user: 'owner@myboutique.com', pass: 'Qr8!xNp2mZ' },
+  { icon: '📦', bg: '#e8eef8', name: 'Shopify Admin', user: 'myboutique.myshopify.com', pass: 'Shpfy#2025!Mv' },
+  { icon: '📋', bg: '#f8f0e8', name: 'QuickBooks', user: 'accounting@myboutique.com', pass: 'QB$Acct77rX' },
+  { icon: '📧', bg: '#f0e8f8', name: 'Business Email', user: 'hello@myboutique.com', pass: 'Gm@il!Pr1me9' },
+  { icon: '🏦', bg: '#e8f8f0', name: 'Business Banking', user: 'myboutique — checking', pass: 'B@nk#Pass22xZ' },
+  { icon: '📱', bg: '#f8e8e8', name: 'Instagram', user: '@myboutiquefl', pass: 'Insta!2024Sec' },
+];
+
+function buildVaultEntries(filter) {
+  const container = document.getElementById('vault-entries');
+  container.innerHTML = '';
+  vaultData.filter(e => !filter || e.name.toLowerCase().includes(filter.toLowerCase()) || e.user.toLowerCase().includes(filter.toLowerCase())).forEach(entry => {
+    const div = document.createElement('div');
+    div.className = 'vault-entry';
+    div.innerHTML = `
+      <div class="entry-icon" style="background:${entry.bg}">${entry.icon}</div>
+      <div class="entry-body">
+        <div class="entry-name">${entry.name}</div>
+        <div class="entry-user">${entry.user}</div>
+        <div class="entry-pass" title="Click to reveal" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'${entry.pass}':'••••••••••••'">••••••••••••</div>
+      </div>
+      <div class="entry-actions">
+        <button class="entry-btn" onclick="copyEntry(this,'${entry.pass}')">Copy</button>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function copyEntry(btn, pass) {
+  navigator.clipboard.writeText(pass).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+function unlockVault() {
+  const pw = document.getElementById('vault-pw').value;
+  const err = document.getElementById('vault-err');
+  if (pw === 'vault2025') {
+    document.getElementById('vault-locked').style.display = 'none';
+    const unlocked = document.getElementById('vault-unlocked');
+    unlocked.classList.add('visible');
+    buildVaultEntries('');
+  } else {
+    err.textContent = 'Incorrect password. (Hint: vault2025)';
+    document.getElementById('vault-pw').style.borderColor = '#c0392b';
+  }
+}
+document.getElementById('vault-pw').addEventListener('keydown', e => { if (e.key === 'Enter') unlockVault(); });
+
+function lockVault() {
+  document.getElementById('vault-locked').style.display = '';
+  document.getElementById('vault-unlocked').classList.remove('visible');
+  document.getElementById('vault-pw').value = '';
+  document.getElementById('vault-pw').style.borderColor = '';
+  document.getElementById('vault-err').textContent = '';
+}
+
+function filterVault(v) { buildVaultEntries(v); }
+
+// ─── NOTEPAD ───────────────────────────────────
+const npKey = 'cds-notepad-' + new Date().toDateString();
+const npTa = document.getElementById('notepad-ta');
+const npSaved = document.getElementById('notepad-saved');
+document.getElementById('notepad-date').textContent = new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+npTa.value = localStorage.getItem(npKey) || '';
+npTa.addEventListener('input', () => {
+  localStorage.setItem(npKey, npTa.value);
+  npSaved.textContent = 'Saved · ' + new Date().toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+});
+function clearNotepad() { npTa.value = ''; localStorage.removeItem(npKey); npSaved.textContent = 'Cleared'; }
+
+// ─── DROPDOWN ───────────────────────────────────
+document.querySelectorAll('.has-dropdown > a').forEach(link => {
+  link.addEventListener('click', e => {
+    const li = link.closest('.has-dropdown');
+    const isOpen = li.classList.contains('open');
+    document.querySelectorAll('.has-dropdown').forEach(el => el.classList.remove('open'));
+    if (!isOpen) { e.preventDefault(); li.classList.add('open'); }
+  });
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.has-dropdown')) document.querySelectorAll('.has-dropdown').forEach(el => el.classList.remove('open'));
+});
+</script>
+</body>
+</html>
