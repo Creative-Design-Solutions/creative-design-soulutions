@@ -54,10 +54,7 @@
     /* ── TOOLS ROW ── */
     .tools-row {
       padding: 0 4rem 6rem;
-      display: grid;
-      grid-template-columns: minmax(0, 600px) 1fr;
-      gap: 2.5rem;
-      align-items: start;
+      max-width: 660px;
     }
     .tool-panel { display: flex; flex-direction: column; }
     .tool-copy-sm { margin-bottom: 1.2rem; }
@@ -150,17 +147,61 @@
     .gs-body textarea::-webkit-scrollbar { display: none; }
     .gs-date { position: relative; z-index: 2; padding: 0 12px 9px; font-size: 9px; color: rgba(255,255,255,0.28); letter-spacing: 0.04em; }
 
-    /* ── VAULT (placeholder for now) ── */
-    .vault-placeholder {
-      background: rgba(30,40,60,0.04);
-      border: 1.5px dashed var(--line);
-      border-radius: 16px; min-height: 320px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 0.75rem; text-align: center; padding: 2rem;
+    /* ── VAULT CHROME WINDOW (floating) ── */
+    .vault-float {
+      position: fixed;
+      right: 40px;
+      bottom: 40px;
+      z-index: 300;
+      width: 360px;
     }
-    .vault-placeholder .ph-icon { font-size: 2.8rem; opacity: 0.3; }
-    .vault-placeholder p { font-size: 0.82rem; color: var(--muted); max-width: 280px; line-height: 1.6; }
+    .vault-chrome-ring {
+      padding: 1.5px;
+      background: linear-gradient(135deg, #b8780a 0%, #e8c058 22%, #f5dA80 40%, #c08828 58%, #e0b850 76%, #a06820 100%);
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .vault-window {
+      border-radius: 12.5px;
+      overflow: hidden;
+      resize: both;
+      min-width: 280px;
+      min-height: 46px;
+      height: 480px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+    .vault-window.collapsed { height: 44px !important; resize: none; }
+    .vault-window.hidden-panel { display: none; }
+    .vault-titlebar {
+      height: 44px; flex-shrink: 0;
+      background: linear-gradient(to bottom, #f8f2e8, #ece4d4);
+      border-bottom: 1px solid rgba(200,146,42,0.18);
+      display: flex; align-items: center; padding: 0 10px; gap: 8px;
+      user-select: none;
+    }
+    .vault-trafficlights { display: flex; gap: 5px; flex-shrink: 0; }
+    .vt-dot { width: 12px; height: 12px; border-radius: 50%; border: none; cursor: pointer; transition: filter 0.15s; position: relative; }
+    .vt-dot::after { content: ''; position: absolute; inset: 2px; border-radius: 50%; background: rgba(255,255,255,0.35); }
+    .vt-dot:hover { filter: brightness(1.12); }
+    .vt-close  { background: radial-gradient(circle at 35% 35%, #ff7a73, #e0342e); }
+    .vt-min    { background: radial-gradient(circle at 35% 35%, #ffd04a, #d49800); }
+    .vt-zoom   { background: radial-gradient(circle at 35% 35%, #54d467, #20a035); }
+    .vault-win-title {
+      flex: 1; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: #7a6248;
+    }
+    .vt-collapse {
+      background: none; border: none; color: #a08868; font-size: 11px;
+      cursor: pointer; padding: 2px 5px; border-radius: 3px;
+      transition: background 0.12s; flex-shrink: 0; line-height: 1;
+    }
+    .vt-collapse:hover { background: rgba(0,0,0,0.07); }
+    .vault-body { flex: 1; overflow: hidden; min-height: 0; }
+    .vault-body iframe { width: 100%; height: 100%; border: none; display: block; }
+    .vault-window.collapsed .vault-body { display: none; }
 
     /* ── Dividers ── */
     .tool-divider { max-width: 1100px; margin: 0 auto 5rem; padding: 0 3rem; border-top: 1px solid var(--line); }
@@ -217,10 +258,8 @@
   <p>Little things that feel helpful for the tasks that need a little companion.</p>
 </section>
 
-<!-- ── TOOLS ROW — stickies left, vault right ── -->
+<!-- ── TOOLS ROW — stickies ── -->
 <div class="tools-row">
-
-  <!-- LEFT: Glass Stickies -->
   <div class="tool-panel" id="stickies">
     <div class="tool-copy-sm">
       <span class="tool-tag tag-live">Live</span>
@@ -239,22 +278,30 @@
       <div class="board-hint">drag · click to type · + for new</div>
     </div>
   </div>
+</div>
 
-  <!-- RIGHT: Password Vault -->
-  <div class="tool-panel" id="vault">
-    <div class="tool-copy-sm">
-      <span class="tool-tag tag-live">Live</span>
-      <h2>Password <em>Vault</em></h2>
-      <p>Secure credential storage — sign in to access your saved entries.</p>
+<!-- ── VAULT — floating chrome window ── -->
+<div class="vault-float" id="vault-float">
+  <div class="vault-chrome-ring">
+    <div class="vault-window" id="vault-window">
+      <div class="vault-titlebar" id="vault-drag-bar">
+        <div class="vault-trafficlights">
+          <button class="vt-dot vt-close" id="vt-close" title="Hide vault"></button>
+          <button class="vt-dot vt-min"   id="vt-min"   title="Collapse"></button>
+          <button class="vt-dot vt-zoom"  id="vt-zoom"  title="Expand"></button>
+        </div>
+        <span class="vault-win-title">Credential Vault</span>
+        <button class="vt-collapse" id="vt-collapse" title="Collapse">▾</button>
+      </div>
+      <div class="vault-body">
+        <iframe
+          src="https://creative-design-solutions.github.io/Practice-Portal/vault.html"
+          title="Credential Vault"
+          loading="lazy"
+        ></iframe>
+      </div>
     </div>
-    <iframe
-      src="https://creative-design-solutions.github.io/Practice-Portal/vault.html"
-      title="Credential Vault"
-      style="width:100%;height:480px;border:none;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.08);"
-      loading="lazy"
-    ></iframe>
   </div>
-
 </div>
 
 <!-- CTA — copy placeholder -->
@@ -394,6 +441,83 @@ function load() {
 }
 
 load();
+
+// ─── VAULT WINDOW ────────────────────────────
+(function() {
+  const floatEl  = document.getElementById('vault-float');
+  const winEl    = document.getElementById('vault-window');
+  const dragBar  = document.getElementById('vault-drag-bar');
+  const collapseBtn = document.getElementById('vt-collapse');
+  const closeBtn    = document.getElementById('vt-close');
+  const minBtn      = document.getElementById('vt-min');
+  const zoomBtn     = document.getElementById('vt-zoom');
+  const VK = 'vault-pos-v1';
+
+  // Restore saved position
+  try {
+    const p = JSON.parse(localStorage.getItem(VK) || 'null');
+    if (p) { floatEl.style.left = p.x + 'px'; floatEl.style.top = p.y + 'px'; floatEl.style.right = 'auto'; floatEl.style.bottom = 'auto'; }
+  } catch {}
+
+  // Draggable titlebar
+  let dx, dy, dragging = false;
+  dragBar.style.cursor = 'grab';
+  dragBar.addEventListener('mousedown', e => {
+    if (e.target.tagName === 'BUTTON') return;
+    dragging = true;
+    const r = floatEl.getBoundingClientRect();
+    dx = e.clientX - r.left;
+    dy = e.clientY - r.top;
+    dragBar.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const x = Math.max(0, Math.min(window.innerWidth  - 80,  e.clientX - dx));
+    const y = Math.max(0, Math.min(window.innerHeight - 44,  e.clientY - dy));
+    floatEl.style.left   = x + 'px';
+    floatEl.style.top    = y + 'px';
+    floatEl.style.right  = 'auto';
+    floatEl.style.bottom = 'auto';
+  });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    dragBar.style.cursor = 'grab';
+    try { localStorage.setItem(VK, JSON.stringify({ x: parseInt(floatEl.style.left), y: parseInt(floatEl.style.top) })); } catch {}
+  });
+
+  // Collapse / expand
+  function toggleCollapse() {
+    const c = winEl.classList.toggle('collapsed');
+    collapseBtn.textContent = c ? '▴' : '▾';
+  }
+  collapseBtn.addEventListener('click', toggleCollapse);
+  minBtn.addEventListener('click', toggleCollapse);
+
+  // Zoom — expand to a comfortable reading size
+  zoomBtn.addEventListener('click', () => {
+    winEl.classList.remove('collapsed');
+    winEl.style.width  = '480px';
+    winEl.style.height = '620px';
+    collapseBtn.textContent = '▾';
+  });
+
+  // Close — hide with a restore hint
+  closeBtn.addEventListener('click', () => {
+    floatEl.style.display = 'none';
+    // Show a small re-open chip at bottom-right
+    let chip = document.getElementById('vault-reopen');
+    if (!chip) {
+      chip = document.createElement('button');
+      chip.id = 'vault-reopen';
+      chip.textContent = '🔐 Vault';
+      chip.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:400;background:linear-gradient(135deg,#b8780a,#e8c058);color:#fff;border:none;border-radius:99px;padding:8px 18px;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.18);';
+      chip.addEventListener('click', () => { floatEl.style.display = ''; chip.remove(); });
+      document.body.appendChild(chip);
+    }
+  });
+})();
 
 // ─── DROPDOWN ────────────────────────────────
 document.querySelectorAll('.has-dropdown > a').forEach(link => {
