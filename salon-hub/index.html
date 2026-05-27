@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blossom — Salon & Color Studio Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ivory:      #fdf9f5;
+  --parchment:  #f5ece2;
+  --panel:      #ffffff;
+  --panel-warm: #fdf5ef;
+  --espresso:   #2a1a14;
+  --warm:       #6b4a3a;
+  --muted:      #9e7e6e;
+  --faint:      #d4b4a4;
+  --line:       rgba(90,50,35,0.07);
+  --line-m:     rgba(90,50,35,0.13);
+
+  --blush:      #b87880;
+  --blush-l:    #faeeef;
+  --blush-m:    rgba(184,120,128,0.25);
+
+  --sage:       #7a9a82;
+  --sage-l:     #e4ede6;
+  --terra:      #b06858;
+  --terra-l:    #f5e4de;
+
+  --gold:       #b89060;
+  --gold-l:     #f5e8d8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--ivory);
+  color: var(--espresso);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  height: 48px;
+  background: var(--espresso);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 16px;
+}
+.brand-mark {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 20px;
+  color: #fdf5ef;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+.brand-sub {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(253,245,239,0.45);
+  flex-shrink: 0;
+}
+.topbar-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+.topbar-day {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(253,245,239,0.5);
+  flex-shrink: 0;
+}
+.topbar-status { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.status-item {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(253,245,239,0.45);
+}
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.2); flex-shrink: 0; }
+.status-dot.on { background: #a8d8a0; box-shadow: 0 0 5px rgba(168,216,160,0.6); }
+.topbar-right { margin-left: auto; }
+.tbar-btn {
+  font-family: Inter; font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+  color: rgba(253,245,239,0.7); background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 5px;
+  padding: 7px 16px; cursor: pointer; transition: all 0.15s;
+}
+.tbar-btn:hover { background: rgba(255,255,255,0.13); color: #fdf5ef; }
+
+/* ── NAV ── */
+.nav {
+  height: 44px;
+  background: var(--panel-warm);
+  border-bottom: 1px solid var(--line-m);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 2px;
+}
+.nav button {
+  font-family: Inter; font-size: 10px; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); background: none;
+  border: 1px solid transparent; border-radius: 999px;
+  padding: 6px 16px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.nav button.active {
+  background: var(--blush-l); color: var(--blush);
+  border-color: var(--blush-m); font-weight: 500;
+}
+.nav button:hover:not(.active) { background: var(--parchment); color: var(--warm); }
+.nav-right { margin-left: auto; display: flex; align-items: center; }
+.nav-pill {
+  font-family: Inter; font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--muted);
+  border: 1px solid var(--line-m); border-radius: 999px; padding: 5px 12px; white-space: nowrap;
+}
+
+/* ── MAIN ── */
+main {
+  max-width: 1200px; margin: 0 auto;
+  padding: 24px 32px 64px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+}
+.card-label {
+  font-size: 9px; font-weight: 400; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+}
+
+/* ── HERO ROW ── */
+.hero-row { display: grid; grid-template-columns: 7fr 5fr; gap: 16px; }
+
+.greeting-card {
+  background: var(--panel-warm);
+  border: 1px solid var(--line-m);
+  border-left: 3px solid var(--blush-m);
+  border-radius: 16px; padding: 26px;
+}
+.greeting-headline {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-weight: 400; font-size: 30px;
+  line-height: 1.15; letter-spacing: -0.01em;
+  color: var(--espresso); margin-bottom: 10px;
+}
+.greeting-context { font-size: 12px; color: var(--blush); margin-bottom: 12px; letter-spacing: 0.02em; font-weight: 500; }
+.greeting-body {
+  font-size: 14px; color: var(--warm); line-height: 1.65;
+  max-width: 520px; margin-bottom: 22px;
+}
+.greeting-body strong { color: var(--espresso); font-weight: 600; }
+.greeting-body em { font-style: italic; color: var(--espresso); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn-primary {
+  font-family: Inter; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  background: var(--espresso); color: var(--ivory);
+  border: none; border-radius: 8px; padding: 10px 18px;
+  cursor: pointer; transition: all 0.15s;
+}
+.btn-primary:hover { background: var(--warm); }
+.btn-secondary {
+  font-family: Inter; font-size: 11px; font-weight: 400; letter-spacing: 0.04em;
+  background: none; color: var(--warm);
+  border: 1px solid var(--line-m); border-radius: 8px; padding: 10px 18px;
+  cursor: pointer; transition: all 0.15s;
+}
+.btn-secondary:hover { border-color: var(--faint); color: var(--espresso); background: var(--parchment); }
+
+/* ── METRICS CARD ── */
+.metrics-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+.metric-rows { display: flex; flex-direction: column; }
+.metric-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.metric-row:last-child { border-bottom: none; padding-bottom: 0; }
+.metric-row:first-child { padding-top: 0; }
+.metric-left { display: flex; flex-direction: column; gap: 2px; }
+.metric-name { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
+.metric-delta { font-size: 12px; color: var(--sage); }
+.metric-delta.down { color: var(--terra); }
+.metric-value { font-size: 18px; font-weight: 600; color: var(--espresso); letter-spacing: -0.01em; align-self: center; }
+
+/* ── SESSION TIMELINE ── */
+.session-list { display: flex; flex-direction: column; }
+.session-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.session-row:first-child { padding-top: 0; }
+.session-row:last-child { border-bottom: none; padding-bottom: 0; }
+.session-time { font-size: 12px; color: var(--muted); width: 64px; flex-shrink: 0; }
+.session-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--faint);
+}
+.session-dot.done { background: var(--sage); }
+.session-dot.now  { background: var(--blush); box-shadow: 0 0 6px var(--blush-m); }
+.session-dot.next { background: var(--faint); border: 2px solid rgba(184,120,128,0.4); }
+.session-info { flex: 1; }
+.session-client { font-size: 14px; color: var(--espresso); }
+.session-type { font-size: 12px; color: var(--muted); }
+.session-who { font-size: 12px; color: var(--blush); margin-left: auto; white-space: nowrap; }
+
+/* ── LOWER ROW ── */
+.lower-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ── CLIENT NOTES ── */
+.client-entry {
+  display: flex; gap: 12px; padding: 14px 0;
+  border-bottom: 1px solid var(--line); align-items: flex-start;
+}
+.client-entry:first-child { padding-top: 0; }
+.client-entry:last-child { border-bottom: none; padding-bottom: 0; }
+.client-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--parchment); border: 1px solid var(--line-m);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 14px; color: var(--warm); flex-shrink: 0;
+}
+.client-body { flex: 1; min-width: 0; }
+.client-name { font-size: 12px; font-weight: 600; color: var(--espresso); margin-bottom: 3px; }
+.client-note { font-size: 14px; color: var(--warm); line-height: 1.6; margin-bottom: 6px; }
+.tag {
+  display: inline-block; font-size: 9px; letter-spacing: 0.15em;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+  border: 1px solid var(--line-m); color: var(--muted);
+}
+.tag.color  { background: var(--blush-l); color: var(--blush); border-color: var(--blush-m); }
+.tag.alert  { background: var(--terra-l); color: var(--terra); border-color: rgba(176,104,88,0.2); }
+.tag.note   { background: var(--sage-l);  color: var(--sage);  border-color: rgba(122,154,130,0.2); }
+.tag.gold   { background: var(--gold-l);  color: var(--gold);  border-color: rgba(184,144,96,0.2); }
+
+/* ── STYLIST ROWS ── */
+.stylist-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.stylist-row:first-child { padding-top: 0; }
+.stylist-row:last-child { border-bottom: none; padding-bottom: 0; }
+.stylist-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--parchment); border: 1px solid var(--line-m);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 14px; color: var(--blush); flex-shrink: 0;
+}
+.stylist-info { flex: 1; }
+.stylist-name { font-size: 14px; color: var(--espresso); }
+.stylist-detail { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.badge {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 999px; border: 1px solid var(--line-m);
+  color: var(--muted); flex-shrink: 0;
+}
+.badge.on    { background: var(--sage-l);  color: var(--sage);  border-color: rgba(122,154,130,0.2); }
+.badge.chair { background: var(--blush-l); color: var(--blush); border-color: var(--blush-m); }
+
+/* ── TWO COL ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ── PLAIN LIST ── */
+.plain-list { list-style: none; }
+.plain-list li {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+}
+.plain-list li:first-child { padding-top: 0; }
+.plain-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.list-muted { font-size: 12px; color: var(--muted); }
+
+/* ── INVENTORY ── */
+.inv-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+}
+.inv-row:first-child { padding-top: 0; }
+.inv-row:last-child { border-bottom: none; padding-bottom: 0; }
+.inv-sku { font-size: 11px; color: var(--muted); margin-left: 8px; }
+.qty { font-size: 12px; font-weight: 600; color: var(--muted); }
+.qty.low { color: var(--terra); }
+.qty.ok  { color: var(--sage); }
+
+/* ── AUTOMATIONS ── */
+.auto-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 0; border-bottom: 1px solid var(--line);
+}
+.auto-row:first-child { padding-top: 0; }
+.auto-row:last-child { border-bottom: none; padding-bottom: 0; }
+.auto-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0; background: var(--parchment);
+}
+.auto-icon.ok   { background: var(--sage-l); }
+.auto-icon.warn { background: var(--terra-l); }
+.auto-icon.blush { background: var(--blush-l); }
+.auto-name { font-size: 14px; font-weight: 600; color: var(--espresso); margin-bottom: 3px; }
+.auto-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.auto-status {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; flex-shrink: 0;
+  border: 1px solid; height: max-content; align-self: flex-start; margin-top: 2px;
+}
+.auto-status.ok   { background: var(--sage-l);  color: var(--sage);  border-color: rgba(122,154,130,0.2); }
+.auto-status.warn { background: var(--terra-l); color: var(--terra); border-color: rgba(176,104,88,0.2); }
+.auto-status.blush { background: var(--blush-l); color: var(--blush); border-color: var(--blush-m); }
+
+/* ── STAT GRID (stylists tab) ── */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
+.stat-tile {
+  background: var(--panel-warm); border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px;
+}
+.stat-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.stat-value { font-size: 26px; font-weight: 600; color: var(--espresso); letter-spacing: -0.02em; line-height: 1; }
+.stat-sub { font-size: 11px; color: var(--sage); margin-top: 4px; }
+.stat-sub.down { color: var(--terra); }
+
+/* ── COLOR FORMULA BOX ── */
+.formula-box {
+  background: var(--parchment); border: 1px solid var(--line-m);
+  border-radius: 10px; padding: 14px 16px; margin-top: 8px;
+  font-size: 12px; color: var(--warm); line-height: 1.8;
+  font-family: 'Courier New', monospace;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap { margin-top: 6px; }
+.progress-bar {
+  height: 3px; background: var(--line); border-radius: 99px; overflow: hidden;
+}
+.progress-fill { height: 100%; border-radius: 99px; }
+.progress-fill.blush { background: var(--blush); }
+.progress-fill.sage  { background: var(--sage); }
+.progress-fill.gold  { background: var(--gold); }
+.progress-label { font-size: 10px; color: var(--muted); margin-top: 4px; display: flex; justify-content: space-between; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; right: 24px; bottom: 24px;
+  background: var(--espresso); color: rgba(253,249,245,0.88);
+  border-radius: 10px; padding: 12px 18px; font-size: 12px;
+  letter-spacing: 0.03em; opacity: 0; transform: translateY(6px);
+  transition: 0.2s; pointer-events: none; border: 1px solid rgba(255,255,255,0.06);
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── TAB SECTIONS ── */
+.tab-section { display: none; }
+
+/* ── APPOINTMENTS TABLE ── */
+.appt-table { width: 100%; border-collapse: collapse; }
+.appt-table th {
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); font-weight: 400; padding: 0 0 12px 0;
+  text-align: left; border-bottom: 1px solid var(--line-m);
+}
+.appt-table td {
+  padding: 13px 0; border-bottom: 1px solid var(--line);
+  font-size: 13px; vertical-align: middle;
+}
+.appt-table tr:last-child td { border-bottom: none; }
+.appt-name { font-weight: 500; color: var(--espresso); }
+.appt-service { color: var(--muted); font-size: 12px; }
+.appt-status {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; border: 1px solid;
+  white-space: nowrap;
+}
+.appt-status.confirmed { background: var(--sage-l);  color: var(--sage);  border-color: rgba(122,154,130,0.2); }
+.appt-status.in-chair  { background: var(--blush-l); color: var(--blush); border-color: var(--blush-m); }
+.appt-status.complete  { background: var(--parchment); color: var(--muted); border-color: var(--line-m); }
+.appt-status.open      { background: var(--gold-l); color: var(--gold); border-color: rgba(184,144,96,0.2); }
+
+/* ── SECTION DIVIDER ── */
+.section-head {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--muted); padding-bottom: 12px; border-bottom: 1px solid var(--line);
+  margin-bottom: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width: 1024px) { .hero-row { grid-template-columns: 1fr; } }
+@media(max-width: 768px) {
+  .nav { overflow-x: auto; }
+  .topbar { padding: 0 16px; gap: 8px; }
+  .topbar-day, .topbar-status { display: none; }
+  .lower-row, .two-col { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width: 640px) {
+  main { padding: 16px 14px 48px; gap: 12px; }
+  .nav { padding: 0 12px; }
+  .brand-sub { display: none; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="brand-mark">Blossom</span>
+  <span class="brand-sub">Salon & Color Studio</span>
+  <div class="topbar-sep"></div>
+  <span class="topbar-day">Wednesday · 14 Appointments</span>
+  <div class="topbar-sep"></div>
+  <div class="topbar-status">
+    <div class="status-item"><span class="status-dot on"></span>Vagaro</div>
+    <div class="status-item"><span class="status-dot on"></span>Online Booking</div>
+  </div>
+  <div class="topbar-right">
+    <button class="tbar-btn" onclick="toast('Generating end of day summary...')">Close Day</button>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="active" data-tab="today">Today</button>
+  <button data-tab="appointments">Appointments</button>
+  <button data-tab="stylists">Stylists</button>
+  <button data-tab="clients">Clients</button>
+  <button data-tab="retail">Retail</button>
+  <button data-tab="automations">Automations</button>
+  <div class="nav-right">
+    <span class="nav-pill">Live Sync</span>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── TODAY ── -->
+  <div id="tab-today">
+
+    <div class="hero-row">
+
+      <div class="greeting-card">
+        <div class="card-label" style="margin-bottom:6px;">Good Morning</div>
+        <h2 class="greeting-headline">Good morning, <em>Sophie.</em></h2>
+        <p class="greeting-context">14 appointments today. 5 color services, 6 cuts, 3 blowouts.</p>
+        <p class="greeting-body">
+          Maya's 10:30 AM is her third color appointment this season — her <em>Olaplex treatment</em> needs to be prepped before she arrives. You have two open chairs this afternoon. <strong>$2,140</strong> in services booked so far, with <strong>$196</strong> in retail attached to today's visits. Lily has a formula note flagged for review before her 1:00 PM.
+        </p>
+        <div class="actions">
+          <button class="btn-primary" onclick="toast('Opening schedule...')">View Schedule</button>
+          <button class="btn-secondary" onclick="toast('Opening retail queue...')">Retail Queue</button>
+          <button class="btn-secondary" onclick="toast('Opening client notes...')">Client Notes</button>
+        </div>
+      </div>
+
+      <div class="metrics-card">
+        <div class="card-label">Right Now</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div class="metric-left">
+              <span class="metric-name">Appointments</span>
+              <span class="metric-delta">5 complete · 9 ahead</span>
+            </div>
+            <span class="metric-value">14</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left">
+              <span class="metric-name">Service Revenue</span>
+              <span class="metric-delta">↑ $310 vs last Wed</span>
+            </div>
+            <span class="metric-value">$2,140</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left">
+              <span class="metric-name">Chair Utilization</span>
+              <span class="metric-delta">2 open slots remaining</span>
+            </div>
+            <span class="metric-value">78%</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left">
+              <span class="metric-name">Retail Today</span>
+              <span class="metric-delta">7 items · 5 visits</span>
+            </div>
+            <span class="metric-value">$196</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Today's Appointments Timeline -->
+    <div class="card">
+      <div class="card-label">Today's Chair Schedule</div>
+      <div class="session-list">
+        <div class="session-row">
+          <span class="session-time">9:00 AM</span>
+          <span class="session-dot done"></span>
+          <div class="session-info">
+            <div class="session-client">Rachel K. — Blowout, 45 min</div>
+            <div class="session-type">Chair 1</div>
+          </div>
+          <span class="session-who">Sophie L.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">9:30 AM</span>
+          <span class="session-dot done"></span>
+          <div class="session-info">
+            <div class="session-client">Dana P. — Cut & Style, 60 min</div>
+            <div class="session-type">Chair 2</div>
+          </div>
+          <span class="session-who">Jade M.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">10:00 AM</span>
+          <span class="session-dot done"></span>
+          <div class="session-info">
+            <div class="session-client">Cora F. — Full Color, 2 hr</div>
+            <div class="session-type">Chair 3</div>
+          </div>
+          <span class="session-who">Sophie L.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">10:30 AM</span>
+          <span class="session-dot now"></span>
+          <div class="session-info">
+            <div class="session-client">Maya R. — Balayage + Olaplex, 2.5 hr</div>
+            <div class="session-type">Chair 1 · Color prep flagged</div>
+          </div>
+          <span class="session-who">Jade M.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">11:00 AM</span>
+          <span class="session-dot done"></span>
+          <div class="session-info">
+            <div class="session-client">Nora B. — Cut, 45 min</div>
+            <div class="session-type">Chair 2</div>
+          </div>
+          <span class="session-who">Camille T.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">1:00 PM</span>
+          <span class="session-dot next"></span>
+          <div class="session-info">
+            <div class="session-client">Lily H. — Root Touch-Up, 90 min · formula note</div>
+            <div class="session-type">Chair 3</div>
+          </div>
+          <span class="session-who">Sophie L.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">2:30 PM</span>
+          <span class="session-dot next"></span>
+          <div class="session-info">
+            <div class="session-client">Ava C. — Blowout, 45 min</div>
+            <div class="session-type">Chair 1</div>
+          </div>
+          <span class="session-who">Camille T.</span>
+        </div>
+        <div class="session-row">
+          <span class="session-time">4:00 PM</span>
+          <span class="session-dot next"></span>
+          <div class="session-info">
+            <div class="session-client">Open — Chair 2 available</div>
+            <div class="session-type">Same-day booking open</div>
+          </div>
+          <span class="session-who" style="color:var(--gold);">Available</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lower-row">
+
+      <!-- Client Notes -->
+      <div class="card">
+        <div class="card-label">Client Notes — Today</div>
+        <div class="client-entry">
+          <div class="client-avatar">M</div>
+          <div class="client-body">
+            <div class="client-name">Maya R.</div>
+            <div class="client-note">Third balayage this season. Loves warm tones — add a touch more gold to the ends. Olaplex treatment confirmed.</div>
+            <span class="tag color">Color Client</span>
+          </div>
+        </div>
+        <div class="client-entry">
+          <div class="client-avatar">L</div>
+          <div class="client-body">
+            <div class="client-name">Lily H.</div>
+            <div class="client-note">Formula updated last visit — check notes before mixing. Previously sensitive to developer above 20 vol.</div>
+            <span class="tag alert">Formula Check</span>
+          </div>
+        </div>
+        <div class="client-entry">
+          <div class="client-avatar">C</div>
+          <div class="client-body">
+            <div class="client-name">Cora F.</div>
+            <div class="client-note">Full color complete. Purchased Olaplex No.3 and leave-in. Rebooked for 8 weeks.</div>
+            <span class="tag note">Rebooked ✓</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stylist Status -->
+      <div class="card">
+        <div class="card-label">Stylists — Today</div>
+        <div class="stylist-row">
+          <div class="stylist-avatar">S</div>
+          <div class="stylist-info">
+            <div class="stylist-name">Sophie L.</div>
+            <div class="stylist-detail">5 appointments · $820 booked</div>
+          </div>
+          <span class="badge chair">On Chair</span>
+        </div>
+        <div class="stylist-row">
+          <div class="stylist-avatar">J</div>
+          <div class="stylist-info">
+            <div class="stylist-name">Jade M.</div>
+            <div class="stylist-detail">4 appointments · $740 booked</div>
+          </div>
+          <span class="badge chair">On Chair</span>
+        </div>
+        <div class="stylist-row">
+          <div class="stylist-avatar">C</div>
+          <div class="stylist-info">
+            <div class="stylist-name">Camille T.</div>
+            <div class="stylist-detail">3 appointments · $420 booked</div>
+          </div>
+          <span class="badge on">Available</span>
+        </div>
+        <div class="stylist-row">
+          <div class="stylist-avatar">R</div>
+          <div class="stylist-info">
+            <div class="stylist-name">Rosa V.</div>
+            <div class="stylist-detail">2 appointments · $160 booked</div>
+          </div>
+          <span class="badge on">Available</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── APPOINTMENTS ── -->
+  <div id="tab-appointments" class="tab-section">
+
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-label">This Week</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div class="metric-left">
+              <span class="metric-name">Total Appointments</span>
+              <span class="metric-delta">↑ 8% vs last week</span>
+            </div>
+            <span class="metric-value">62</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left">
+              <span class="metric-name">Rebooking Rate</span>
+              <span class="metric-delta">Target: 70%</span>
+            </div>
+            <span class="metric-value">74%</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left">
+              <span class="metric-name">No-Show Rate</span>
+              <span class="metric-delta">↓ 1.2% vs last week</span>
+            </div>
+            <span class="metric-value">3.2%</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Service Mix — This Week</div>
+        <div style="display:flex;flex-direction:column;gap:14px;padding-top:4px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
+              <span>Color Services</span><span style="color:var(--blush);font-weight:600;">38%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill blush" style="width:38%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
+              <span>Cuts & Styling</span><span style="color:var(--sage);font-weight:600;">44%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill sage" style="width:44%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
+              <span>Treatments</span><span style="color:var(--gold);font-weight:600;">18%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill gold" style="width:18%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Today's Full Appointment List</div>
+      <table class="appt-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Client</th>
+            <th>Service</th>
+            <th>Stylist</th>
+            <th>Duration</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>9:00 AM</td>
+            <td><span class="appt-name">Rachel K.</span></td>
+            <td><span class="appt-service">Blowout</span></td>
+            <td>Sophie L.</td>
+            <td>45 min</td>
+            <td><span class="appt-status complete">Complete</span></td>
+          </tr>
+          <tr>
+            <td>9:30 AM</td>
+            <td><span class="appt-name">Dana P.</span></td>
+            <td><span class="appt-service">Cut & Style</span></td>
+            <td>Jade M.</td>
+            <td>60 min</td>
+            <td><span class="appt-status complete">Complete</span></td>
+          </tr>
+          <tr>
+            <td>10:00 AM</td>
+            <td><span class="appt-name">Cora F.</span></td>
+            <td><span class="appt-service">Full Color</span></td>
+            <td>Sophie L.</td>
+            <td>2 hr</td>
+            <td><span class="appt-status complete">Complete</span></td>
+          </tr>
+          <tr>
+            <td>10:30 AM</td>
+            <td><span class="appt-name">Maya R.</span></td>
+            <td><span class="appt-service">Balayage + Olaplex</span></td>
+            <td>Jade M.</td>
+            <td>2.5 hr</td>
+            <td><span class="appt-status in-chair">In Chair</span></td>
+          </tr>
+          <tr>
+            <td>11:00 AM</td>
+            <td><span class="appt-name">Nora B.</span></td>
+            <td><span class="appt-service">Cut</span></td>
+            <td>Camille T.</td>
+            <td>45 min</td>
+            <td><span class="appt-status complete">Complete</span></td>
+          </tr>
+          <tr>
+            <td>1:00 PM</td>
+            <td><span class="appt-name">Lily H.</span></td>
+            <td><span class="appt-service">Root Touch-Up</span></td>
+            <td>Sophie L.</td>
+            <td>90 min</td>
+            <td><span class="appt-status confirmed">Confirmed</span></td>
+          </tr>
+          <tr>
+            <td>2:30 PM</td>
+            <td><span class="appt-name">Ava C.</span></td>
+            <td><span class="appt-service">Blowout</span></td>
+            <td>Camille T.</td>
+            <td>45 min</td>
+            <td><span class="appt-status confirmed">Confirmed</span></td>
+          </tr>
+          <tr>
+            <td>4:00 PM</td>
+            <td><span class="appt-name">Open Slot</span></td>
+            <td><span class="appt-service">—</span></td>
+            <td>Jade M.</td>
+            <td>—</td>
+            <td><span class="appt-status open">Available</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ── STYLISTS ── -->
+  <div id="tab-stylists" class="tab-section">
+
+    <div class="stat-grid">
+      <div class="stat-tile">
+        <div class="stat-label">Weekly Revenue</div>
+        <div class="stat-value">$9,840</div>
+        <div class="stat-sub">↑ 12% vs last week</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Avg Ticket</div>
+        <div class="stat-value">$158</div>
+        <div class="stat-sub">↑ $14 vs last week</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Rebooking Rate</div>
+        <div class="stat-value">74%</div>
+        <div class="stat-sub">Target: 70%</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Retail per Stylist</div>
+        <div class="stat-value">$312</div>
+        <div class="stat-sub">↑ $48 vs last week</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">Sophie L. — Senior Stylist</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Appointments This Week</span></div>
+            <span class="metric-value">22</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Revenue</span><span class="metric-delta">↑ $480 vs last week</span></div>
+            <span class="metric-value">$3,480</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Rebooking Rate</span></div>
+            <span class="metric-value">82%</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Retail Sold</span></div>
+            <span class="metric-value">$520</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Jade M. — Color Specialist</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Appointments This Week</span></div>
+            <span class="metric-value">18</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Revenue</span><span class="metric-delta">↑ $220 vs last week</span></div>
+            <span class="metric-value">$3,060</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Rebooking Rate</span></div>
+            <span class="metric-value">78%</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Retail Sold</span></div>
+            <span class="metric-value">$384</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Camille T. — Stylist</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Appointments This Week</span></div>
+            <span class="metric-value">14</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Revenue</span><span class="metric-delta">↑ $80 vs last week</span></div>
+            <span class="metric-value">$2,100</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Rebooking Rate</span></div>
+            <span class="metric-value">68%</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Retail Sold</span></div>
+            <span class="metric-value">$248</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Rosa V. — Junior Stylist</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Appointments This Week</span></div>
+            <span class="metric-value">8</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Revenue</span><span class="metric-delta">↑ $140 vs last week</span></div>
+            <span class="metric-value">$1,200</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Rebooking Rate</span></div>
+            <span class="metric-value">62%</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Retail Sold</span></div>
+            <span class="metric-value">$96</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CLIENTS ── -->
+  <div id="tab-clients" class="tab-section">
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">Client Highlights</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Active Clients</span><span class="metric-delta">visited in last 90 days</span></div>
+            <span class="metric-value">184</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Avg Visit Frequency</span></div>
+            <span class="metric-value">6.2 wk</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">New Clients This Month</span><span class="metric-delta">↑ 4 vs last month</span></div>
+            <span class="metric-value">18</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Lapsed (90+ days)</span><span class="metric-delta">win-back campaign active</span></div>
+            <span class="metric-value">23</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Due for Rebook</div>
+        <ul class="plain-list">
+          <li><span>Samantha W.</span><span class="list-muted">Last visit 7 wks ago</span></li>
+          <li><span>Tara L.</span><span class="list-muted">Last visit 8 wks ago</span></li>
+          <li><span>Priya N.</span><span class="list-muted">Last visit 9 wks ago</span></li>
+          <li><span>Heather M.</span><span class="list-muted">Last visit 10 wks ago</span></li>
+          <li><span>Jess B.</span><span class="list-muted">Last visit 11 wks ago</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Color Formulas on File</div>
+      <div class="client-entry">
+        <div class="client-avatar">M</div>
+        <div class="client-body">
+          <div class="client-name">Maya R. — Balayage Client</div>
+          <div class="formula-box">
+Base: Wella 7/0 — 30 vol<br>
+Highlights: Blondor Freelights — 40 vol<br>
+Toner: /81 Pale Silver — 10 vol, 15 min<br>
+Olaplex No.1 added to color · No.2 post-rinse
+          </div>
+          <div style="margin-top:8px;"><span class="tag color">Updated 3 wks ago</span></div>
+        </div>
+      </div>
+      <div class="client-entry">
+        <div class="client-avatar">L</div>
+        <div class="client-body">
+          <div class="client-name">Lily H. — Root Touch-Up Client</div>
+          <div class="formula-box">
+Base: Redken 5N — 20 vol (sensitive — do NOT use 30 vol)<br>
+Gloss: Shades EQ 06N — 10 vol, 20 min<br>
+⚠ Developer sensitivity noted last visit — confirm before mixing
+          </div>
+          <div style="margin-top:8px;"><span class="tag alert">Sensitivity Flag</span></div>
+        </div>
+      </div>
+      <div class="client-entry">
+        <div class="client-avatar">C</div>
+        <div class="client-body">
+          <div class="client-name">Cora F. — Full Color Client</div>
+          <div class="formula-box">
+All-over: Wella 6/7 Chocolate — 30 vol<br>
+Face frame: Wella 8/0 — 30 vol<br>
+Toner: /07 Cool Beige — 10 vol, 10 min
+          </div>
+          <div style="margin-top:8px;"><span class="tag note">Last visit today · rebooked ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── RETAIL ── -->
+  <div id="tab-retail" class="tab-section">
+
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-label">Retail This Month</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Revenue</span><span class="metric-delta">↑ $380 vs last month</span></div>
+            <span class="metric-value">$3,240</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Items Sold</span></div>
+            <span class="metric-value">148</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric-left"><span class="metric-name">Attach Rate</span><span class="metric-delta">% of visits with retail</span></div>
+            <span class="metric-value">34%</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Top Sellers</div>
+        <ul class="plain-list">
+          <li><span>Olaplex No.3 Hair Perfector</span><span class="list-muted">42 sold</span></li>
+          <li><span>Redken All Soft Shampoo</span><span class="list-muted">28 sold</span></li>
+          <li><span>Wella Invigo Color Brilliance</span><span class="list-muted">22 sold</span></li>
+          <li><span>Moroccanoil Treatment</span><span class="list-muted">18 sold</span></li>
+          <li><span>Kerastase Nutritive Mask</span><span class="list-muted">14 sold</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Inventory Status</div>
+      <div class="inv-row">
+        <div><span>Olaplex No.3 Hair Perfector</span><span class="inv-sku">OLP-003</span></div>
+        <span class="qty ok">12 in stock</span>
+      </div>
+      <div class="inv-row">
+        <div><span>Olaplex No.5 Conditioner</span><span class="inv-sku">OLP-005</span></div>
+        <span class="qty low">2 in stock — reorder</span>
+      </div>
+      <div class="inv-row">
+        <div><span>Redken All Soft Shampoo 300ml</span><span class="inv-sku">RDK-AS300</span></div>
+        <span class="qty ok">8 in stock</span>
+      </div>
+      <div class="inv-row">
+        <div><span>Moroccanoil Treatment 100ml</span><span class="inv-sku">MOR-100</span></div>
+        <span class="qty ok">6 in stock</span>
+      </div>
+      <div class="inv-row">
+        <div><span>Wella Invigo Color Brilliance</span><span class="inv-sku">WEL-ICB</span></div>
+        <span class="qty low">1 in stock — reorder</span>
+      </div>
+      <div class="inv-row">
+        <div><span>Kerastase Nutritive Masquintense</span><span class="inv-sku">KER-NM200</span></div>
+        <span class="qty ok">5 in stock</span>
+      </div>
+      <div class="inv-row">
+        <div><span>GHD Heat Protect Spray</span><span class="inv-sku">GHD-HP</span></div>
+        <span class="qty ok">9 in stock</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── AUTOMATIONS ── -->
+  <div id="tab-automations" class="tab-section">
+    <div class="card">
+      <div class="card-label">Active Automations</div>
+      <div class="auto-row">
+        <div class="auto-icon ok">💌</div>
+        <div style="flex:1;">
+          <div class="auto-name">Rebooking Reminder</div>
+          <div class="auto-desc">Sends a personalized text to clients 6 weeks after their last visit. Links directly to online booking. 74% open rate this month.</div>
+        </div>
+        <span class="auto-status ok">Running</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">📋</div>
+        <div style="flex:1;">
+          <div class="auto-name">Color Formula Log</div>
+          <div class="auto-desc">After each color service, stylist confirms or updates the formula on file. Client record updates automatically in Vagaro.</div>
+        </div>
+        <span class="auto-status ok">Running</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon blush">🛍️</div>
+        <div style="flex:1;">
+          <div class="auto-name">Retail Recommendation Queue</div>
+          <div class="auto-desc">Based on service booked, generates a product recommendation for each stylist before the appointment. 34% attach rate this month.</div>
+        </div>
+        <span class="auto-status blush">Active</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">📦</div>
+        <div style="flex:1;">
+          <div class="auto-name">Low Stock Alert</div>
+          <div class="auto-desc">When any retail item drops below 3 units, sends a reorder reminder with the supplier link. Two alerts active now.</div>
+        </div>
+        <span class="auto-status ok">Running</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon warn">📊</div>
+        <div style="flex:1;">
+          <div class="auto-name">End of Day Summary</div>
+          <div class="auto-desc">Daily revenue, rebooking rate, and retail attach rate sent to owner at 6:30 PM. Last delivery: yesterday · $1,930 / 71% rebook / 32% retail.</div>
+        </div>
+        <span class="auto-status ok">Running</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon warn">🎂</div>
+        <div style="flex:1;">
+          <div class="auto-name">Birthday Offer</div>
+          <div class="auto-desc">Sends a 15% off service voucher 3 days before each client's birthday. Setup incomplete — birthday field missing for 38 clients.</div>
+        </div>
+        <span class="auto-status warn">Needs Attention</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+document.querySelectorAll('.nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.getElementById('tab-today').style.display = (tab === 'today') ? 'contents' : 'none';
+    document.querySelectorAll('.tab-section').forEach(s => s.style.display = 'none');
+    if (tab !== 'today') {
+      const el = document.getElementById('tab-' + tab);
+      if (el) el.style.display = 'contents';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
