@@ -153,9 +153,22 @@
       right: 36px;
       bottom: 36px;
       z-index: 300;
-      width: 320px;
+      width: 243px;
+      height: 382px;
+      min-width: 222px;
+      min-height: 42px;
+      resize: both;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow:
+        0 1px 3px rgba(0,0,0,0.14),
+        0 20px 60px rgba(0,0,0,0.22);
+      display: flex;
+      flex-direction: column;
     }
+    .vault-float.collapsed { height: 42px !important; resize: none; }
     .vault-chrome-ring {
+      flex: 1;
       padding: 1.5px;
       background: linear-gradient(135deg,
         #787878 0%, #d8d8d8 12%, #ffffff 24%,
@@ -163,24 +176,18 @@
         #888888 62%, #e0e0e0 74%,
         #c0c0c0 86%, #f8f8f8 100%);
       border-radius: 16px;
-      box-shadow:
-        0 1px 3px rgba(0,0,0,0.14),
-        0 20px 60px rgba(0,0,0,0.22),
-        inset 0 1px 0 rgba(255,255,255,0.9);
+      display: flex;
+      min-height: 0;
     }
     .vault-win {
+      flex: 1;
       border-radius: 14.5px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      resize: both;
-      min-width: 220px;
-      min-height: 40px;
-      width: 240px;
-      height: 380px;
-      position: relative;
+      min-width: 0;
+      min-height: 0;
     }
-    .vault-win.collapsed { height: 40px !important; resize: none; }
     /* Titlebar */
     .vault-titlebar {
       height: 40px; flex-shrink: 0;
@@ -207,7 +214,7 @@
       cursor: pointer; padding: 2px 5px; border-radius: 3px; transition: background 0.12s; flex-shrink: 0;
     }
     .vt-collapse:hover { background: rgba(0,0,0,0.08); }
-    .vault-win.collapsed .vault-card { display: none; }
+    .vault-float.collapsed .vault-card { display: none; }
     /* ── Vault card interior ── */
     .vault-card { flex: 1; overflow: hidden; background: #f8fafa; display: flex; flex-direction: column; min-height: 0; }
     /* locked */
@@ -393,7 +400,7 @@
             <circle cx="22" cy="33" r="3" fill="#4a3828" opacity="0.45"/>
             <rect x="21" y="33" width="2" height="5" rx="1" fill="#4a3828" opacity="0.45"/>
           </svg>
-          <p class="vault-card-title">Dev Notes <em>Vault</em></p>
+          <p class="vault-card-title">Credential <em>Vault</em></p>
           <p class="vault-card-sub">Enter master password to unlock</p>
           <p class="vault-field-label">Master Password</p>
           <input type="password" class="vault-pass-input" id="vault-pass-input" placeholder="••••••••" autocomplete="current-password">
@@ -918,15 +925,15 @@ load();
 
   const collapseBtn = document.getElementById('vt-collapse');
   function toggleMin() {
-    const min = winEl.classList.toggle('collapsed');
+    const min = floatEl.classList.toggle('collapsed');
     collapseBtn.textContent = min ? '▴' : '▾';
   }
   collapseBtn.addEventListener('click', toggleMin);
   document.getElementById('vt-min').addEventListener('click', toggleMin);
 
   document.getElementById('vt-zoom').addEventListener('click', () => {
-    winEl.classList.remove('collapsed');
-    winEl.style.width = '360px'; winEl.style.height = '500px';
+    floatEl.classList.remove('collapsed');
+    floatEl.style.width = '362px'; floatEl.style.height = '502px';
     collapseBtn.textContent = '▾';
   });
 
