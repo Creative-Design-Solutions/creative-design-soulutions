@@ -54,13 +54,9 @@
     /* ── TOOLS ROW ── */
     .tools-row {
       padding: 0 4rem 6rem;
-      max-width: 1160px;
-      display: flex;
-      gap: 4rem;
-      align-items: flex-start;
+      max-width: 640px;
     }
-    .tool-panel { display: flex; flex-direction: column; flex: 1; min-width: 0; }
-    .tool-panel--vault { flex: 0 0 auto; }
+    .tool-panel { display: flex; flex-direction: column; }
     .tool-copy-sm { margin-bottom: 1.2rem; }
     .tool-copy-sm h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; line-height: 1.1; margin-bottom: 0.4rem; }
     .tool-copy-sm h2 em { color: var(--gold); font-style: italic; }
@@ -153,7 +149,10 @@
 
     /* ── VAULT FLOATING WINDOW ── */
     .vault-float {
-      position: relative;
+      position: fixed;
+      right: 36px;
+      bottom: 36px;
+      z-index: 300;
       width: 243px;
       height: 382px;
       min-width: 222px;
@@ -344,7 +343,7 @@
   <p>Little things that feel helpful for the tasks that need a little companion.</p>
 </section>
 
-<!-- ── TOOLS ROW — stickies + vault ── -->
+<!-- ── TOOLS ROW — stickies ── -->
 <div class="tools-row">
   <div class="tool-panel" id="stickies">
     <div class="tool-copy-sm">
@@ -364,15 +363,21 @@
       <div class="board-hint">drag · click to type · + for new</div>
     </div>
   </div>
+</div>
 
-  <!-- ── VAULT column ── -->
-  <div class="tool-panel tool-panel--vault">
+<!-- ── VAULT DESCRIPTION ── -->
+<div class="tools-row" style="padding-top: 0; padding-bottom: 8rem;">
+  <div class="tool-panel">
     <div class="tool-copy-sm">
-      <span class="tool-tag tag-live">Live</span>
+      <span class="tool-tag tag-live">Live — bottom right ↘</span>
       <h2>Credential <em>Vault</em></h2>
-      <p>A secure, encrypted place for logins, API keys, and passwords. Locked behind a master password, encrypted with AES-256 — nothing leaves your device. Resize it, minimize it to the titlebar, and keep it wherever it fits your day.</p>
+      <p>A secure, encrypted place for logins, API keys, and passwords. Locked behind a master password and encrypted with AES-256 — nothing leaves your device. Resize it, minimize it to just the titlebar, and keep it wherever it fits your day.</p>
     </div>
-    <div class="vault-float" id="vault-float">
+  </div>
+</div>
+
+<!-- ── VAULT — fixed floating window ── -->
+<div class="vault-float" id="vault-float">
   <div class="vault-chrome-ring">
     <div class="vault-win" id="vault-win">
 
@@ -440,9 +445,7 @@
       </div><!-- /vault-card -->
     </div><!-- /vault-win -->
   </div><!-- /vault-chrome-ring -->
-    </div><!-- /vault-float -->
-  </div><!-- /tool-panel--vault -->
-</div><!-- /tools-row -->
+</div><!-- /vault-float -->
 
 <!-- CTA — copy placeholder -->
 <section class="lt-cta">
