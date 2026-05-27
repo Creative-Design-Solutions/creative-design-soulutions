@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex Auto Service — Shop Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:    #0e0c0b;
+  --dark:     #161210;
+  --panel:    #1e1a17;
+  --panel2:   #252018;
+  --edge:     rgba(255,255,255,0.06);
+  --edge-m:   rgba(255,255,255,0.10);
+  --orange:   #e07818;
+  --orange-l: rgba(224,120,24,0.15);
+  --orange-m: rgba(224,120,24,0.35);
+  --cream:    #f0ece6;
+  --warm:     #c8b89a;
+  --muted:    #7a6a58;
+  --faint:    #3a3028;
+
+  --green:    #4a9a60;
+  --green-l:  rgba(74,154,96,0.15);
+  --red:      #c04840;
+  --red-l:    rgba(192,72,64,0.15);
+  --amber:    #c89030;
+  --amber-l:  rgba(200,144,48,0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--black);
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  height: 44px;
+  background: var(--dark);
+  border-bottom: 1px solid var(--edge);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.brand {
+  font-family: Oswald, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream);
+  flex-shrink: 0;
+}
+.brand span { color: var(--orange); }
+.topbar-sep { width: 1px; height: 14px; background: var(--edge-m); flex-shrink: 0; }
+.topbar-meta {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.topbar-status { display: flex; align-items: center; gap: 16px; }
+.status-item {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+}
+.dot { width: 5px; height: 5px; border-radius: 50%; background: var(--faint); flex-shrink: 0; }
+.dot.on { background: var(--green); box-shadow: 0 0 6px rgba(74,154,96,0.7); }
+.topbar-right { margin-left: auto; }
+.tbar-btn {
+  font-family: Oswald; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--orange); background: var(--orange-l);
+  border: 1px solid var(--orange-m); border-radius: 3px;
+  padding: 6px 16px; cursor: pointer; transition: all 0.15s;
+}
+.tbar-btn:hover { background: var(--orange-m); color: var(--cream); }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-img {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://source.unsplash.com/c4Py8o1shXQ/1920x800');
+  background-size: cover;
+  background-position: center 40%;
+  filter: brightness(0.45) saturate(0.7);
+}
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(14,12,11,0.95) 0%,
+    rgba(14,12,11,0.7) 50%,
+    rgba(14,12,11,0.2) 100%
+  ),
+  linear-gradient(
+    to top,
+    rgba(14,12,11,0.9) 0%,
+    transparent 60%
+  );
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 36px 32px;
+  max-width: 700px;
+}
+.hero-eyebrow {
+  font-family: Oswald; font-size: 10px; font-weight: 400;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 10px;
+}
+.hero-title {
+  font-family: Oswald; font-size: 52px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  line-height: 0.95; color: var(--cream);
+  margin-bottom: 14px;
+}
+.hero-title span { color: var(--orange); }
+.hero-stats {
+  display: flex;
+  gap: 32px;
+}
+.hero-stat-val {
+  font-family: Oswald; font-size: 26px; font-weight: 600;
+  color: var(--cream); line-height: 1;
+}
+.hero-stat-label {
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); margin-top: 3px;
+}
+
+/* ── NAV ── */
+.nav {
+  background: var(--dark);
+  border-bottom: 1px solid var(--edge);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 0;
+  position: sticky;
+  top: 44px;
+  z-index: 99;
+}
+.nav button {
+  font-family: Oswald; font-size: 11px; font-weight: 400;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); background: none;
+  border: none; border-bottom: 2px solid transparent;
+  padding: 12px 18px; cursor: pointer;
+  transition: all 0.15s; white-space: nowrap;
+}
+.nav button.active { color: var(--orange); border-bottom-color: var(--orange); }
+.nav button:hover:not(.active) { color: var(--warm); }
+.nav-right { margin-left: auto; }
+.nav-pill {
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--edge-m);
+  border-radius: 2px; padding: 4px 10px;
+}
+
+/* ── MAIN ── */
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 28px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── STAT ROW ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--edge);
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.stat-tile {
+  background: var(--panel);
+  padding: 18px 20px;
+}
+.stat-label {
+  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+.stat-value {
+  font-family: Oswald; font-size: 28px; font-weight: 600;
+  color: var(--cream); letter-spacing: 0.02em; line-height: 1;
+}
+.stat-sub { font-size: 11px; color: var(--green); margin-top: 4px; }
+.stat-sub.warn { color: var(--amber); }
+.stat-sub.down { color: var(--red); }
+
+/* ── TWO COL ── */
+.two-col { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* ── CARD ── */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  padding: 20px;
+}
+.card-head {
+  font-family: Oswald; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--edge);
+}
+
+/* ── JOB ROWS ── */
+.job-list { display: flex; flex-direction: column; gap: 0; }
+.job-row {
+  display: flex; align-items: stretch;
+  border-bottom: 1px solid var(--edge);
+}
+.job-row:last-child { border-bottom: none; }
+.job-bar {
+  width: 3px; flex-shrink: 0;
+  border-radius: 2px 0 0 2px;
+  background: var(--faint);
+  margin: 10px 0;
+}
+.job-bar.in-progress { background: var(--orange); }
+.job-bar.complete    { background: var(--green); }
+.job-bar.waiting     { background: var(--amber); }
+.job-bar.pending     { background: var(--muted); }
+.job-inner {
+  flex: 1; display: flex; align-items: center;
+  gap: 14px; padding: 14px 14px 14px 16px;
+}
+.job-ro {
+  font-family: Oswald; font-size: 13px; font-weight: 500;
+  letter-spacing: 0.08em; color: var(--muted);
+  width: 52px; flex-shrink: 0;
+}
+.job-info { flex: 1; min-width: 0; }
+.job-vehicle {
+  font-family: Oswald; font-size: 16px; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--cream); line-height: 1.1;
+}
+.job-service { font-size: 12px; color: var(--warm); margin-top: 2px; }
+.job-tech {
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0;
+}
+.job-status {
+  font-family: Oswald; font-size: 10px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 2px; flex-shrink: 0;
+  border: 1px solid;
+}
+.job-status.in-progress { color: var(--orange); border-color: var(--orange-m); background: var(--orange-l); }
+.job-status.complete    { color: var(--green);  border-color: rgba(74,154,96,0.3); background: var(--green-l); }
+.job-status.waiting     { color: var(--amber);  border-color: rgba(200,144,48,0.3); background: var(--amber-l); }
+.job-status.pending     { color: var(--muted);  border-color: var(--edge-m); background: transparent; }
+.job-bay {
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); flex-shrink: 0; width: 44px; text-align: right;
+}
+
+/* ── BAY GRID ── */
+.bay-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.bay-tile {
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+  padding: 14px;
+  background: var(--panel2);
+  position: relative;
+  overflow: hidden;
+}
+.bay-tile::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.bay-tile.occupied::before { background: var(--orange); }
+.bay-tile.clear::before    { background: var(--green); }
+.bay-tile.waiting::before  { background: var(--amber); }
+.bay-num {
+  font-family: Oswald; font-size: 10px; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 6px;
+}
+.bay-vehicle {
+  font-family: Oswald; font-size: 15px; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--cream); line-height: 1.1;
+}
+.bay-job { font-size: 11px; color: var(--warm); margin-top: 3px; }
+.bay-tech { font-size: 10px; color: var(--muted); margin-top: 6px; letter-spacing: 0.06em; }
+.bay-empty {
+  font-family: Oswald; font-size: 13px; font-weight: 400;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint);
+}
+
+/* ── PARTS / PLAIN LIST ── */
+.plain-list { list-style: none; }
+.plain-list li {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 11px 0; border-bottom: 1px solid var(--edge); font-size: 13px;
+}
+.plain-list li:first-child { padding-top: 0; }
+.plain-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.list-muted { font-size: 11px; color: var(--muted); }
+.list-orange { font-size: 11px; color: var(--orange); font-family: Oswald; letter-spacing: 0.06em; }
+.list-green  { font-size: 11px; color: var(--green); }
+.list-red    { font-size: 11px; color: var(--red); }
+
+/* ── TECH ROWS ── */
+.tech-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--edge);
+}
+.tech-row:first-child { padding-top: 0; }
+.tech-row:last-child { border-bottom: none; padding-bottom: 0; }
+.tech-avatar {
+  width: 34px; height: 34px; border-radius: 3px;
+  background: var(--panel2); border: 1px solid var(--edge-m);
+  display: flex; align-items: center; justify-content: center;
+  font-family: Oswald; font-size: 15px; font-weight: 600;
+  color: var(--orange); flex-shrink: 0;
+  text-transform: uppercase;
+}
+.tech-info { flex: 1; }
+.tech-name { font-family: Oswald; font-size: 15px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--cream); }
+.tech-detail { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.badge {
+  font-family: Oswald; font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 2px; flex-shrink: 0;
+  border: 1px solid;
+}
+.badge.on   { color: var(--green);  border-color: rgba(74,154,96,0.3); background: var(--green-l); }
+.badge.bay  { color: var(--orange); border-color: var(--orange-m);      background: var(--orange-l); }
+.badge.off  { color: var(--muted);  border-color: var(--edge-m);         background: transparent; }
+
+/* ── AUTO ROWS ── */
+.auto-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 0; border-bottom: 1px solid var(--edge);
+}
+.auto-row:first-child { padding-top: 0; }
+.auto-row:last-child { border-bottom: none; padding-bottom: 0; }
+.auto-icon {
+  width: 36px; height: 36px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.auto-icon.ok   { background: var(--green-l); }
+.auto-icon.warn { background: var(--red-l); }
+.auto-icon.amber { background: var(--amber-l); }
+.auto-name { font-family: Oswald; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cream); margin-bottom: 3px; }
+.auto-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.auto-status {
+  font-family: Oswald; font-size: 9px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 2px; flex-shrink: 0;
+  border: 1px solid; height: max-content; align-self: flex-start; margin-top: 2px;
+}
+.auto-status.ok    { color: var(--green);  border-color: rgba(74,154,96,0.3);  background: var(--green-l); }
+.auto-status.warn  { color: var(--red);    border-color: rgba(192,72,64,0.3);   background: var(--red-l); }
+.auto-status.amber { color: var(--amber);  border-color: rgba(200,144,48,0.3);  background: var(--amber-l); }
+
+/* ── REVENUE METRICS ── */
+.metric-rows { display: flex; flex-direction: column; }
+.metric-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 11px 0; border-bottom: 1px solid var(--edge);
+}
+.metric-row:last-child { border-bottom: none; padding-bottom: 0; }
+.metric-row:first-child { padding-top: 0; }
+.metric-name {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+}
+.metric-delta { font-size: 11px; color: var(--green); margin-top: 2px; }
+.metric-delta.down { color: var(--red); }
+.metric-value {
+  font-family: Oswald; font-size: 20px; font-weight: 600;
+  color: var(--cream); letter-spacing: 0.02em;
+}
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; right: 22px; bottom: 22px;
+  background: var(--panel); color: var(--cream);
+  border: 1px solid var(--orange-m);
+  border-radius: 4px; padding: 12px 18px; font-size: 12px;
+  letter-spacing: 0.04em; opacity: 0; transform: translateY(6px);
+  transition: 0.2s; pointer-events: none;
+  font-family: Oswald; text-transform: uppercase; letter-spacing: 0.1em;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── TAB SECTIONS ── */
+.tab-section { display: none; }
+
+/* ── RESPONSIVE ── */
+@media(max-width: 1024px) {
+  .two-col { grid-template-columns: 1fr; }
+  .stat-row { grid-template-columns: repeat(3, 1fr); }
+}
+@media(max-width: 768px) {
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .three-col { grid-template-columns: 1fr; }
+  .hero-title { font-size: 36px; }
+  .hero { height: 220px; }
+  .nav { overflow-x: auto; padding: 0 14px; }
+  main { padding: 16px 14px 48px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span class="brand">Apex <span>Auto</span></span>
+  <div class="topbar-sep"></div>
+  <span class="topbar-meta">Thursday · 9 Active Jobs</span>
+  <div class="topbar-sep"></div>
+  <div class="topbar-status">
+    <div class="status-item"><span class="dot on"></span>Shop-Ware</div>
+    <div class="status-item"><span class="dot on"></span>Parts Live</div>
+  </div>
+  <div class="topbar-right">
+    <button class="tbar-btn" onclick="toast('Running close-of-day report...')">Close Day</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Shop Status — Live</div>
+    <div class="hero-title">Thursday<br><span>Job Board</span></div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val">9</div>
+        <div class="hero-stat-label">Active Jobs</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">4</div>
+        <div class="hero-stat-label">Bays Running</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">$6,240</div>
+        <div class="hero-stat-label">Today's RO Value</div>
+      </div>
+      <div>
+        <div class="hero-stat-val">2</div>
+        <div class="hero-stat-label">Waiting on Parts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="active" data-tab="today">Today</button>
+  <button data-tab="bays">Bays</button>
+  <button data-tab="technicians">Technicians</button>
+  <button data-tab="parts">Parts</button>
+  <button data-tab="revenue">Revenue</button>
+  <button data-tab="automations">Automations</button>
+  <div class="nav-right">
+    <span class="nav-pill">Live Sync</span>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ── TODAY ── -->
+  <div id="tab-today">
+
+    <!-- Stat Row -->
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="stat-label">Jobs Today</div>
+        <div class="stat-value">13</div>
+        <div class="stat-sub">4 complete · 9 active</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">RO Value</div>
+        <div class="stat-value">$6,240</div>
+        <div class="stat-sub">↑ $840 vs last Thu</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Parts Margin</div>
+        <div class="stat-value">34%</div>
+        <div class="stat-sub warn">↓ 2% vs target</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Avg Labor/Job</div>
+        <div class="stat-value">$318</div>
+        <div class="stat-sub">↑ $22 vs last Thu</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Bay Utilization</div>
+        <div class="stat-value">80%</div>
+        <div class="stat-sub">1 bay available</div>
+      </div>
+    </div>
+
+    <!-- Job Board + Bay Status -->
+    <div class="two-col">
+
+      <div class="card">
+        <div class="card-head">Active Job Board</div>
+        <div class="job-list">
+          <div class="job-row">
+            <div class="job-bar in-progress"></div>
+            <div class="job-inner">
+              <span class="job-ro">RO-418</span>
+              <div class="job-info">
+                <div class="job-vehicle">2021 Ford F-150</div>
+                <div class="job-service">Oil Change · Tire Rotation · Multi-Point Inspection</div>
+              </div>
+              <span class="job-tech">Marcus T.</span>
+              <span class="job-status in-progress">In Progress</span>
+              <span class="job-bay">Bay 1</span>
+            </div>
+          </div>
+          <div class="job-row">
+            <div class="job-bar in-progress"></div>
+            <div class="job-inner">
+              <span class="job-ro">RO-419</span>
+              <div class="job-info">
+                <div class="job-vehicle">2019 Toyota Camry</div>
+                <div class="job-service">Brake Pads & Rotors — Front Axle</div>
+              </div>
+              <span class="job-tech">Devon R.</span>
+              <span class="job-status in-progress">In Progress</span>
+              <span class="job-bay">Bay 2</span>
+            </div>
+          </div>
+          <div class="job-row">
+            <div class="job-bar waiting"></div>
+            <div class="job-inner">
+              <span class="job-ro">RO-420</span>
+              <div class="job-info">
+                <div class="job-vehicle">2017 Honda Accord</div>
+                <div class="job-service">Timing Belt & Water Pump — waiting on belt kit</div>
+              </div>
+              <span class="job-tech">Luis V.</span>
+              <span class="job-status waiting">Parts Wait</span>
+              <span class="job-bay">Bay 3</span>
+            </div>
+          </div>
+          <div class="job-row">
+            <div class="job-bar in-progress"></div>
+            <div class="job-inner">
+              <span class="job-ro">RO-421</span>
+              <div class="job-info">
+                <div class="job-vehicle">2022 Chevy Tahoe</div>
+                <div class="job-service">AC Recharge · Cabin Air Filter</div>
+              </div>
+              <span class="job-tech">Marcus T.</span>
+              <span class="job-status in-progress">In Progress</span>
+              <span class="job-bay">Bay 4</span>
+            </div>
+          </div>
+          <div class="job-row">
+            <div class="job-bar waiting"></div>
+            <div class="job-inner">
+              <span class="job-ro">RO-422</span>
+              <div class="job-info">
+                <div class="job-vehicle">2016 BMW 328i</div>
+                <div class="job-service">Diagnostic — P0171 Lean Code · Waiting on customer approval</div>
+              </div>
+              <span class="job-tech">Devon R.</span>
+              <span class="job-status waiting">Approval</span>
+              <span class="job-bay">Bay 2</span>
+            </div>
+          </div>
+          <div class="job-row">
+            <div class="job-bar pending"></div>
+            <div class="job-inner">
+              <span class="job-ro">RO-423</span>
+              <div class="job-info">
+                <div class="job-vehicle">2020 Subaru Outback</div>
+                <div class="job-service">Transmission Service · Drop-in at 11:30 AM</div>
+              </div>
+              <span class="job-tech">Luis V.</span>
+              <span class="job-status pending">Queued</span>
+              <span class="job-bay">—</span>
+            </div>
+          </div>
+          <div class="job-row">
+            <div class="job-bar complete"></div>
+            <div class="job-inner">
+              <span class="job-ro">RO-414</span>
+              <div class="job-info">
+                <div class="job-vehicle">2018 Jeep Wrangler</div>
+                <div class="job-service">Full Synthetic Oil Change · Wiper Blades</div>
+              </div>
+              <span class="job-tech">Marcus T.</span>
+              <span class="job-status complete">Complete</span>
+              <span class="job-bay">Bay 1</span>
+            </div>
+          </div>
+          <div class="job-row">
+            <div class="job-bar complete"></div>
+            <div class="job-inner">
+              <span class="job-ro">RO-415</span>
+              <div class="job-info">
+                <div class="job-vehicle">2015 Dodge Ram 1500</div>
+                <div class="job-service">Alternator Replacement · Battery Test</div>
+              </div>
+              <span class="job-tech">Devon R.</span>
+              <span class="job-status complete">Complete</span>
+              <span class="job-bay">Bay 2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bay Status -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card">
+          <div class="card-head">Bay Status</div>
+          <div class="bay-grid">
+            <div class="bay-tile occupied">
+              <div class="bay-num">Bay 1</div>
+              <div class="bay-vehicle">2021 F-150</div>
+              <div class="bay-job">Oil Change · Rotation</div>
+              <div class="bay-tech">Marcus T.</div>
+            </div>
+            <div class="bay-tile occupied">
+              <div class="bay-num">Bay 2</div>
+              <div class="bay-vehicle">2019 Camry</div>
+              <div class="bay-job">Brakes — Front</div>
+              <div class="bay-tech">Devon R.</div>
+            </div>
+            <div class="bay-tile waiting">
+              <div class="bay-num">Bay 3</div>
+              <div class="bay-vehicle">2017 Accord</div>
+              <div class="bay-job">Timing Belt — Parts Wait</div>
+              <div class="bay-tech">Luis V.</div>
+            </div>
+            <div class="bay-tile occupied">
+              <div class="bay-num">Bay 4</div>
+              <div class="bay-vehicle">2022 Tahoe</div>
+              <div class="bay-job">AC Recharge</div>
+              <div class="bay-tech">Marcus T.</div>
+            </div>
+            <div class="bay-tile clear" style="grid-column:span 2;">
+              <div class="bay-num">Bay 5</div>
+              <div class="bay-empty">Available</div>
+              <div class="bay-tech" style="margin-top:8px;">RO-423 queued next</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">Flags</div>
+          <ul class="plain-list">
+            <li><span>RO-420 — Timing Belt Kit</span><span class="list-orange">ETA 2:00 PM</span></li>
+            <li><span>RO-422 — BMW Approval</span><span class="list-orange">Awaiting Call</span></li>
+            <li><span>Parts Margin</span><span class="list-red">↓ 2% vs target</span></li>
+            <li><span>Subaru queued — no tech assigned</span><span class="list-orange">Assign Now</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── BAYS ── -->
+  <div id="tab-bays" class="tab-section">
+    <div class="stat-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">
+      <div class="stat-tile">
+        <div class="stat-label">Bays Active</div>
+        <div class="stat-value">4 / 5</div>
+        <div class="stat-sub">80% utilization</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Avg Time in Bay</div>
+        <div class="stat-value">1.8 hr</div>
+        <div class="stat-sub warn">↑ 0.3hr vs target</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Waiting on Parts</div>
+        <div class="stat-value">2</div>
+        <div class="stat-sub warn">RO-420, RO-422</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Completed Today</div>
+        <div class="stat-value">4</div>
+        <div class="stat-sub">↑ 1 vs last Thu</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Bay Overview</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+        <div class="bay-tile occupied" style="padding:20px;">
+          <div class="bay-num">Bay 1</div>
+          <div class="bay-vehicle">2021 Ford F-150</div>
+          <div class="bay-job">Oil Change · Tire Rotation · MPI</div>
+          <div class="bay-tech" style="margin-top:10px;">Marcus T. · Est. done 1:30 PM</div>
+        </div>
+        <div class="bay-tile occupied" style="padding:20px;">
+          <div class="bay-num">Bay 2</div>
+          <div class="bay-vehicle">2019 Toyota Camry</div>
+          <div class="bay-job">Brake Pads & Rotors — Front</div>
+          <div class="bay-tech" style="margin-top:10px;">Devon R. · Est. done 2:00 PM</div>
+        </div>
+        <div class="bay-tile waiting" style="padding:20px;">
+          <div class="bay-num">Bay 3</div>
+          <div class="bay-vehicle">2017 Honda Accord</div>
+          <div class="bay-job">Timing Belt & Water Pump</div>
+          <div class="bay-tech" style="margin-top:10px;color:var(--amber);">Parts ETA 2:00 PM</div>
+        </div>
+        <div class="bay-tile occupied" style="padding:20px;">
+          <div class="bay-num">Bay 4</div>
+          <div class="bay-vehicle">2022 Chevy Tahoe</div>
+          <div class="bay-job">AC Recharge · Cabin Filter</div>
+          <div class="bay-tech" style="margin-top:10px;">Marcus T. · Est. done 12:30 PM</div>
+        </div>
+        <div class="bay-tile clear" style="padding:20px;">
+          <div class="bay-num">Bay 5</div>
+          <div class="bay-empty">Available</div>
+          <div class="bay-tech" style="margin-top:10px;">Next: RO-423 Subaru Outback</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TECHNICIANS ── -->
+  <div id="tab-technicians" class="tab-section">
+    <div class="stat-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">
+      <div class="stat-tile">
+        <div class="stat-label">Technicians In</div>
+        <div class="stat-value">3 / 4</div>
+        <div class="stat-sub">Kyle off today</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Labor Revenue</div>
+        <div class="stat-value">$4,140</div>
+        <div class="stat-sub">↑ $520 vs last Thu</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Avg Efficiency</div>
+        <div class="stat-value">88%</div>
+        <div class="stat-sub">↑ 3% vs last week</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Jobs Completed</div>
+        <div class="stat-value">4</div>
+        <div class="stat-sub">9 in progress</div>
+      </div>
+    </div>
+    <div class="three-col">
+      <div class="card">
+        <div class="card-head">Marcus T. — Lead Tech</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div><div class="metric-name">Jobs Today</div></div>
+            <span class="metric-value">4</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Labor Revenue</div><div class="metric-delta">↑ $180 vs last Thu</div></div>
+            <span class="metric-value">$1,640</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Efficiency</div></div>
+            <span class="metric-value">94%</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Current Bay</div></div>
+            <span class="metric-value" style="font-size:15px;">Bay 1 / 4</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">Devon R. — Tech</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div><div class="metric-name">Jobs Today</div></div>
+            <span class="metric-value">3</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Labor Revenue</div><div class="metric-delta">↑ $90 vs last Thu</div></div>
+            <span class="metric-value">$1,320</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Efficiency</div></div>
+            <span class="metric-value">86%</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Current Bay</div></div>
+            <span class="metric-value" style="font-size:15px;">Bay 2</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">Luis V. — Tech</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div><div class="metric-name">Jobs Today</div></div>
+            <span class="metric-value">2</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Labor Revenue</div><div class="metric-delta">↑ $40 vs last Thu</div></div>
+            <span class="metric-value">$1,180</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Efficiency</div></div>
+            <span class="metric-value">82%</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Current Bay</div></div>
+            <span class="metric-value" style="font-size:15px;">Bay 3 — Wait</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PARTS ── -->
+  <div id="tab-parts" class="tab-section">
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">Parts on Order — Today</div>
+        <ul class="plain-list">
+          <li><span>Gates Timing Belt Kit — Accord<br><span style="font-size:11px;color:var(--muted);">RO-420 · NAPA #B416</span></span><span class="list-orange">ETA 2:00 PM</span></li>
+          <li><span>BMW MAF Sensor<br><span style="font-size:11px;color:var(--muted);">RO-422 · Pending approval</span></span><span class="list-orange">Hold</span></li>
+          <li><span>AC Pro Refrigerant R134a × 3<br><span style="font-size:11px;color:var(--muted);">RO-421 · In stock</span></span><span class="list-green">In Shop</span></li>
+          <li><span>Motorcraft FL-820S Oil Filter × 6<br><span style="font-size:11px;color:var(--muted);">Stock replenish</span></span><span class="list-green">Delivered</span></li>
+          <li><span>Subaru ATF HP fluid × 4 qt<br><span style="font-size:11px;color:var(--muted);">RO-423 · Ordered 9 AM</span></span><span class="list-orange">ETA 3:30 PM</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-head">Low Stock Alerts</div>
+        <ul class="plain-list">
+          <li><span>5W-30 Full Synthetic — 5qt</span><span class="list-red">3 jugs left</span></li>
+          <li><span>Brake Cleaner Spray</span><span class="list-red">2 cans left</span></li>
+          <li><span>Wiper Blades — 22"</span><span class="list-orange">4 remaining</span></li>
+          <li><span>Cabin Air Filters — Universal</span><span class="list-orange">5 remaining</span></li>
+          <li><span>Coolant Flush Solution</span><span class="list-green">12 in stock</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Parts Margin — This Month</div>
+      <div class="metric-rows">
+        <div class="metric-row">
+          <div><div class="metric-name">Total Parts Revenue</div></div>
+          <span class="metric-value">$18,420</span>
+        </div>
+        <div class="metric-row">
+          <div><div class="metric-name">Parts Cost</div></div>
+          <span class="metric-value">$12,160</span>
+        </div>
+        <div class="metric-row">
+          <div><div class="metric-name">Gross Margin</div><div class="metric-delta down">↓ 2% vs target of 36%</div></div>
+          <span class="metric-value">34%</span>
+        </div>
+        <div class="metric-row">
+          <div><div class="metric-name">Supplier Split</div></div>
+          <span class="metric-value" style="font-size:13px;color:var(--warm);">NAPA 54% · AutoZone 28% · Other 18%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REVENUE ── -->
+  <div id="tab-revenue" class="tab-section">
+    <div class="stat-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">
+      <div class="stat-tile">
+        <div class="stat-label">Month Revenue</div>
+        <div class="stat-value">$48,320</div>
+        <div class="stat-sub">↑ 11% vs last month</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Labor Revenue</div>
+        <div class="stat-value">$29,900</div>
+        <div class="stat-sub">62% of total</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Parts Revenue</div>
+        <div class="stat-value">$18,420</div>
+        <div class="stat-sub">38% of total</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-label">Avg RO Value</div>
+        <div class="stat-value">$412</div>
+        <div class="stat-sub">↑ $38 vs last month</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head">Revenue by Service Type</div>
+        <ul class="plain-list">
+          <li><span>Engine & Drivetrain</span><span class="list-orange">$14,800 · 31%</span></li>
+          <li><span>Brakes & Suspension</span><span class="list-orange">$11,200 · 23%</span></li>
+          <li><span>Oil Service & Maintenance</span><span class="list-orange">$9,600 · 20%</span></li>
+          <li><span>Electrical & Diagnostics</span><span class="list-orange">$7,720 · 16%</span></li>
+          <li><span>AC & Heating</span><span class="list-orange">$5,000 · 10%</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-head">Weekly Trend</div>
+        <div class="metric-rows">
+          <div class="metric-row">
+            <div><div class="metric-name">This Week (est.)</div></div>
+            <span class="metric-value">$12,480</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Last Week</div></div>
+            <span class="metric-value">$11,240</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">2 Weeks Ago</div></div>
+            <span class="metric-value">$10,980</span>
+          </div>
+          <div class="metric-row">
+            <div><div class="metric-name">Month Target</div><div class="metric-delta">On track</div></div>
+            <span class="metric-value">$50,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AUTOMATIONS ── -->
+  <div id="tab-automations" class="tab-section">
+    <div class="card">
+      <div class="card-head">Active Automations</div>
+      <div class="auto-row">
+        <div class="auto-icon ok">📋</div>
+        <div style="flex:1;">
+          <div class="auto-name">RO Close Summary</div>
+          <div class="auto-desc">When a repair order is marked complete, sends a close summary to the owner with labor, parts, and total billed. Runs on every completed job.</div>
+        </div>
+        <span class="auto-status ok">Running</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">📦</div>
+        <div style="flex:1;">
+          <div class="auto-name">Parts ETA Alert</div>
+          <div class="auto-desc">When a part order is placed, logs the ETA and sends a reminder to the assigned tech 30 minutes before delivery. Active on RO-420 and RO-423.</div>
+        </div>
+        <span class="auto-status ok">Running</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon amber">📞</div>
+        <div style="flex:1;">
+          <div class="auto-name">Customer Approval Follow-Up</div>
+          <div class="auto-desc">If a diagnostic approval hasn't been received within 2 hours, sends a follow-up text to the customer. RO-422 triggered at 10:45 AM — no response yet.</div>
+        </div>
+        <span class="auto-status amber">Waiting</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">💬</div>
+        <div style="flex:1;">
+          <div class="auto-name">Vehicle Ready Notification</div>
+          <div class="auto-desc">Sends a text to the customer the moment their RO is marked complete. 4 sent today — average pickup time 48 minutes after notification.</div>
+        </div>
+        <span class="auto-status ok">Running</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon ok">📊</div>
+        <div style="flex:1;">
+          <div class="auto-name">Daily Revenue Report</div>
+          <div class="auto-desc">End-of-day summary delivered at 6:00 PM — total RO value, parts margin, technician efficiency, and jobs carried to tomorrow.</div>
+        </div>
+        <span class="auto-status ok">Running</span>
+      </div>
+      <div class="auto-row">
+        <div class="auto-icon warn">⚠️</div>
+        <div style="flex:1;">
+          <div class="auto-name">Low Stock Alert</div>
+          <div class="auto-desc">Two items below threshold: 5W-30 Synthetic (3 remaining) and Brake Cleaner (2 remaining). Reorder links sent to service manager — no confirmation yet.</div>
+        </div>
+        <span class="auto-status warn">Needs Action</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+document.querySelectorAll('.nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.getElementById('tab-today').style.display = (tab === 'today') ? 'contents' : 'none';
+    document.querySelectorAll('.tab-section').forEach(s => s.style.display = 'none');
+    if (tab !== 'today') {
+      const el = document.getElementById('tab-' + tab);
+      if (el) el.style.display = 'contents';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
