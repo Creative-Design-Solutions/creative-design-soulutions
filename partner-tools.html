@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner Tools — Creative Design SOULutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #1a1208; --gold: #c8922a; --cream: #fdf8f2;
+      --warm: #f5ede0; --text: #1a1208; --muted: #6b5d4f;
+      --line: rgba(200,146,42,0.2); --sky: #4a8fc2;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem; background: rgba(253,248,242,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+    .nav-logo .brand-word { color: var(--navy); white-space: nowrap; }
+    .nav-logo .brand-word em { color: var(--gold); font-style: normal; }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links li { display: flex; align-items: center; }
+    .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .has-dropdown { position: relative; }
+    .has-dropdown > a { display: flex; align-items: center; gap: 0.3rem; }
+    .caret { font-size: 0.55rem; opacity: 0.6; transition: transform 0.2s; }
+    .has-dropdown:hover .caret { transform: rotate(180deg); }
+    .dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-4px); min-width: 170px; background: #fdf8f2; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 12px 32px rgba(26,18,8,0.12); list-style: none; padding: 0.75rem 0 0.5rem; opacity: 0; pointer-events: none; transition: opacity 0.18s, transform 0.18s; }
+    .has-dropdown:hover .dropdown, .has-dropdown.open .dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .dropdown li { padding: 0; }
+    .dropdown a { display: block; padding: 0.6rem 1.1rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+    .dropdown a:hover { color: var(--gold); background: rgba(200,146,42,0.04); }
+    .dropdown .drop-divider { height: 1px; background: var(--line); margin: 0.35rem 0.8rem; }
+    .dropdown .drop-special a { color: var(--gold); font-weight: 600; }
+    .nav-cta { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); text-decoration: none; border: 1.5px solid var(--sky); padding: 0.5rem 1.4rem; border-radius: 2px; transition: all 0.2s; }
+    .nav-cta:hover { background: var(--sky); color: white; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 10rem 4rem 5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .section-label {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400; font-style: italic;
+      line-height: 1.1; letter-spacing: 0.01em;
+      margin-bottom: 0.9rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, #a07830 0%, #d4a840 22%, #f5e090 45%, #c49030 65%, #e8c060 82%, #a06820 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 300;
+      line-height: 1.7; color: var(--muted);
+      max-width: 520px; margin: 0 auto;
+    }
+
+    /* ── DIVIDER ── */
+    .gold-divider {
+      width: 48px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 3rem auto;
+    }
+
+    /* ── TOOL CARD ── */
+    .tools-section {
+      padding: 0 4rem 8rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .tool-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 3rem 3.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #a07830, #d4a840, #f5e090, #c49030);
+    }
+
+    .tool-card-header {
+      margin-bottom: 0;
+    }
+
+    .tool-card-title-wrap { flex: 1; }
+
+    .tool-badge {
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--sky);
+      border: 1px solid rgba(74,143,194,0.3);
+      padding: 3px 10px; border-radius: 2px;
+      display: inline-block; margin-bottom: 0.8rem;
+    }
+
+    .tool-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem; font-weight: 400;
+      font-style: italic; line-height: 1.1;
+      color: var(--navy); margin-bottom: 0.3rem;
+    }
+
+    .tool-card h2 em {
+      font-style: italic;
+      background: linear-gradient(135deg, #a07830 0%, #d4a840 40%, #c49030 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tool-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem; font-weight: 300;
+      color: var(--muted); font-style: italic;
+    }
+
+    /* ── Full app mockup — white-label palette ── */
+    .app-mockup {
+      width: 100%;
+      margin: 2rem 0 2.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(26,18,8,0.13), 0 2px 8px rgba(26,18,8,0.06);
+      border: 1px solid #d8e4e4;
+      font-family: 'Inter', sans-serif;
+      user-select: none;
+    }
+
+    /* macOS title bar */
+    .yw-titlebar {
+      background: #f8fafa;
+      border-bottom: 1px solid #d8e4e4;
+      padding: 11px 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .yw-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .yw-dot.r { background: #ff5f57; }
+    .yw-dot.y { background: #febc2e; }
+    .yw-dot.g { background: #28c840; }
+
+    .yw-appname {
+      display: flex; align-items: center; gap: 8px;
+      margin-left: 4px;
+    }
+    .yw-logo {
+      width: 22px; height: 22px; flex-shrink: 0;
+    }
+    .yw-name {
+      font-size: 13px; font-weight: 700;
+      color: #2c3a3a; letter-spacing: -0.01em;
+    }
+    .yw-subtitle {
+      font-size: 8.5px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: #8aabab;
+    }
+
+    .yw-right-pills {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .yw-status-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #b0c8c8; flex-shrink: 0;
+    }
+    .yw-status-text {
+      font-size: 9px; color: #8aabab;
+      font-weight: 500; margin-right: 4px;
+    }
+    .yw-pill {
+      font-size: 8.5px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 999px; padding: 3px 10px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .yw-pill-outline {
+      color: #4d8f8a;
+      border: 1.5px solid rgba(77,143,138,0.4);
+      background: rgba(77,143,138,0.04);
+    }
+    .yw-pill-solid {
+      color: #fff;
+      background: #4d8f8a;
+      border: 1.5px solid #4d8f8a;
+    }
+    .yw-pill-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .yw-pill-dot.teal  { background: #4d8f8a; }
+    .yw-pill-dot.green { background: #28c840; }
+    .yw-icon-btn {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      color: #8aabab; flex-shrink: 0;
+    }
+    .yw-icon-btn svg { width: 14px; height: 14px; }
+
+    /* Column sub-header */
+    .yw-colbar {
+      background: #ffffff;
+      border-bottom: 1px solid #d8e4e4;
+      display: flex; align-items: center;
+      padding: 0;
+    }
+    .yw-colbar-left {
+      flex: 1; display: flex; align-items: center;
+      gap: 8px; padding: 9px 16px;
+    }
+    .yw-colbar-right {
+      flex: 1; display: flex; align-items: center;
+      gap: 8px; padding: 9px 16px;
+    }
+    .yw-col-divider {
+      width: 1px; height: 36px; background: #d8e4e4;
+      flex-shrink: 0;
+    }
+    .yw-col-title {
+      font-size: 8.5px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: #5a7878;
+    }
+    .yw-count-badge {
+      font-size: 9px; font-weight: 700;
+      color: #8aabab;
+      background: #eef4f4;
+      border: 1px solid #d8e4e4;
+      border-radius: 999px;
+      padding: 1px 7px;
+    }
+    .yw-addbtn {
+      font-size: 8.5px; font-weight: 600;
+      color: #4d8f8a;
+      background: rgba(77,143,138,0.06);
+      border: 1.5px solid rgba(77,143,138,0.35);
+      border-radius: 999px; padding: 3px 11px;
+      cursor: default; letter-spacing: 0.02em;
+    }
+    .yw-clearbtn {
+      font-size: 8.5px; font-weight: 500;
+      color: #7a9898;
+      background: #f5f9f9;
+      border: 1px solid #d8e4e4;
+      border-radius: 6px; padding: 3px 10px;
+      cursor: default; display: flex; align-items: center;
+    }
+
+    /* Body */
+    .yw-body {
+      background: #f0f4f4;
+      display: flex; min-height: 230px;
+    }
+    .yw-pane {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 24px 16px;
+    }
+    .yw-body-divider {
+      width: 1px; background: #d8e4e4; flex-shrink: 0;
+      align-self: stretch;
+    }
+    .yw-empty {
+      text-align: center; color: #9ab8b8;
+    }
+    .yw-empty-icon {
+      width: 38px; height: 38px;
+      margin: 0 auto 12px;
+      display: block;
+      color: #b8d0d0;
+    }
+    .yw-empty p {
+      font-size: 10px; line-height: 1.6; color: #9ab8b8;
+    }
+
+    /* Hermes strip */
+    .yw-hermes-strip {
+      background: #e8f0f0;
+      border-top: 1px solid #d0e0e0;
+      padding: 10px 16px;
+    }
+    .yw-hermes-top {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 8px;
+    }
+    .yw-h-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #4d8f8a; color: white;
+      font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .yw-h-ready {
+      font-size: 9px; color: #5a7878; line-height: 1.5;
+      padding-top: 4px;
+    }
+    .yw-hermes-input-row {
+      display: flex; gap: 8px; align-items: center;
+    }
+    .yw-hermes-field {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid #c8dcdc;
+      border-radius: 8px; padding: 7px 14px;
+      font-size: 9px; color: #9ab8b8;
+    }
+    .yw-send-btn {
+      font-size: 9px; font-weight: 600;
+      color: white; background: #4d8f8a;
+      border-radius: 7px; padding: 7px 16px;
+      cursor: default; letter-spacing: 0.05em;
+    }
+
+    /* Description */
+    .tool-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 300;
+      line-height: 1.75; color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    /* Feature list */
+    .feature-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-list li {
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--text);
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+
+    .feature-list li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.55rem;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    /* Add-ons */
+    .addon-row {
+      display: flex; gap: 0.75rem;
+      flex-wrap: wrap; margin-bottom: 2rem;
+    }
+
+    .addon-tag {
+      font-size: 0.72rem; font-weight: 500;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px; padding: 4px 14px;
+    }
+
+    .addon-tag.highlight {
+      border-color: rgba(74,143,194,0.4);
+      color: var(--sky);
+      background: rgba(74,143,194,0.04);
+    }
+
+    /* Pricing */
+    .pricing-row {
+      display: flex; align-items: center;
+      gap: 2rem; flex-wrap: wrap;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .price-block { flex: 1; min-width: 140px; }
+
+    .price-label {
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 0.2rem;
+    }
+
+    .price-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 600;
+      color: var(--navy);
+    }
+
+    .price-note {
+      font-size: 0.75rem; color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .tool-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: white; background: var(--navy);
+      padding: 0.75rem 1.8rem; border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .tool-cta:hover { background: #2d1f0a; }
+
+    /* Coming soon card */
+    .tool-card.coming-soon {
+      opacity: 0.6;
+      background: var(--warm);
+    }
+    .tool-card.coming-soon::before {
+      background: linear-gradient(90deg, var(--muted), transparent);
+    }
+    .coming-label {
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid rgba(107,93,79,0.3);
+      padding: 3px 10px; border-radius: 2px;
+      display: inline-block; margin-bottom: 0.8rem;
+    }
+
+    /* ── CTA SECTION ── */
+    .pt-cta {
+      text-align: center;
+      padding: 5rem 4rem 7rem;
+      background: var(--warm);
+      border-top: 1px solid var(--line);
+    }
+    .pt-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 400; font-style: italic;
+      margin-bottom: 1rem;
+    }
+    .pt-cta p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 300;
+      color: var(--muted); max-width: 420px;
+      margin: 0 auto 2rem;
+    }
+    .btn-cta {
+      display: inline-block;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: white; background: var(--navy);
+      padding: 0.85rem 2.2rem; border-radius: 2px;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .btn-cta:hover { background: #2d1f0a; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero, .tools-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .tool-card { padding: 2rem 1.5rem; }
+      .tool-card-header { flex-direction: column-reverse; }
+      .tool-preview { width: 100%; }
+      .feature-list { grid-template-columns: 1fr; }
+      .pricing-row { flex-direction: column; gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <span class="brand-word">Creative Design <em>SOULutions</em></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li class="has-dropdown">
+        <a href="systems.html">Systems <span class="caret">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="systems.html">Business Hubs</a></li>
+          <li><div class="drop-divider"></div></li>
+          <li><a href="little-things.html">Small Tools</a></li>
+          <li class="drop-special"><a href="partner-tools.html" class="active">✦ Partner Tools</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html#why">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="nav-cta">Let's Talk</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <span class="section-label">Specialist tools</span>
+    <h1>Built for the work<br>that <em>actually matters</em></h1>
+    <p>Partner Tools are purpose-built for specific industries. More powerful than general software. Designed around compliance, workflow, and the real shape of your day.</p>
+    <div class="gold-divider"></div>
+  </section>
+
+  <!-- ── TOOLS ── -->
+  <section class="tools-section">
+
+    <!-- You're Welcome -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-card-title-wrap">
+          <span class="tool-badge">Medical Practices</span>
+          <h2>You're <em>Welcome</em></h2>
+          <p class="tool-tagline">Practice communications, done properly.</p>
+        </div>
+      </div>
+
+      <!-- App mockup placeholder — replace with real screenshot when white-label is built -->
+      <div class="app-mockup" style="display:none;">
+
+        <!-- macOS title bar -->
+        <div class="yw-titlebar">
+          <div class="yw-dot r"></div>
+          <div class="yw-dot y"></div>
+          <div class="yw-dot g"></div>
+
+          <!-- Logo + app name -->
+          <div class="yw-appname">
+            <svg class="yw-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="15" fill="#c8922a" opacity="0.12"/>
+              <g stroke="#c8922a" stroke-width="1.8" stroke-linecap="round">
+                <line x1="16" y1="5"  x2="16" y2="27"/>
+                <line x1="5"  y1="16" x2="27" y2="16"/>
+                <line x1="8.5"  y1="8.5"  x2="23.5" y2="23.5"/>
+                <line x1="23.5" y1="8.5"  x2="8.5"  y2="23.5"/>
+                <line x1="5.5"  y1="11.5" x2="26.5" y2="20.5"/>
+                <line x1="5.5"  y1="20.5" x2="26.5" y2="11.5"/>
+              </g>
+            </svg>
+            <span class="yw-name">You're Welcome</span>
+            <span class="yw-subtitle">PRACTICE COMMUNICATIONS</span>
+          </div>
+
+          <!-- Right pills -->
+          <div class="yw-right-pills">
+            <span class="yw-status-dot"></span>
+            <span class="yw-status-text">Hermes offline</span>
+            <span class="yw-pill yw-pill-outline">
+              <span class="yw-pill-dot teal"></span>OUTLOOK
+            </span>
+            <span class="yw-pill yw-pill-outline">
+              <span class="yw-pill-dot green"></span>PHI STRIP
+            </span>
+            <span class="yw-pill yw-pill-solid">HIPAA &nbsp;·&nbsp; APPs</span>
+            <span class="yw-icon-btn">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zM1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8z" fill="currentColor" opacity=".4"/><path d="M8 5.5v3l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="yw-icon-btn">
+              <svg viewBox="0 0 16 16" fill="none"><rect x="2.5" y="2.5" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M10.5 2.5V5m0 0H13M10.5 5l3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="yw-icon-btn">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".5"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Column sub-header bar -->
+        <div class="yw-colbar">
+          <div class="yw-colbar-left">
+            <span class="yw-col-title">INCOMING</span>
+            <span class="yw-count-badge">0</span>
+            <button class="yw-addbtn">+ Add Email</button>
+            <button class="yw-clearbtn">
+              <svg viewBox="0 0 14 14" fill="none" style="width:10px;height:10px;margin-right:3px"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Clear
+            </button>
+          </div>
+          <div class="yw-col-divider"></div>
+          <div class="yw-colbar-right">
+            <span class="yw-col-title">OUTGOING</span>
+            <span class="yw-count-badge">0</span>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="yw-body">
+          <!-- Incoming empty state -->
+          <div class="yw-pane">
+            <div class="yw-empty">
+              <svg class="yw-empty-icon" viewBox="0 0 40 40" fill="none"><rect x="4" y="10" width="32" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4 14l16 10 16-10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              <p>Add an incoming email to get started.</p>
+              <p>Remove names before pasting.</p>
+            </div>
+          </div>
+
+          <div class="yw-body-divider"></div>
+
+          <!-- Outgoing empty state -->
+          <div class="yw-pane">
+            <div class="yw-empty">
+              <svg class="yw-empty-icon" viewBox="0 0 40 40" fill="none">
+                <line x1="20" y1="4"  x2="20" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="17" y1="7"  x2="20" y2="4"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="23" y1="7"  x2="20" y2="4"  stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <ellipse cx="20" cy="28" rx="5" ry="2" stroke="currentColor" stroke-width="1.2" opacity=".5"/>
+                <path d="M14 30c0 2 2.7 4 6 4s6-2 6-4" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
+              </svg>
+              <p>Hermes will draft responses here. Select</p>
+              <p>an email and tap Draft Response.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hermes strip -->
+        <div class="yw-hermes-strip">
+          <div class="yw-hermes-top">
+            <span class="yw-h-avatar">H</span>
+            <span class="yw-h-ready">Ready to help refine any response. Select a draft and ask me to adjust the tone, add a link, or rewrite entirely.</span>
+          </div>
+          <div class="yw-hermes-input-row">
+            <div class="yw-hermes-field">Ask Hermes to adjust a draft… e.g. 'Make this warmer' or 'Add the booking link'</div>
+            <button class="yw-send-btn">Send</button>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="tool-desc" style="margin-top:1.5rem;">
+        You're Welcome drafts outgoing email responses for your practice — without anyone handling patient data carelessly. Emails land in the app, identifying information is stripped automatically before any AI sees it, and Hermes drafts a warm, professional reply. Staff review and send. The whole loop takes under a minute.
+      </p>
+      <p class="tool-desc" style="margin-top:-0.8rem;">
+        Built for Australian and US specialist practices. Compliant with the Australian Privacy Principles and HIPAA Minimum Necessary Standard. Every action is audit logged. No patient data is stored, transmitted, or retained.
+      </p>
+
+      <ul class="feature-list">
+        <li>Automated PHI stripping on every email</li>
+        <li>AI-drafted responses via local Hermes agent</li>
+        <li>Audit log — compliant, no patient content</li>
+        <li>Session expiry with 30-min auto-wipe</li>
+        <li>Signed HIPAA / APPs risk assessment PDF</li>
+        <li>Link memory for booking, forms &amp; resources</li>
+        <li>Hermes chat for tone refinement</li>
+        <li>Mac desktop app — nothing in the cloud</li>
+        <li>Windows version available on request</li>
+      </ul>
+
+      <div style="margin-bottom:1.5rem;">
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;">Add-ons</p>
+        <div class="addon-row">
+          <span class="addon-tag highlight">✦ Outlook Connect — live inbox sync &amp; send</span>
+          <span class="addon-tag">Shared mailbox routing</span>
+          <span class="addon-tag">Multi-staff access</span>
+        </div>
+      </div>
+
+      <div class="pricing-row">
+        <div class="price-block">
+          <span class="price-label">Setup</span>
+          <div class="price-value">Contact us</div>
+          <div class="price-note">Includes installation &amp; staff walkthrough</div>
+        </div>
+        <div class="price-block">
+          <span class="price-label">Outlook Connect</span>
+          <div class="price-value">Add-on</div>
+          <div class="price-note">Live inbox sync, reply sending, shared mailbox</div>
+        </div>
+        <a href="index.html#contact" class="tool-cta">Book a demo →</a>
+      </div>
+    </div>
+
+    <!-- Coming soon slot -->
+    <div class="tool-card coming-soon">
+      <span class="coming-label">Coming soon</span>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;font-style:italic;color:var(--navy);margin-bottom:0.5rem;">More Partner Tools</h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:var(--muted);">Tools for legal practices, real estate agencies, and specialist trades — built when the right partnership is there. If your industry has a workflow problem, let's talk.</p>
+    </div>
+
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="pt-cta">
+    <span class="section-label">Ready to build</span>
+    <h2>The right tool changes<br>everything.</h2>
+    <p>Book a demo and we'll walk through You're Welcome with your team. If it fits, we'll set it up and have you running within a week.</p>
+    <a href="index.html#contact" class="btn-cta">Let's talk</a>
+  </section>
+
+  <script>
+    document.querySelectorAll('.has-dropdown > a').forEach(link => {
+      link.addEventListener('click', e => {
+        const li = link.closest('.has-dropdown');
+        const isOpen = li.classList.contains('open');
+        document.querySelectorAll('.has-dropdown').forEach(el => el.classList.remove('open'));
+        if (!isOpen) { e.preventDefault(); li.classList.add('open'); }
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.has-dropdown')) {
+        document.querySelectorAll('.has-dropdown').forEach(el => el.classList.remove('open'));
+      }
+    });
+  </script>
+
+</body>
+</html>
