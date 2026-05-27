@@ -197,13 +197,6 @@
       display: flex; align-items: center; padding: 0 10px; gap: 8px;
       user-select: none;
     }
-    .vault-trafficlights { display: flex; gap: 5px; flex-shrink: 0; }
-    .vt-dot { width: 12px; height: 12px; border-radius: 50%; border: none; cursor: pointer; transition: filter 0.15s; position: relative; }
-    .vt-dot::after { content: ''; position: absolute; inset: 2px; border-radius: 50%; background: rgba(255,255,255,0.3); }
-    .vt-dot:hover { filter: brightness(1.15); }
-    .vt-close  { background: radial-gradient(circle at 35% 35%, #ff7a73, #e0342e); }
-    .vt-min    { background: radial-gradient(circle at 35% 35%, #ffd04a, #d49800); }
-    .vt-zoom   { background: radial-gradient(circle at 35% 35%, #54d467, #20a035); }
     .vault-win-title {
       flex: 1; text-align: center;
       font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; font-weight: 400;
@@ -385,11 +378,6 @@
 
       <!-- Titlebar — drag handle -->
       <div class="vault-titlebar" id="vault-titlebar">
-        <div class="vault-trafficlights">
-          <button class="vt-dot vt-close" id="vt-close" title="Hide"></button>
-          <button class="vt-dot vt-min"   id="vt-min"   title="Minimize"></button>
-          <button class="vt-dot vt-zoom"  id="vt-zoom"  title="Expand"></button>
-        </div>
         <span class="vault-win-title">Credential Vault</span>
         <button class="vt-collapse" id="vt-collapse">▾</button>
       </div>
@@ -906,26 +894,9 @@ load();
 
 
   const collapseBtn = document.getElementById('vt-collapse');
-  function toggleMin() {
+  collapseBtn.addEventListener('click', () => {
     const min = floatEl.classList.toggle('collapsed');
     collapseBtn.textContent = min ? '▴' : '▾';
-  }
-  collapseBtn.addEventListener('click', toggleMin);
-  document.getElementById('vt-min').addEventListener('click', toggleMin);
-
-  document.getElementById('vt-zoom').addEventListener('click', () => {
-    floatEl.classList.remove('collapsed');
-    floatEl.style.width = '362px'; floatEl.style.height = '502px';
-    collapseBtn.textContent = '▾';
-  });
-
-  document.getElementById('vt-close').addEventListener('click', () => {
-    floatEl.style.display = 'none';
-    const pill = document.createElement('button');
-    pill.textContent = '🔐 Vault';
-    pill.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:400;padding:7px 16px;background:linear-gradient(135deg,#3a7060,#2d5a3d);color:#fff;border:none;border-radius:99px;font-size:0.68rem;font-weight:600;letter-spacing:0.06em;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);';
-    pill.addEventListener('click', () => { floatEl.style.display = ''; pill.remove(); });
-    document.body.appendChild(pill);
   });
 })();
 
