@@ -54,9 +54,13 @@
     /* ── TOOLS ROW ── */
     .tools-row {
       padding: 0 4rem 6rem;
-      max-width: 640px;
+      max-width: 1160px;
+      display: flex;
+      gap: 4rem;
+      align-items: flex-start;
     }
-    .tool-panel { display: flex; flex-direction: column; }
+    .tool-panel { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+    .tool-panel--vault { flex: 0 0 auto; }
     .tool-copy-sm { margin-bottom: 1.2rem; }
     .tool-copy-sm h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; line-height: 1.1; margin-bottom: 0.4rem; }
     .tool-copy-sm h2 em { color: var(--gold); font-style: italic; }
@@ -149,10 +153,7 @@
 
     /* ── VAULT FLOATING WINDOW ── */
     .vault-float {
-      position: fixed;
-      right: 36px;
-      bottom: 36px;
-      z-index: 300;
+      position: relative;
       width: 243px;
       height: 382px;
       min-width: 222px;
@@ -194,9 +195,8 @@
       background: linear-gradient(to bottom, #b8cec8, #9ab8b0);
       border-bottom: 1px solid rgba(40,90,78,0.18);
       display: flex; align-items: center; padding: 0 10px; gap: 8px;
-      cursor: grab; user-select: none;
+      user-select: none;
     }
-    .vault-titlebar:active { cursor: grabbing; }
     .vault-trafficlights { display: flex; gap: 5px; flex-shrink: 0; }
     .vt-dot { width: 12px; height: 12px; border-radius: 50%; border: none; cursor: pointer; transition: filter 0.15s; position: relative; }
     .vt-dot::after { content: ''; position: absolute; inset: 2px; border-radius: 50%; background: rgba(255,255,255,0.3); }
@@ -351,7 +351,7 @@
   <p>Little things that feel helpful for the tasks that need a little companion.</p>
 </section>
 
-<!-- ── TOOLS ROW — stickies ── -->
+<!-- ── TOOLS ROW — stickies + vault ── -->
 <div class="tools-row">
   <div class="tool-panel" id="stickies">
     <div class="tool-copy-sm">
@@ -371,21 +371,15 @@
       <div class="board-hint">drag · click to type · + for new</div>
     </div>
   </div>
-</div>
 
-<!-- ── VAULT DESCRIPTION ── -->
-<div class="tools-row" style="padding-top: 3rem;">
-  <div class="tool-panel" id="vault-desc">
+  <!-- ── VAULT column ── -->
+  <div class="tool-panel tool-panel--vault">
     <div class="tool-copy-sm">
-      <span class="tool-tag tag-live">Live — bottom right</span>
+      <span class="tool-tag tag-live">Live</span>
       <h2>Credential <em>Vault</em></h2>
-      <p>A secure, encrypted place to keep your logins, API keys, and passwords — right on your screen. Drag it anywhere, resize it, minimize it to just the titlebar when you don't need it. Everything is locked behind a master password and encrypted with AES-256 before it ever touches storage. Nothing leaves your device.</p>
+      <p>A secure, encrypted place for logins, API keys, and passwords. Locked behind a master password, encrypted with AES-256 — nothing leaves your device. Resize it, minimize it to the titlebar, and keep it wherever it fits your day.</p>
     </div>
-  </div>
-</div>
-
-<!-- ── VAULT — floating draggable window ── -->
-<div class="vault-float" id="vault-float">
+    <div class="vault-float" id="vault-float">
   <div class="vault-chrome-ring">
     <div class="vault-win" id="vault-win">
 
@@ -458,7 +452,9 @@
       </div><!-- /vault-card -->
     </div><!-- /vault-win -->
   </div><!-- /vault-chrome-ring -->
-</div><!-- /vault-float -->
+    </div><!-- /vault-float -->
+  </div><!-- /tool-panel--vault -->
+</div><!-- /tools-row -->
 
 <!-- CTA — copy placeholder -->
 <section class="lt-cta">
@@ -907,32 +903,7 @@ load();
   const floatEl  = document.getElementById('vault-float');
   const winEl    = document.getElementById('vault-win');
   const titlebar = document.getElementById('vault-titlebar');
-  const POS_KEY  = 'vault-win-pos-v2';
 
-  try {
-    const p = JSON.parse(localStorage.getItem(POS_KEY));
-    if (p) { floatEl.style.right = 'auto'; floatEl.style.bottom = 'auto'; floatEl.style.left = p.x + 'px'; floatEl.style.top = p.y + 'px'; }
-  } catch {}
-
-  let dragging = false, dx = 0, dy = 0;
-  titlebar.addEventListener('mousedown', e => {
-    if (e.target.tagName === 'BUTTON') return;
-    dragging = true;
-    const r = floatEl.getBoundingClientRect();
-    dx = e.clientX - r.left; dy = e.clientY - r.top;
-    titlebar.style.cursor = 'grabbing'; e.preventDefault();
-  });
-  window.addEventListener('mousemove', e => {
-    if (!dragging) return;
-    floatEl.style.left   = Math.max(0, Math.min(window.innerWidth  - 80,  e.clientX - dx)) + 'px';
-    floatEl.style.top    = Math.max(0, Math.min(window.innerHeight - 40,  e.clientY - dy)) + 'px';
-    floatEl.style.right  = 'auto'; floatEl.style.bottom = 'auto';
-  });
-  window.addEventListener('mouseup', () => {
-    if (!dragging) return;
-    dragging = false; titlebar.style.cursor = '';
-    try { localStorage.setItem(POS_KEY, JSON.stringify({ x: floatEl.offsetLeft, y: floatEl.offsetTop })); } catch {}
-  });
 
   const collapseBtn = document.getElementById('vt-collapse');
   function toggleMin() {
