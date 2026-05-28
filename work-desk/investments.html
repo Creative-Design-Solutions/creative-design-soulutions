@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investment Tracker — Bryan Gallagher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300;1,9..144,400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky:   #EEF4FA;
+      --sky-2: #E4EDF6;
+      --deep:  #1A2236;
+      --ink:   #1C2333;
+      --muted: #7A8BA8;
+      --cream: #FDFAF5;
+      --sage:  #5B9E88;
+      --sage-l:#A0C4B8;
+      --gold:  #B8900A;
+      --faint: rgba(28,35,51,0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--deep);
+      padding: 3rem 4rem;
+    }
+
+    .header-eyebrow {
+      font-size: 0.4375rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.75rem;
+    }
+
+    header h1 {
+      font-family: 'Cormorant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--sky);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-optical-sizing: auto;
+    }
+
+    header p {
+      font-family: 'Cormorant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1rem;
+      color: rgba(238,244,250,0.45);
+      margin-top: 1rem;
+      max-width: 480px;
+      line-height: 1.65;
+      font-optical-sizing: auto;
+    }
+
+    /* ── Summary bar ── */
+    .summary {
+      background: var(--sky);
+      padding: 1.5rem 4rem;
+      display: flex;
+      gap: 3rem;
+      border-bottom: 1px solid var(--sky-2);
+    }
+
+    .summary-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .summary-value {
+      font-family: 'Cormorant', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--ink);
+      font-optical-sizing: auto;
+    }
+
+    .summary-label {
+      font-size: 0.375rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── Body layout ── */
+    main {
+      padding: 3rem 4rem 6rem;
+      max-width: 1100px;
+    }
+
+    /* ── Filter tabs ── */
+    .filter-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-size: 0.4375rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(28,35,51,0.12);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--deep);
+      border-color: var(--deep);
+      color: var(--sky);
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-heading {
+      font-size: 0.4375rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--faint);
+    }
+
+    /* ── Investment card ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: rgba(28,35,51,0.07);
+      border: 1px solid rgba(28,35,51,0.07);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .inv-card {
+      background: var(--cream);
+      padding: 1.5rem;
+      transition: background 0.15s;
+    }
+
+    .inv-card:hover { background: var(--sky); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 0.75rem;
+    }
+
+    .card-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: var(--ink);
+      font-optical-sizing: auto;
+      line-height: 1.1;
+    }
+
+    .badge {
+      font-size: 0.375rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.625rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-explore  { background: rgba(184,144,10,0.1);  color: var(--gold); }
+    .badge-worth-it { background: rgba(91,158,136,0.12); color: var(--sage); }
+    .badge-waiting  { background: rgba(122,139,168,0.1); color: var(--muted); }
+    .badge-active   { background: rgba(26,34,54,0.08);   color: var(--ink); }
+
+    .card-name a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(28,35,51,0.15);
+      transition: border-color 0.18s, color 0.18s;
+    }
+    .card-name a:hover {
+      color: var(--sage);
+      border-color: var(--sage);
+    }
+
+    .card-cost {
+      font-size: 0.5rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.625rem;
+      letter-spacing: 0.04em;
+    }
+
+    .card-note {
+      font-family: 'Cormorant', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-optical-sizing: auto;
+    }
+
+    .card-why {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 2px solid rgba(28,35,51,0.1);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ── Add button ── */
+    .add-row {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .add-btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.4375rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.5rem;
+      background: var(--deep);
+      color: var(--sky);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.18s;
+    }
+    .add-btn:hover { opacity: 0.8; }
+
+    /* ── Back button ── */
+    .back {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6875rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--sage-l); text-decoration: none;
+      opacity: 0.8; transition: opacity 0.15s;
+      margin-bottom: 1.25rem;
+    }
+    .back:hover { opacity: 1; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--faint);
+      font-size: 0.4375rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="http://localhost:8765" class="back">← Hub</a>
+  <div class="header-eyebrow">Bryan Gallagher · 2026</div>
+  <h1>The Investment List</h1>
+  <p>Tools, programs, and platforms worth exploring as the work grows. Not purchases — possibilities. Things to revisit when the moment is right.</p>
+</header>
+
+<div class="summary">
+  <div class="summary-stat">
+    <span class="summary-value" id="total-count">0</span>
+    <span class="summary-label">Total tracked</span>
+  </div>
+  <div class="summary-stat">
+    <span class="summary-value" id="worth-it-count">0</span>
+    <span class="summary-label">Worth it now</span>
+  </div>
+  <div class="summary-stat">
+    <span class="summary-value" id="explore-count">0</span>
+    <span class="summary-label">Exploring</span>
+  </div>
+  <div class="summary-stat">
+    <span class="summary-value" id="est-cost">$0</span>
+    <span class="summary-label">Est. monthly (worth it)</span>
+  </div>
+</div>
+
+<main>
+
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="design">Design</button>
+    <button class="filter-btn" data-filter="type">Typography</button>
+    <button class="filter-btn" data-filter="dev">Development</button>
+    <button class="filter-btn" data-filter="ai">AI</button>
+    <button class="filter-btn" data-filter="business">Business</button>
+  </div>
+
+  <!-- ── DESIGN ── -->
+  <div class="section" data-category="design">
+    <div class="section-heading">Design</div>
+    <div class="card-grid">
+
+      <div class="inv-card" data-category="design" data-status="explore" data-cost="15">
+        <div class="card-top">
+          <span class="card-name"><a href="https://figma.com" target="_blank" rel="noopener">Figma</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">~$15/mo (Starter) · Free tier available</div>
+        <div class="card-note">The industry-standard design tool. Components, prototypes, auto-layout. Claude can export design tokens directly from Figma files.</div>
+        <div class="card-why">Worth it when: building UI for clients or the real estate app at scale. Right now Claude + code covers it.</div>
+      </div>
+
+      <div class="inv-card" data-category="design" data-status="worth-it" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://www.adobe.com/products/firefly.html" target="_blank" rel="noopener">Adobe Firefly</a></span>
+          <span class="badge badge-worth-it">Worth It Now</span>
+        </div>
+        <div class="card-cost">Currently: Free tier · Upgrading to Pro ~$20/mo for more generations</div>
+        <div class="card-note">Adobe's AI image generator — already in use. Generated the From the Kitchen short ribs photo in one prompt. Produces food photography, brand visuals, and custom imagery from text descriptions. Replaces hours of stock photo hunting.</div>
+        <div class="card-why">Already using it. Upgrade to Pro when the free credits run out — $20/mo is worth it if you're generating visuals for client projects regularly.</div>
+      </div>
+
+      <div class="inv-card" data-category="design" data-status="explore" data-cost="60">
+        <div class="card-top">
+          <span class="card-name"><a href="https://www.adobe.com/creativecloud.html" target="_blank" rel="noopener">Adobe Creative Cloud</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">~$60/mo (All Apps) · ~$22/mo (Illustrator only)</div>
+        <div class="card-note">Illustrator for vector logos. Photoshop for photo editing. InDesign for print. Vast overkill until client work demands it.</div>
+        <div class="card-why">Worth it when: logo delivery to clients or print materials for the medical practice.</div>
+      </div>
+
+      <div class="inv-card" data-category="design" data-status="worth-it" data-cost="15">
+        <div class="card-top">
+          <span class="card-name"><a href="https://www.canva.com/pro/" target="_blank" rel="noopener">Canva Pro</a></span>
+          <span class="badge badge-worth-it">Worth It Now</span>
+        </div>
+        <div class="card-cost">~$15/mo — already subscribed</div>
+        <div class="card-note">Already in use. Fast social, print, and presentation assets. Great for handing off to clients who want to self-edit their own brand materials without touching code.</div>
+        <div class="card-why">Already paying. Use it for client-facing deliverables and quick turnaround visuals.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── TYPOGRAPHY ── -->
+  <div class="section" data-category="type">
+    <div class="section-heading">Typography</div>
+    <div class="card-grid">
+
+      <div class="inv-card" data-category="type" data-status="explore" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://pangrampangram.com/products/editorial-new" target="_blank" rel="noopener">PP Editorial New</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">~$109 (desktop license, one-time) · ~$349 (full family)</div>
+        <div class="card-note">Pangram Pangram's editorial serif. Sharp, confident, and surprisingly warm. Used by editorial-forward studios and high-end product brands. Would replace Cormorant in premium work.</div>
+        <div class="card-why">Worth it when: landing a client project with a real visual identity budget. Or just when it feels right.</div>
+      </div>
+
+      <div class="inv-card" data-category="type" data-status="explore" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://commercialtype.com/catalog/canela" target="_blank" rel="noopener">Canela</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">~$50–200 depending on styles</div>
+        <div class="card-note">Display serif with real personality — optical size-aware, beautiful at large scales. Feels like a proper editorial magazine. Strong candidate for From the Kitchen headings.</div>
+        <div class="card-why">Worth it when: From the Kitchen becomes something people actually use, or a premium client project calls for it.</div>
+      </div>
+
+      <div class="inv-card" data-category="type" data-status="explore" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://klim.co.nz/retail-fonts/signifier/" target="_blank" rel="noopener">Signifier</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">~$60–350 depending on styles</div>
+        <div class="card-note">Klim Type Foundry. A text serif with deep craft — designed for sustained reading at body sizes. Serious, distinctive, respected in editorial design circles.</div>
+        <div class="card-why">Worth it when: a long-form project (recipe book, client brand guide, patient materials) where body text needs real personality.</div>
+      </div>
+
+      <div class="inv-card" data-category="type" data-status="worth-it" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://fonts.google.com" target="_blank" rel="noopener">Google Fonts (Cormorant + Syne)</a></span>
+          <span class="badge badge-worth-it">Worth It Now</span>
+        </div>
+        <div class="card-cost">Free</div>
+        <div class="card-note">Already in use. Cormorant for editorial warmth, Syne for clean UI. This pairing is punching above its weight. Hold it until a project genuinely needs more.</div>
+        <div class="card-why">No action needed. Keep building with it.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── DEVELOPMENT ── -->
+  <div class="section" data-category="dev">
+    <div class="section-heading">Development</div>
+    <div class="card-grid">
+
+      <div class="inv-card" data-category="dev" data-status="worth-it" data-cost="4">
+        <div class="card-top">
+          <span class="card-name"><a href="https://github.com" target="_blank" rel="noopener">GitHub + GitHub Pages</a></span>
+          <span class="badge badge-worth-it">Worth It Now</span>
+        </div>
+        <div class="card-cost">Free (public) · ~$4/mo (Pro)</div>
+        <div class="card-note">Already using for From the Kitchen hosting. Git version control is essential. GitHub Pages = free static hosting. GitHub Pro unlocks private repos and more Actions minutes.</div>
+        <div class="card-why">Upgrade to Pro when you have private client projects or need more Actions.</div>
+      </div>
+
+      <div class="inv-card" data-category="dev" data-status="explore" data-cost="20">
+        <div class="card-top">
+          <span class="card-name"><a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">Free tier generous · ~$20/mo (Pro)</div>
+        <div class="card-note">Best-in-class Next.js hosting. Instant deployments, preview branches, edge functions. The right move when a project needs server-side rendering or API routes.</div>
+        <div class="card-why">Worth it when: the real estate app or a client project needs dynamic features that GitHub Pages can't handle.</div>
+      </div>
+
+      <div class="inv-card" data-category="dev" data-status="explore" data-cost="25">
+        <div class="card-top">
+          <span class="card-name"><a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">Free tier · ~$25/mo (Pro)</div>
+        <div class="card-note">Open-source Firebase alternative. Postgres database, auth, real-time, storage. Strong candidate for the real estate app backend. Claude can write Supabase queries fluently.</div>
+        <div class="card-why">Worth it when: the real estate app needs a real database and user accounts.</div>
+      </div>
+
+      <div class="inv-card" data-category="dev" data-status="explore" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://www.cursor.com" target="_blank" rel="noopener">Cursor IDE</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">~$20/mo (Pro)</div>
+        <div class="card-note">AI-native code editor built on VS Code. Inline chat, full codebase awareness, multi-file edits. Pairs well with Claude for faster iteration on bigger projects.</div>
+        <div class="card-why">Worth it when: you're building the real estate app and jumping between many files. Less critical for single-file HTML work.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── AI ── -->
+  <div class="section" data-category="ai">
+    <div class="section-heading">AI & Automation</div>
+    <div class="card-grid">
+
+      <div class="inv-card" data-category="ai" data-status="worth-it" data-cost="20">
+        <div class="card-top">
+          <span class="card-name"><a href="https://claude.ai" target="_blank" rel="noopener">Claude Pro (Anthropic)</a></span>
+          <span class="badge badge-worth-it">Worth It Now</span>
+        </div>
+        <div class="card-cost">~$20/mo</div>
+        <div class="card-note">Already in use. Priority access to Claude, higher usage limits, access to newer models. The single most leveraged tool in the stack.</div>
+        <div class="card-why">Already paying. Keep it. Consider Claude Teams ($30/mo/seat) when you have a collaborator or need shared usage.</div>
+      </div>
+
+      <div class="inv-card" data-category="ai" data-status="explore" data-cost="20">
+        <div class="card-top">
+          <span class="card-name"><a href="https://www.make.com" target="_blank" rel="noopener">Make (formerly Integromat)</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">Free tier · ~$9–$29/mo</div>
+        <div class="card-note">Visual automation platform. Connects Outlook, Gentu, Xero, and hundreds of other tools without code. Strong candidate for the medical practice workflow layer.</div>
+        <div class="card-why">Worth it when: you need to automate something between Gentu and Xero and don't want to write a Python script.</div>
+      </div>
+
+
+      <div class="inv-card" data-category="ai" data-status="worth-it" data-cost="20">
+        <div class="card-top">
+          <span class="card-name"><a href="https://glaido.com" target="_blank" rel="noopener">Glaido</a></span>
+          <span class="badge badge-worth-it">Worth It Now</span>
+        </div>
+        <div class="card-cost">~$20/mo (Pro) — already subscribed</div>
+        <div class="card-note">Context-aware voice dictation — it knows what app you're in, reads the text around your cursor, and types accordingly. Casual in Slack, professional in Gmail, formatted in code. Launched May 2026. Fast and private.</div>
+        <div class="card-why">Already paying. Use it for drafting client messages, notes, and AIOS entries by voice. If you ever think faster than you type, this closes that gap.</div>
+      </div>
+
+      <div class="inv-card" data-category="ai" data-status="explore" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://www.bland.ai" target="_blank" rel="noopener">Bland.ai</a> or <a href="https://vapi.ai" target="_blank" rel="noopener">Vapi</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">Bland: ~$0.09/min · Vapi: ~$0.05/min + voice costs</div>
+        <div class="card-note">Purpose-built inbound AI phone agents. Someone calls the practice after hours — the AI picks up, answers FAQs, collects basic info, routes urgent calls. Not outbound. Not cold calling. Just a reliable first responder that never misses a call. Fully customizable — you write the personality and logic, they handle the infrastructure. Pick your voice, your LLM (Claude, GPT-4), and connect it to your calendar or CRM via webhooks. A realistic build is a weekend of prompting, not weeks of engineering.</div>
+        <div class="card-why">Start with Vapi — better developer experience, more flexible, and you can point it at Claude as the brain. Build the practice agent once the site is live.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── BUSINESS ── -->
+  <div class="section" data-category="business">
+    <div class="section-heading">Business & Operations</div>
+    <div class="card-grid">
+
+      <div class="inv-card" data-category="business" data-status="worth-it" data-cost="15">
+        <div class="card-top">
+          <span class="card-name"><a href="https://www.xero.com" target="_blank" rel="noopener">Xero</a></span>
+          <span class="badge badge-worth-it">Worth It Now</span>
+        </div>
+        <div class="card-cost">~$15–40/mo depending on plan</div>
+        <div class="card-note">Already planned for the medical practice. Clean accounting, invoicing, bank reconciliation. AIOS can connect directly to Xero's API to pull revenue data.</div>
+        <div class="card-why">Set up when the practice launch is ready. It's on the 90-day list.</div>
+      </div>
+
+      <div class="inv-card" data-category="business" data-status="explore" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://www.loom.com" target="_blank" rel="noopener">Loom</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">Free (limited) · ~$15/mo (Business)</div>
+        <div class="card-note">Async video messaging. Send clients a 2-minute walkthrough instead of writing a long email. Shortens the feedback loop on design reviews and builds trust.</div>
+        <div class="card-why">Worth it when: you have 3+ active freelance clients and async communication becomes a bottleneck.</div>
+      </div>
+
+      <div class="inv-card" data-category="business" data-status="explore" data-cost="0">
+        <div class="card-top">
+          <span class="card-name"><a href="https://cal.com" target="_blank" rel="noopener">Cal.com</a> or <a href="https://calendly.com" target="_blank" rel="noopener">Calendly</a></span>
+          <span class="badge badge-explore">Explore</span>
+        </div>
+        <div class="card-cost">Free tier · ~$12/mo (Pro)</div>
+        <div class="card-note">Scheduling that connects to your calendar and eliminates back-and-forth. Essential once you're booking discovery calls regularly. Cal.com is open-source and more customizable.</div>
+        <div class="card-why">Worth it when: you're booking 5+ client calls per month and scheduling is friction.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="add-row">
+    <button class="add-btn" onclick="alert('Add new investment — editable in investments.html')">+ Add Investment</button>
+  </div>
+
+</main>
+
+<footer>
+  Last updated May 2026 · Not purchases — possibilities. Things to revisit when the moment is right.
+</footer>
+
+<script>
+  /* ── Filter ── */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const sections   = document.querySelectorAll('.section');
+  const cards      = document.querySelectorAll('.inv-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+
+      sections.forEach(s => {
+        const cat = s.dataset.category;
+        s.style.display = (f === 'all' || f === cat) ? '' : 'none';
+      });
+    });
+  });
+
+  /* ── Summary counts ── */
+  let total = 0, worthIt = 0, exploring = 0, worthItCost = 0;
+  cards.forEach(c => {
+    total++;
+    const status = c.dataset.status;
+    const cost = parseInt(c.dataset.cost) || 0;
+    if (status === 'worth-it') { worthIt++; worthItCost += cost; }
+    if (status === 'explore')  { exploring++; }
+  });
+
+  document.getElementById('total-count').textContent    = total;
+  document.getElementById('worth-it-count').textContent = worthIt;
+  document.getElementById('explore-count').textContent  = exploring;
+  document.getElementById('est-cost').textContent       = '$' + worthItCost + '/mo';
+</script>
+
+</body>
+</html>

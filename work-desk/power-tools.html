@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:    #1c2333;
+      --cream:  #f7f4ef;
+      --sage:   #5a7a6a;
+      --sky:    #eef4fa;
+      --faint:  rgba(28,35,51,0.07);
+      --gold:   #c8922a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { scrollbar-width: none; }
+    *::-webkit-scrollbar { display: none; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      border-radius: 12px;
+      padding: 2px;
+      background: linear-gradient(135deg,
+        #ffe8a0 0%, #c8922a 22%, #fff4c2 45%, #a0681a 68%, #e8c060 85%, #ffe8a0 100%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .page-header {
+      padding: 3.5rem 2.5rem 2rem;
+      border-bottom: 1px solid var(--faint);
+    }
+
+    .back {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--sage);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.7;
+      transition: opacity 0.15s;
+    }
+    .back:hover { opacity: 1; }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--ink);
+      opacity: 0.5;
+      font-weight: 400;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      padding: 2.5rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--faint);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(28,35,51,0.08);
+      transform: translateY(-2px);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .card-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge.free {
+      background: #e8f4ed;
+      color: #3a7a4a;
+    }
+    .badge.paid {
+      background: #fef3e2;
+      color: var(--gold);
+    }
+    .badge.freemium {
+      background: #eef4fa;
+      color: #3a6a9a;
+    }
+    .badge.installed {
+      background: #e8f4ed;
+      color: #3a7a4a;
+    }
+    .btn-installed {
+      background: #e8f4ed;
+      color: #3a7a4a;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .card-desc {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      opacity: 0.65;
+      font-weight: 400;
+    }
+
+    .card-why {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--sage);
+      line-height: 1.5;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--faint);
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #2d3748; }
+    .btn-secondary {
+      background: var(--sky);
+      color: var(--ink);
+    }
+    .btn-secondary:hover { background: #ddeaf5; }
+
+    .category-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.35;
+    }
+
+    .section-title {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      padding: 0 2.5rem;
+      padding-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <a href="http://localhost:8765" class="back">← Hub</a>
+    <h1>Power Tools</h1>
+    <p class="subtitle">Apps that make your Mac actually work the way you think.</p>
+  </div>
+
+  <p class="section-title">Productivity</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-name">Raycast</span>
+        <span class="badge installed">Installed</span>
+      </div>
+      <p class="card-desc">Replaces Spotlight entirely. Launch apps, search files, manage clipboard history, run calculations, control Spotify, and more — all from one keyboard shortcut.</p>
+      <p class="card-why">The single highest-leverage tool on this list. Once it's in muscle memory you'll use it 50 times a day.</p>
+      <div class="card-footer">
+        <span class="btn btn-installed">✓ Installed</span>
+        <span class="category-label">Launcher · Clipboard · Search</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-name">Lungo</span>
+        <span class="badge free">Free</span>
+      </div>
+      <p class="card-desc">One click in the menu bar keeps your Mac awake. No more screen going dark mid-meeting or mid-build. Simple, tiny, does exactly one thing perfectly.</p>
+      <p class="card-why">Zero learning curve. Install it and forget it's there — until you need it.</p>
+      <div class="card-footer">
+        <a href="https://sindresorhus.com/lungo" class="btn btn-primary">Get Lungo</a>
+        <span class="category-label">Utility · Menu Bar</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-name">Shottr</span>
+        <span class="badge installed">Installed</span>
+      </div>
+      <p class="card-desc">Screenshots with instant annotation, scrolling capture, and OCR — copy text right out of an image. Faster and cleaner than macOS's built-in tools.</p>
+      <p class="card-why">Especially useful for sharing UI feedback with clients or grabbing text from PDFs and images.</p>
+      <div class="card-footer">
+        <span class="btn btn-installed">✓ Installed</span>
+        <span class="category-label">Screenshots · OCR · Annotation</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-name">Loom</span>
+        <span class="badge freemium">Freemium</span>
+      </div>
+      <p class="card-desc">Record your screen and face, get a shareable link in seconds. No editing needed. Perfect for client walkthroughs, quick explainers, or async team updates.</p>
+      <p class="card-why">For CDS — showing a client how something works is faster than writing it out. Free tier is generous.</p>
+      <div class="card-footer">
+        <a href="https://loom.com" class="btn btn-primary">Get Loom</a>
+        <span class="category-label">Screen Recording · Sharing</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="card-name">Bartender</span>
+        <span class="badge paid">Paid</span>
+      </div>
+      <p class="card-desc">Hides menu bar icons you don't need to see all the time. Keeps the top of your screen clean and lets you surface the right tools when you need them.</p>
+      <p class="card-why">As you add more tools, the menu bar gets cluttered fast. Bartender keeps it surgical.</p>
+      <div class="card-footer">
+        <a href="https://macbartender.com" class="btn btn-primary">Get Bartender</a>
+        <span class="category-label">Menu Bar · Organization</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('click', function(e) {
+      const a = e.target.closest('a');
+      if (!a) return;
+      const href = a.getAttribute('href');
+      if (href && (href.startsWith('http://') || href.startsWith('https://'))
+          && !href.includes('localhost') && window.pywebview) {
+        e.preventDefault();
+        window.pywebview.api.open_external(href);
+      }
+    }, true);
+  </script>
+</body>
+</html>

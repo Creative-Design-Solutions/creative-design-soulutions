@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Backend — Bryan Gallagher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:    #1C2333;
+      --deep:   #1A2236;
+      --deep-2: #222B40;
+      --muted:  #7A8BA8;
+      --white:  #FFFFFF;
+      --off:    #F8F9FB;
+      --sage:   #5B9E88;
+      --sage-l: #A0C4B8;
+      --gold:   #B8900A;
+      --faint:  rgba(28,35,51,0.07);
+      --urgent: #C0392B;
+
+      /* Project glow colors */
+      --c-invite:     #C4845A;
+      --c-home:       #8B7EC4;
+      --c-dashboard:  #C4A45B;
+      --c-planner:    #5B8EC4;
+      --c-all:        #5B9E88;
+      --c-open:       #7A9EC4;
+      --c-completed:  #8A9E7A;
+      --c-maintenance:#9A8EC4;
+      --c-kitchen:  #C4884A;
+      --c-cds:      #6A7EC4;
+      --c-portal:   #9A6EC4;
+      --c-wisdom:   #5BAEB4;
+      --c-wsc:      #C4A45B;
+      --c-origen:   #C47A6A;
+      --c-default:  #8A9EC4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { scrollbar-width: none; }
+    *::-webkit-scrollbar { display: none; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ── Golden trim ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      border-radius: 12px;
+      padding: 2px;
+      background: linear-gradient(135deg,
+        #ffe8a0 0%, #c8922a 22%, #fff4c2 45%,
+        #a0681a 68%, #e8c060 85%, #ffe8a0 100%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ────────────────────────────────
+       SIDEBAR
+    ──────────────────────────────── */
+    .sidebar {
+      width: 52px;
+      background: var(--deep);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width 0.22s ease;
+      overflow: hidden;
+      z-index: 100;
+      border-right: 1px solid rgba(255,255,255,0.04);
+    }
+    .sidebar.expanded { width: 196px; }
+
+    /* Toggle */
+    .sidebar-toggle {
+      padding: 1.125rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: rgba(255,255,255,0.25);
+      font-size: 0.75rem;
+      transition: color 0.15s;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      user-select: none;
+    }
+    .sidebar-toggle:hover { color: rgba(255,255,255,0.6); }
+    .toggle-icon { transition: transform 0.22s ease; }
+    .sidebar.expanded .toggle-icon { transform: rotate(180deg); }
+
+    /* Nav items */
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0.75rem 0;
+      gap: 2px;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.6rem 0;
+      padding-left: 16px;
+      cursor: pointer;
+      border-radius: 0;
+      transition: background 0.15s;
+      white-space: nowrap;
+      position: relative;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.04); }
+    .nav-item.active { background: rgba(255,255,255,0.06); }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.875rem;
+      transition: box-shadow 0.2s;
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.6);
+    }
+
+    .nav-item:hover  .nav-icon,
+    .nav-item.active .nav-icon {
+      color: rgba(255,255,255,0.95);
+    }
+
+    /* Glow on hover/active — white-core emanating into each project color */
+    .nav-item:hover   .nav-icon,
+    .nav-item.active  .nav-icon {
+      color: #fff;
+    }
+
+    .nav-item[data-color="all"]:hover    .nav-icon,
+    .nav-item[data-color="all"].active   .nav-icon {
+      background: rgba(91,158,136,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(91,158,136,0.8), 0 0 36px rgba(91,158,136,0.35);
+    }
+    .nav-item[data-color="open"]:hover   .nav-icon,
+    .nav-item[data-color="open"].active  .nav-icon {
+      background: rgba(122,158,196,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(122,158,196,0.8), 0 0 36px rgba(122,158,196,0.35);
+    }
+    .nav-item[data-color="completed"]:hover  .nav-icon,
+    .nav-item[data-color="completed"].active .nav-icon {
+      background: rgba(138,158,122,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(138,158,122,0.8), 0 0 36px rgba(138,158,122,0.35);
+    }
+    .nav-item[data-color="maintenance"]:hover  .nav-icon,
+    .nav-item[data-color="maintenance"].active .nav-icon {
+      background: rgba(154,142,196,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(154,142,196,0.8), 0 0 36px rgba(154,142,196,0.35);
+    }
+    .nav-item[data-color="c0"]:hover .nav-icon, .nav-item[data-color="c0"].active .nav-icon {
+      background: rgba(196,136,74,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(196,136,74,0.8), 0 0 36px rgba(196,136,74,0.35);
+    }
+    .nav-item[data-color="c1"]:hover .nav-icon, .nav-item[data-color="c1"].active .nav-icon {
+      background: rgba(106,126,196,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(106,126,196,0.8), 0 0 36px rgba(106,126,196,0.35);
+    }
+    .nav-item[data-color="c2"]:hover .nav-icon, .nav-item[data-color="c2"].active .nav-icon {
+      background: rgba(154,110,196,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(154,110,196,0.8), 0 0 36px rgba(154,110,196,0.35);
+    }
+    .nav-item[data-color="c3"]:hover .nav-icon, .nav-item[data-color="c3"].active .nav-icon {
+      background: rgba(91,174,180,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(91,174,180,0.8), 0 0 36px rgba(91,174,180,0.35);
+    }
+    .nav-item[data-color="c4"]:hover .nav-icon, .nav-item[data-color="c4"].active .nav-icon {
+      background: rgba(196,164,91,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(196,164,91,0.8), 0 0 36px rgba(196,164,91,0.35);
+    }
+    .nav-item[data-color="c5"]:hover .nav-icon, .nav-item[data-color="c5"].active .nav-icon {
+      background: rgba(196,122,106,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(196,122,106,0.8), 0 0 36px rgba(196,122,106,0.35);
+    }
+    .nav-item[data-color="c6"]:hover .nav-icon, .nav-item[data-color="c6"].active .nav-icon {
+      background: rgba(138,158,196,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(138,158,196,0.8), 0 0 36px rgba(138,158,196,0.35);
+    }
+    .nav-item[data-color="invite"]:hover .nav-icon, .nav-item[data-color="invite"].active .nav-icon {
+      background: rgba(196,132,90,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(196,132,90,0.8), 0 0 36px rgba(196,132,90,0.35);
+    }
+    .nav-item[data-color="dashboard"]:hover .nav-icon, .nav-item[data-color="dashboard"].active .nav-icon {
+      background: rgba(196,164,91,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(196,164,91,0.8), 0 0 36px rgba(196,164,91,0.35);
+    }
+    .nav-item[data-color="planner"]:hover .nav-icon, .nav-item[data-color="planner"].active .nav-icon {
+      background: rgba(91,142,196,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(91,142,196,0.8), 0 0 36px rgba(91,142,196,0.35);
+    }
+
+    .nav-label {
+      font-size: 0.625rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.15s;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 130px;
+    }
+    .nav-item:hover  .nav-label,
+    .nav-item.active .nav-label { color: rgba(255,255,255,0.85); }
+
+    .sidebar-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.05);
+      margin: 0.5rem 12px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-section-label {
+      font-size: 0.375rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+      padding: 0.5rem 0 0.25rem 17px;
+      white-space: nowrap;
+    }
+
+    /* ────────────────────────────────
+       MAIN AREA
+    ──────────────────────────────── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    /* Header */
+    .board-header {
+      padding: 1rem 1.75rem;
+      border-bottom: 1px solid transparent;
+      border-image: linear-gradient(90deg,
+        #ffe8a0 0%, #c8922a 22%, #fff4c2 45%,
+        #a0681a 68%, #e8c060 85%, #ffe8a0 100%
+      ) 1;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-shrink: 0;
+      background: var(--white);
+    }
+
+    .back-link {
+      font-size: 0.5625rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .back-link:hover { color: var(--ink); }
+
+    .board-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.625rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .board-title em { font-style: italic; color: var(--sage); }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: auto;
+    }
+
+    .meta-date {
+      font-size: 0.5625rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .meta-tasks {
+      font-size: 0.5625rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      background: rgba(91,158,136,0.1);
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+    }
+
+    .btn-lazaro {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: 'Syne', sans-serif;
+      color: #ffffff;
+      text-shadow: none;
+      background: var(--sage);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 0.45rem 1rem;
+      cursor: pointer;
+      transition: all 0.22s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: none;
+    }
+    .btn-lazaro:hover {
+      background: #4a9070;
+      border-color: rgba(255,255,255,0.25);
+      text-shadow:
+        0 0 3px #fff,
+        0 0 8px rgba(255,255,255,1),
+        0 0 18px rgba(62,220,130,0.95),
+        0 0 38px rgba(30,180,90,0.6);
+      box-shadow:
+        0 0 14px rgba(255,255,255,0.14),
+        0 0 30px rgba(46,204,113,0.4),
+        0 0 56px rgba(30,160,80,0.2);
+    }
+    .btn-lazaro.active {
+      background: #4a9070;
+      border-color: rgba(255,255,255,0.3);
+      text-shadow:
+        0 0 3px #fff,
+        0 0 10px rgba(255,255,255,1),
+        0 0 22px rgba(62,220,130,1),
+        0 0 44px rgba(30,180,90,0.7);
+      box-shadow:
+        0 0 16px rgba(255,255,255,0.16),
+        0 0 36px rgba(46,204,113,0.5),
+        0 0 64px rgba(30,160,80,0.25);
+    }
+    .btn-lazaro .lz-star {
+      font-size: 0.9rem;
+      line-height: 1;
+      color: #ffffff;
+      filter: none;
+      transition: filter 0.22s;
+    }
+    .btn-lazaro:hover .lz-star,
+    .btn-lazaro.active .lz-star {
+      filter:
+        drop-shadow(0 0 3px #fff)
+        drop-shadow(0 0 8px rgba(255,255,255,1))
+        drop-shadow(0 0 18px rgba(62,220,130,1))
+        drop-shadow(0 0 36px rgba(30,180,90,0.65));
+    }
+
+    /* ── Lazaro drawer ── */
+    .lazaro-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 340px;
+      background: var(--deep);
+      display: flex;
+      flex-direction: column;
+      z-index: 500;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      border-left: 1px solid rgba(255,255,255,0.06);
+      box-shadow: -8px 0 32px rgba(28,35,51,0.18);
+    }
+    .lazaro-drawer.open { transform: translateX(0); }
+
+    .lazaro-header {
+      padding: 1.125rem 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .lazaro-name {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.3rem;
+      color: var(--sage);
+      letter-spacing: -0.01em;
+    }
+    .lazaro-name span {
+      font-size: 0.45rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+    .lazaro-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.25);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .lazaro-close:hover { color: rgba(255,255,255,0.6); }
+
+    .lazaro-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .lz-msg {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      max-width: 90%;
+    }
+    .lz-msg.user { align-self: flex-end; align-items: flex-end; }
+    .lz-msg.agent { align-self: flex-start; align-items: flex-start; }
+
+    .lz-bubble {
+      padding: 0.6rem 0.875rem;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      line-height: 1.55;
+      font-family: 'Syne', sans-serif;
+    }
+    .lz-msg.user  .lz-bubble { background: rgba(91,158,136,0.2); color: #ffffff; border-bottom-right-radius: 3px; }
+    .lz-msg.agent .lz-bubble { background: rgba(255,255,255,0.06); color: #ffffff; border-bottom-left-radius: 3px; }
+
+    .lz-meta {
+      font-size: 0.45rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .lazaro-thinking {
+      display: none;
+      align-self: flex-start;
+    }
+    .lazaro-thinking.visible { display: flex; }
+    .lazaro-thinking .lz-bubble {
+      color: rgba(255,255,255,0.35);
+      font-style: italic;
+    }
+
+    .lazaro-empty {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+    @keyframes lazaro-star-pulse {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0 3px #fff)
+          drop-shadow(0 0 8px rgba(255,255,255,0.85))
+          drop-shadow(0 0 18px rgba(46,204,113,0.65))
+          drop-shadow(0 0 36px rgba(30,160,80,0.25));
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 5px #fff)
+          drop-shadow(0 0 14px rgba(255,255,255,0.95))
+          drop-shadow(0 0 30px rgba(46,204,113,1))
+          drop-shadow(0 0 58px rgba(30,160,80,0.55));
+      }
+    }
+
+    @keyframes lazaro-text-pulse {
+      0%, 100% {
+        text-shadow:
+          0 0 2px #fff,
+          0 0 7px rgba(255,255,255,0.8),
+          0 0 16px rgba(46,204,113,0.55);
+      }
+      50% {
+        text-shadow:
+          0 0 3px #fff,
+          0 0 10px rgba(255,255,255,0.95),
+          0 0 26px rgba(46,204,113,0.95),
+          0 0 44px rgba(30,160,80,0.4);
+      }
+    }
+
+    .lazaro-empty-icon {
+      font-size: 1.75rem;
+      color: #ffffff;
+      animation: lazaro-star-pulse 2.8s ease-in-out infinite;
+    }
+    .lazaro-empty-text {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+      animation: lazaro-text-pulse 2.8s ease-in-out infinite;
+      animation-delay: 0.4s;
+    }
+
+    .lazaro-input-area {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 0.625rem;
+      flex-shrink: 0;
+    }
+    .lazaro-input {
+      flex: 1;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 0.625rem 0.875rem;
+      outline: none;
+      resize: none;
+      height: 40px;
+      transition: border-color 0.15s, background 0.15s;
+      line-height: 1.4;
+    }
+    .lazaro-input::placeholder { color: rgba(255,255,255,0.2); }
+    .lazaro-input:focus { border-color: rgba(91,158,136,0.4); background: rgba(255,255,255,0.07); }
+    .lazaro-send {
+      background: rgba(91,158,136,0.2);
+      border: 1px solid rgba(91,158,136,0.3);
+      border-radius: 8px;
+      color: var(--sage);
+      font-size: 0.875rem;
+      width: 40px;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lazaro-send:hover { background: rgba(91,158,136,0.3); box-shadow: 0 0 10px rgba(91,158,136,0.2); }
+
+    /* ── Board body ── */
+    .board-body {
+      flex: 1;
+      display: flex;
+      gap: 1.25rem;
+      padding: 1.5rem 1.75rem 2rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      align-items: flex-start;
+    }
+
+    /* ── Project column ── */
+    .project-col {
+      flex-shrink: 0;
+      width: 275px;
+      background: var(--white);
+      border: 1px solid var(--faint);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 96px);
+    }
+
+    .col-header {
+      padding: 1.125rem 1.25rem 1rem;
+      border-bottom: 1px solid var(--faint);
+      flex-shrink: 0;
+    }
+
+    .col-header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .col-name {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .status-badge {
+      font-size: 0.375rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .status-live        { background: rgba(91,158,136,0.12); color: var(--sage); }
+    .status-building    { background: rgba(184,144,10,0.10); color: var(--gold); }
+    .status-planned     { background: rgba(122,139,168,0.12); color: var(--muted); }
+    .status-maintenance { background: rgba(154,142,196,0.12); color: var(--c-maintenance); }
+    .status-complete    { background: rgba(138,158,122,0.12); color: var(--c-completed); }
+    .status-archived    { background: rgba(122,139,168,0.08); color: var(--muted); }
+
+    .col-next {
+      font-size: 0.6875rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Task list ── */
+    .task-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .task-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      transition: opacity 0.3s;
+    }
+
+    .task-check {
+      width: 15px;
+      height: 15px;
+      border: 1.5px solid var(--sage-l);
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+    }
+    .task-check:hover { border-color: var(--sage); background: rgba(91,158,136,0.08); }
+    .task-check.done  { background: var(--sage); border-color: var(--sage); }
+    .task-check.done::after { content: '✓'; color: white; font-size: 9px; line-height: 1; }
+
+    .priority-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .p-urgent { background: var(--urgent); }
+    .p-high   { background: var(--gold); }
+    .p-normal { background: var(--sage-l); }
+    .p-low    { background: rgba(28,35,51,0.15); }
+
+    .task-title {
+      font-size: 0.75rem;
+      color: var(--ink);
+      line-height: 1.45;
+      flex: 1;
+    }
+    .task-row.done .task-title { text-decoration: line-through; opacity: 0.35; }
+
+    .tasks-empty {
+      font-size: 0.6875rem;
+      color: rgba(28,35,51,0.25);
+      padding: 0.25rem 0;
+    }
+
+    /* ── Add task ── */
+    .add-task-row {
+      padding: 0.875rem 1.25rem;
+      border-top: 1px solid var(--faint);
+      flex-shrink: 0;
+    }
+
+    .add-task-input {
+      width: 100%;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6875rem;
+      color: var(--ink);
+      background: var(--off);
+      border: 1px solid var(--faint);
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .add-task-input::placeholder { color: rgba(28,35,51,0.3); }
+    .add-task-input:focus { border-color: var(--sage-l); background: white; }
+
+    /* ── Add project column ── */
+    .col-add {
+      flex-shrink: 0;
+      width: 180px;
+      border: 1.5px dashed rgba(28,35,51,0.1);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 140px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      padding: 2rem;
+    }
+    .col-add:hover { border-color: var(--sage-l); }
+    .col-add-icon  { font-size: 1.125rem; color: rgba(28,35,51,0.18); }
+    .col-add-label {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(28,35,51,0.22);
+      text-align: center;
+    }
+
+    /* ── New project modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(28,35,51,0.4);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 14px;
+      padding: 2rem;
+      width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 16px 48px rgba(28,35,51,0.18);
+    }
+    .modal-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+    .modal-field { display: flex; flex-direction: column; gap: 0.375rem; }
+    .modal-label {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .modal-input, .modal-select, .modal-textarea {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      color: var(--ink);
+      background: var(--off);
+      border: 1px solid var(--faint);
+      border-radius: 6px;
+      padding: 0.6rem 0.75rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .modal-textarea { resize: none; height: 72px; }
+    .modal-input:focus, .modal-select:focus, .modal-textarea:focus { border-color: var(--sage-l); background: white; }
+    .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; padding-top: 0.5rem; }
+    .btn-cancel {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'Syne', sans-serif;
+      background: none;
+      border: 1px solid var(--faint);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.15s;
+    }
+    .btn-cancel:hover { border-color: var(--muted); color: var(--ink); }
+    .btn-save {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-family: 'Syne', sans-serif;
+      color: white;
+      background: var(--ink);
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1.1rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-save:hover { background: #2a3450; }
+
+    /* ── Home glow ── */
+    .nav-item[data-color="home"]:hover .nav-icon,
+    .nav-item[data-color="home"].active .nav-icon {
+      background: rgba(139,126,196,0.18);
+      box-shadow: 0 0 4px #fff, 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(139,126,196,0.9), 0 0 36px rgba(139,126,196,0.4);
+    }
+
+    /* ── Board tab strip ── */
+    .board-tabs {
+      display: flex;
+      align-items: center;
+      padding: 0 0.5rem;
+      border-bottom: 1px solid transparent;
+      border-image: linear-gradient(90deg,
+        #ffe8a0 0%, #c8922a 22%, #fff4c2 45%,
+        #a0681a 68%, #e8c060 85%, #ffe8a0 100%
+      ) 1;
+      flex-shrink: 0;
+      background: var(--white);
+    }
+
+    .board-tab {
+      flex: 1;
+      text-align: center;
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.75rem 0.5rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .board-tab:hover { color: var(--ink); }
+    .board-tab.active {
+      color: var(--ink);
+      border-bottom-color: var(--gold);
+    }
+    .board-tab.tab-inbox { color: var(--sage); }
+    .board-tab.tab-inbox:hover { color: #3a8a6a; }
+
+    /* ── Date fields ── */
+    .col-target-date {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+    .col-target-label {
+      font-size: 0.45rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .date-input {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.55rem;
+      color: var(--ink);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(28,35,51,0.15);
+      padding: 0.1rem 0.2rem;
+      cursor: pointer;
+      outline: none;
+      width: 7rem;
+    }
+    .date-input:focus { border-bottom-color: var(--gold); }
+    .date-input::-webkit-calendar-picker-indicator { opacity: 0.3; cursor: pointer; }
+    .task-due {
+      font-size: 0.48rem;
+      color: var(--muted);
+      margin-left: auto;
+      white-space: nowrap;
+      cursor: pointer;
+      padding: 0.1rem 0.3rem;
+      border-radius: 4px;
+      border: 1px solid transparent;
+    }
+    .task-due:hover { border-color: rgba(28,35,51,0.15); }
+    .task-due.has-date { color: var(--gold); }
+    .task-due-input {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.48rem;
+      color: var(--gold);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--gold);
+      outline: none;
+      width: 6rem;
+      cursor: pointer;
+    }
+
+    /* ── Today view ── */
+    .today-view {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .today-project-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.75rem 0 0.25rem;
+    }
+    .today-project-label:first-child { padding-top: 0; }
+
+    /* ── Placeholder view (Dashboard / Planner) ── */
+    .placeholder-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .placeholder-view-icon {
+      font-size: 2rem;
+      opacity: 0.15;
+    }
+    .placeholder-view-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.5rem;
+      color: var(--ink);
+      opacity: 0.3;
+      letter-spacing: -0.02em;
+    }
+    .placeholder-view-sub {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+
+    /* ── Planner view ── */
+    .planner-view {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .planner-day {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(28,35,51,0.06);
+    }
+    .planner-day:last-child { border-bottom: none; }
+    .planner-day-label {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      min-width: 2.8rem;
+      flex-shrink: 0;
+    }
+    .planner-day-label.today-label {
+      color: var(--sage);
+    }
+    .planner-events {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex: 1;
+    }
+    .planner-event {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      color: var(--ink);
+    }
+    .planner-event-time {
+      font-size: 0.5rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      min-width: 3rem;
+      flex-shrink: 0;
+    }
+    .planner-event-title {
+      font-weight: 500;
+    }
+    .planner-event-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--sage);
+      flex-shrink: 0;
+    }
+    .planner-empty-day {
+      font-size: 0.6rem;
+      color: var(--muted);
+      opacity: 0.4;
+      font-style: italic;
+    }
+    .planner-loading {
+      font-size: 0.65rem;
+      color: var(--muted);
+      opacity: 0.5;
+      padding: 2rem 0;
+    }
+
+    /* ── Invite modal ── */
+    .invite-modal {
+      background: white;
+      border-radius: 14px;
+      padding: 2rem;
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 16px 48px rgba(28,35,51,0.18);
+    }
+    .invite-modal-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .invite-modal-sub {
+      font-size: 0.65rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: -0.5rem;
+    }
+    .invite-coming {
+      background: rgba(196,132,90,0.07);
+      border: 1px solid rgba(196,132,90,0.2);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-invite);
+      text-align: center;
+    }
+    .invite-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .invite-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .invite-row .modal-field { flex: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar" id="sidebar">
+
+    <div class="sidebar-toggle" onclick="toggleSidebar()" title="Expand / collapse">
+      <span class="toggle-icon">›</span>
+    </div>
+
+    <div class="sidebar-nav" id="sidebar-nav">
+
+      <div class="nav-item active" data-color="home" onclick="setView('home', this)">
+        <div class="nav-icon">⌂</div>
+        <span class="nav-label">Home</span>
+      </div>
+
+      <div class="nav-item" data-color="dashboard" onclick="setView('dashboard', this)">
+        <div class="nav-icon">◈</div>
+        <span class="nav-label">Dashboard</span>
+      </div>
+
+      <div class="nav-item" data-color="planner" onclick="setView('planner', this)">
+        <div class="nav-icon">▦</div>
+        <span class="nav-label">Planner</span>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="nav-item" data-color="invite" onclick="openInvite()">
+        <div class="nav-icon">
+          <svg viewBox="0 0 20 16" fill="currentColor" width="17" height="14">
+            <!-- back person -->
+            <circle cx="13" cy="4" r="2.8"/>
+            <path d="M9 16c0-2.8 1.9-4.5 4-4.5s4 1.7 4 4.5z"/>
+            <!-- front person (overlapping, slightly left) -->
+            <circle cx="7" cy="4" r="2.8" style="paint-order:stroke fill" stroke="rgba(26,34,54,0.6)" stroke-width="1"/>
+            <path d="M3 16c0-2.8 1.9-4.5 4-4.5s4 1.7 4 4.5z" style="paint-order:stroke fill" stroke="rgba(26,34,54,0.6)" stroke-width="1"/>
+            <!-- sparkle -->
+            <circle cx="18.5" cy="1.5" r="1"/>
+            <rect x="17.9" y="0" width="1.2" height="3" rx="0.5"/>
+            <rect x="16.5" y="0.9" width="4" height="1.2" rx="0.5"/>
+          </svg>
+        </div>
+        <span class="nav-label">Invite</span>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ── Main ── -->
+  <div class="main">
+
+    <header class="board-header">
+      <a href="/" class="back-link">← Hub</a>
+      <h1 class="board-title">Creative <em>Backend.</em></h1>
+      <div class="header-meta">
+        <span class="meta-date" id="meta-date"></span>
+        <span class="meta-tasks" id="meta-tasks">— open</span>
+        <button class="btn-lazaro" onclick="toggleLazaro()"><span class="lz-star">✦</span> Ask Lazaro</button>
+      </div>
+    </header>
+
+    <div class="board-tabs" id="board-tabs">
+      <div class="board-tab" onclick="setTabFilter('today', this)">Today</div>
+      <div class="board-tab active" onclick="setTabFilter('all', this)">All Projects</div>
+      <div class="board-tab" onclick="setTabFilter('open', this)">Live Projects</div>
+      <div class="board-tab" onclick="setTabFilter('graduated', this)">Graduated</div>
+      <div class="board-tab tab-inbox" onclick="openInbox()">Inbox</div>
+    </div>
+
+    <div class="board-body" id="board-body">
+      <p style="font-size:0.75rem;color:var(--muted);padding:1rem 0">Loading…</p>
+    </div>
+
+  </div>
+
+  <!-- ── Lazaro drawer ── -->
+  <aside class="lazaro-drawer" id="lazaro-drawer">
+    <div class="lazaro-header">
+      <div class="lazaro-name">Lazaro <span>Agent</span></div>
+      <button class="lazaro-close" onclick="toggleLazaro()">✕</button>
+    </div>
+    <div class="lazaro-messages" id="lazaro-messages">
+      <div class="lazaro-empty" id="lazaro-empty">
+        <div class="lazaro-empty-icon">✦</div>
+        <div class="lazaro-empty-text">Ask anything</div>
+      </div>
+      <div class="lazaro-thinking lz-msg agent" id="lazaro-thinking">
+        <div class="lz-bubble">Thinking…</div>
+      </div>
+    </div>
+    <div class="lazaro-input-area">
+      <textarea
+        class="lazaro-input"
+        id="lazaro-input"
+        placeholder="Ask Lazaro…"
+        onkeydown="lazaroKeydown(event)"
+        rows="1"
+      ></textarea>
+      <button class="lazaro-send" onclick="lazaroSend()">›</button>
+    </div>
+  </aside>
+
+  <!-- ── New project modal ── -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeIfOverlay(event)">
+    <div class="modal">
+      <div class="modal-title">New Project</div>
+      <div class="modal-field">
+        <div class="modal-label">Name</div>
+        <input id="proj-name" class="modal-input" placeholder="Project name" />
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">Description</div>
+        <textarea id="proj-desc" class="modal-textarea" placeholder="What is this?"></textarea>
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">Status</div>
+        <select id="proj-status" class="modal-select">
+          <option value="building">Building</option>
+          <option value="planned">Planned</option>
+          <option value="live">Live</option>
+          <option value="maintenance">Maintenance</option>
+          <option value="complete">Complete</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">What's next</div>
+        <input id="proj-next" class="modal-input" placeholder="Current focus or first action" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeAddProject()">Cancel</button>
+        <button class="btn-save"   onclick="saveProject()">Add Project</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Invite modal ── -->
+  <div class="modal-overlay" id="invite-overlay" onclick="closeInviteIfOverlay(event)">
+    <div class="invite-modal">
+      <div class="invite-modal-title">Invite a Collaborator</div>
+      <p class="invite-modal-sub">Share projects and tasks with your team. They'll be able to view and contribute based on the access level you set.</p>
+      <div class="invite-coming">Collaboration invites — coming soon</div>
+      <div class="invite-fields">
+        <div class="invite-row">
+          <div class="modal-field">
+            <div class="modal-label">First name</div>
+            <input class="modal-input" placeholder="Anna" disabled />
+          </div>
+          <div class="modal-field">
+            <div class="modal-label">Last name</div>
+            <input class="modal-input" placeholder="Gallagher" disabled />
+          </div>
+        </div>
+        <div class="modal-field">
+          <div class="modal-label">Email</div>
+          <input class="modal-input" placeholder="anna@wisdomsurgery.clinic" disabled />
+        </div>
+        <div class="modal-field">
+          <div class="modal-label">Access</div>
+          <select class="modal-select" disabled>
+            <option>View only</option>
+            <option>Collaborator</option>
+            <option>Full access</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <div class="modal-label">Projects</div>
+          <select class="modal-select" disabled>
+            <option>All projects</option>
+            <option>Wisdom Surgery only</option>
+            <option>Select projects…</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeInvite()">Close</button>
+        <button class="btn-save" style="opacity:0.4;cursor:not-allowed" disabled>Send Invite</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PRIORITY_CLASS = { urgent:'p-urgent', high:'p-high', normal:'p-normal', low:'p-low' };
+    const COLOR_CLASSES   = ['c0','c1','c2','c3','c4','c5','c6'];
+    const PROJECT_ICONS   = ['◈','⬡','◉','❖','◆','✦','◇'];
+
+    let allProjects = [];
+    let allTasks    = [];
+    let activeFilter = 'all';
+    let activeProjectId = null;
+
+    // ── Date in header ──
+    document.getElementById('meta-date').textContent =
+      new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+
+    // ── Sidebar toggle ──
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('expanded');
+    }
+
+    // ── Sidebar view switcher ──
+    let currentView = 'home';
+
+    function setView(view, el) {
+      currentView = view;
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      el.classList.add('active');
+      const tabs = document.getElementById('board-tabs');
+      if (view === 'home') {
+        tabs.style.display = 'flex';
+        renderBoard();
+      } else if (view === 'dashboard') {
+        tabs.style.display = 'none';
+        renderPlaceholder('◈', 'Dashboard', 'Lazaro briefing — coming next build');
+      } else if (view === 'planner') {
+        tabs.style.display = 'none';
+        renderPlanner();
+      }
+    }
+
+    async function renderPlanner() {
+      const body = document.getElementById('board-body');
+      body.innerHTML = '<div class="planner-view"><p class="planner-loading">Loading calendar…</p></div>';
+
+      let calEvents = [];
+      try {
+        const res = await fetch('/api/board/calendar?days=14');
+        if (res.ok) calEvents = await res.json();
+      } catch(e) {}
+
+      // Build a 14-day date map
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const days = [];
+      for (let i = 0; i < 14; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() + i);
+        days.push(d);
+      }
+
+      // Index calendar events by date
+      const byDate = {};
+      for (const ev of calEvents) {
+        const key = (ev.date || '').slice(0, 10);
+        if (!byDate[key]) byDate[key] = { cal: [], tasks: [], milestones: [] };
+        byDate[key].cal.push(ev);
+      }
+
+      // Index tasks with due dates
+      for (const t of allTasks) {
+        if (!t.due_date || t.status === 'done') continue;
+        const key = t.due_date.slice(0, 10);
+        if (!byDate[key]) byDate[key] = { cal: [], tasks: [], milestones: [] };
+        const proj = allProjects.find(p => p.id === t.project_id);
+        byDate[key].tasks.push({ title: t.title, project: proj?.name || '' });
+      }
+
+      // Index project target dates as milestones
+      for (const p of allProjects) {
+        if (!p.target_date) continue;
+        const key = p.target_date.slice(0, 10);
+        if (!byDate[key]) byDate[key] = { cal: [], tasks: [], milestones: [] };
+        byDate[key].milestones.push(p.name);
+      }
+
+      const wrap = document.createElement('div');
+      wrap.className = 'planner-view';
+
+      for (const d of days) {
+        const key = d.toISOString().slice(0, 10);
+        const isToday = d.getTime() === today.getTime();
+        const dayLabel = d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+        const slot = byDate[key] || { cal: [], tasks: [], milestones: [] };
+        const hasAnything = slot.cal.length || slot.tasks.length || slot.milestones.length;
+
+        const row = document.createElement('div');
+        row.className = 'planner-day';
+
+        const eventsHTML = [
+          ...slot.milestones.map(name => `
+            <div class="planner-event">
+              <div class="planner-event-dot" style="background:var(--gold)"></div>
+              <span class="planner-event-time" style="color:var(--gold)">target</span>
+              <span class="planner-event-title" style="color:var(--gold);font-weight:600">${name}</span>
+            </div>`),
+          ...slot.cal.map(ev => `
+            <div class="planner-event">
+              <div class="planner-event-dot"></div>
+              <span class="planner-event-time">${ev.time || 'all day'}</span>
+              <span class="planner-event-title">${ev.summary}</span>
+            </div>`),
+          ...slot.tasks.map(t => `
+            <div class="planner-event">
+              <div class="planner-event-dot" style="background:var(--sage-l)"></div>
+              <span class="planner-event-time" style="color:var(--sage)">${t.project}</span>
+              <span class="planner-event-title">${t.title}</span>
+            </div>`),
+        ].join('') || `<span class="planner-empty-day">—</span>`;
+
+        row.innerHTML = `
+          <div class="planner-day-label ${isToday ? 'today-label' : ''}">${dayLabel}</div>
+          <div class="planner-events">${eventsHTML}</div>`;
+        wrap.appendChild(row);
+      }
+
+      body.innerHTML = '';
+      body.appendChild(wrap);
+    }
+
+    function renderPlaceholder(icon, title, sub) {
+      const body = document.getElementById('board-body');
+      body.innerHTML = `
+        <div class="placeholder-view">
+          <div class="placeholder-view-icon">${icon}</div>
+          <div class="placeholder-view-title">${title}</div>
+          <div class="placeholder-view-sub">${sub}</div>
+        </div>`;
+    }
+
+    // ── Tab strip filter ──
+    function setTabFilter(filter, el) {
+      activeFilter    = filter;
+      activeProjectId = null;
+      document.querySelectorAll('.board-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelector('.nav-item[data-color="home"]').classList.add('active');
+      currentView = 'home';
+      renderBoard();
+    }
+
+    function setProjectFilter(projectId, el) {
+      activeFilter    = 'project';
+      activeProjectId = projectId;
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      el.classList.add('active');
+      renderBoard();
+    }
+
+    function openInbox() {
+      const url = 'https://mail.google.com/mail/u/0/#inbox';
+      if (window.pywebview) {
+        window.pywebview.api.open_external(url);
+      } else {
+        window.open(url, '_blank');
+      }
+    }
+
+    function renderSidebarProjects() { /* projects nav removed — lives on main canvas */ }
+
+    // ── Render board columns ──
+    function renderBoard() {
+      const body = document.getElementById('board-body');
+
+      // ── Today view: flat task list across all projects, sorted by priority ──
+      if (activeFilter === 'today') {
+        const PRIORITY_ORDER = { urgent: 0, high: 1, normal: 2, low: 3 };
+        const openTasks = allTasks
+          .filter(t => t.status !== 'done')
+          .sort((a, b) => (PRIORITY_ORDER[a.priority] ?? 2) - (PRIORITY_ORDER[b.priority] ?? 2));
+
+        // Update task count
+        document.getElementById('meta-tasks').textContent = `${openTasks.length} open`;
+
+        if (!openTasks.length) {
+          body.innerHTML = `<div class="today-view"><p style="font-size:0.75rem;color:var(--muted);opacity:0.6">Nothing open today.</p></div>`;
+          return;
+        }
+
+        // Group by project
+        const byProject = {};
+        for (const t of openTasks) {
+          const proj = allProjects.find(p => p.id === t.project_id);
+          const name = proj ? proj.name : 'Ungrouped';
+          if (!byProject[name]) byProject[name] = [];
+          byProject[name].push(t);
+        }
+
+        const wrap = document.createElement('div');
+        wrap.className = 'today-view';
+        for (const [projectName, tasks] of Object.entries(byProject)) {
+          const label = document.createElement('div');
+          label.className = 'today-project-label';
+          label.textContent = projectName;
+          wrap.appendChild(label);
+          for (const t of tasks) {
+            wrap.insertAdjacentHTML('beforeend', taskHTML(t));
+          }
+        }
+        body.innerHTML = '';
+        body.appendChild(wrap);
+        return;
+      }
+
+      let projects = allProjects;
+      if (activeFilter === 'open') {
+        projects = allProjects.filter(p => p.status === 'building' || p.status === 'live');
+      } else if (activeFilter === 'graduated') {
+        projects = allProjects.filter(p => p.status === 'complete' || p.status === 'archived');
+      } else if (activeFilter === 'project' && activeProjectId) {
+        projects = allProjects.filter(p => p.id === activeProjectId);
+      }
+
+      // Update task count
+      const openCount = allTasks.filter(t => t.status !== 'done').length;
+      document.getElementById('meta-tasks').textContent = `${openCount} open`;
+
+      body.innerHTML = '';
+
+      for (const p of projects) {
+        const projectTasks = allTasks.filter(t => t.project_id === p.id);
+        const col = document.createElement('div');
+        col.className = 'project-col';
+        col.innerHTML = `
+          <div class="col-header">
+            <div class="col-header-top">
+              <div class="col-name">${p.name}</div>
+              <span class="status-badge status-${p.status}">${p.status}</span>
+            </div>
+            ${p.next_action ? `<div class="col-next">${p.next_action}</div>` : ''}
+            <div class="col-target-date">
+              <span class="col-target-label">Target</span>
+              <input type="date" class="date-input" value="${p.target_date || ''}"
+                onchange="setProjectDate('${p.id}', this.value)"
+                title="Set target completion date" />
+            </div>
+          </div>
+          <div class="task-list" id="tasks-${p.id}">
+            ${projectTasks.length
+              ? projectTasks.map(t => taskHTML(t)).join('')
+              : '<p class="tasks-empty">No open tasks.</p>'}
+          </div>
+          <div class="add-task-row">
+            <input
+              class="add-task-input"
+              placeholder="Add a task — press Enter"
+              data-project="${p.id}"
+              onkeydown="handleAddTask(event, this)"
+            />
+          </div>`;
+        body.appendChild(col);
+      }
+
+      if (!projects.length) {
+        body.innerHTML = `<p style="font-size:0.75rem;color:var(--muted);padding:1rem 0;opacity:0.6">No projects here yet.</p>`;
+      }
+
+      const addCol = document.createElement('div');
+      addCol.className = 'col-add';
+      addCol.onclick = openAddProject;
+      addCol.innerHTML = `<div class="col-add-icon">+</div><div class="col-add-label">New Project</div>`;
+      body.appendChild(addCol);
+    }
+
+    function taskHTML(t) {
+      const dateLabel = t.due_date
+        ? `<span class="task-due has-date" title="Change due date" onclick="editTaskDate('${t.id}', this)">${fmtDate(t.due_date)}</span>`
+        : `<span class="task-due" title="Set due date" onclick="editTaskDate('${t.id}', this)">+ date</span>`;
+      return `
+        <div class="task-row" id="task-${t.id}">
+          <div class="task-check" onclick="completeTask('${t.id}', this)"></div>
+          <div class="priority-dot ${PRIORITY_CLASS[t.priority] || 'p-normal'}"></div>
+          <span class="task-title">${t.title}</span>
+          ${dateLabel}
+        </div>`;
+    }
+
+    function fmtDate(d) {
+      if (!d) return '';
+      const dt = new Date(d + 'T00:00:00');
+      return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    function editTaskDate(taskId, el) {
+      const current = allTasks.find(t => t.id === taskId);
+      const input = document.createElement('input');
+      input.type = 'date';
+      input.className = 'task-due-input';
+      input.value = current?.due_date || '';
+      el.replaceWith(input);
+      input.focus();
+      const save = async () => {
+        const val = input.value;
+        await setTaskDate(taskId, val || null);
+        if (current) current.due_date = val || null;
+        const newEl = val
+          ? `<span class="task-due has-date" onclick="editTaskDate('${taskId}', this)">${fmtDate(val)}</span>`
+          : `<span class="task-due" onclick="editTaskDate('${taskId}', this)">+ date</span>`;
+        input.insertAdjacentHTML('afterend', newEl);
+        input.remove();
+      };
+      input.addEventListener('change', save);
+      input.addEventListener('blur', save);
+    }
+
+    async function setTaskDate(taskId, date) {
+      await fetch(`/api/board/tasks/${taskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ due_date: date }),
+      });
+    }
+
+    async function setProjectDate(projectId, date) {
+      const proj = allProjects.find(p => p.id === projectId);
+      if (proj) proj.target_date = date || null;
+      await fetch(`/api/board/projects/${projectId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ target_date: date || null }),
+      });
+    }
+
+    // ── Load ──
+    async function load() {
+      try {
+        const [pr, tr] = await Promise.all([
+          fetch('/api/board/projects'),
+          fetch('/api/board/tasks'),
+        ]);
+        if (!pr.ok) throw new Error('server error');
+        allProjects = await pr.json();
+        allTasks    = await tr.json();
+        renderSidebarProjects(allProjects);
+        renderBoard();
+      } catch(e) {
+        document.getElementById('board-body').innerHTML =
+          `<p style="font-size:0.75rem;color:#c0392b;padding:1rem 0">Could not reach hub server.</p>`;
+      }
+    }
+
+    // ── Add task ──
+    async function handleAddTask(e, input) {
+      if (e.key !== 'Enter') return;
+      const title = input.value.trim();
+      if (!title) return;
+      const projectId = input.dataset.project;
+      input.value = '';
+      input.disabled = true;
+      try {
+        const res = await fetch('/api/board/tasks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ project_id: projectId, title }),
+        });
+        const task = await res.json();
+        allTasks.push(task);
+        const list = document.getElementById(`tasks-${projectId}`);
+        const empty = list.querySelector('.tasks-empty');
+        if (empty) empty.remove();
+        list.insertAdjacentHTML('beforeend', taskHTML(task));
+        document.getElementById('meta-tasks').textContent = `${allTasks.filter(t=>t.status!=='done').length} open`;
+      } catch(e) { console.error(e); }
+      input.disabled = false;
+      input.focus();
+    }
+
+    // ── Complete task ──
+    async function completeTask(taskId, el) {
+      const row = el.closest('.task-row');
+      el.classList.add('done');
+      row.classList.add('done');
+      setTimeout(() => {
+        row.remove();
+        allTasks = allTasks.filter(t => t.id !== taskId);
+        document.getElementById('meta-tasks').textContent = `${allTasks.filter(t=>t.status!=='done').length} open`;
+      }, 500);
+      try {
+        await fetch(`/api/board/tasks/${taskId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'done' }),
+        });
+      } catch(e) { console.error(e); }
+    }
+
+    // ── New project modal ──
+    function openAddProject() {
+      document.getElementById('modal-overlay').classList.add('open');
+      document.getElementById('proj-name').focus();
+    }
+    function closeAddProject() {
+      document.getElementById('modal-overlay').classList.remove('open');
+      ['proj-name','proj-desc','proj-next'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('proj-status').value = 'building';
+    }
+    function closeIfOverlay(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeAddProject();
+    }
+    async function saveProject() {
+      const name = document.getElementById('proj-name').value.trim();
+      if (!name) return;
+      try {
+        const res = await fetch('/api/board/projects', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            description: document.getElementById('proj-desc').value.trim(),
+            status:      document.getElementById('proj-status').value,
+            next_action: document.getElementById('proj-next').value.trim(),
+          }),
+        });
+        const project = await res.json();
+        allProjects.push(project);
+        closeAddProject();
+        renderSidebarProjects(allProjects);
+        renderBoard();
+      } catch(e) { console.error(e); }
+    }
+
+    // ── Lazaro chat ──
+    let lazaroOpen = false;
+    let lazaroHistory = [];
+
+    function toggleLazaro() {
+      lazaroOpen = !lazaroOpen;
+      document.getElementById('lazaro-drawer').classList.toggle('open', lazaroOpen);
+      document.querySelector('.btn-lazaro').classList.toggle('active', lazaroOpen);
+      if (lazaroOpen) setTimeout(() => document.getElementById('lazaro-input').focus(), 250);
+    }
+
+    function lazaroKeydown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        lazaroSend();
+      }
+    }
+
+    function lazaroAppend(role, text) {
+      const empty = document.getElementById('lazaro-empty');
+      if (empty) empty.style.display = 'none';
+
+      const msgs = document.getElementById('lazaro-messages');
+      const div = document.createElement('div');
+      div.className = `lz-msg ${role}`;
+      const label = role === 'user' ? 'You' : 'Lazaro';
+      div.innerHTML = `<div class="lz-meta">${label}</div><div class="lz-bubble">${text.replace(/\n/g,'<br>')}</div>`;
+      msgs.insertBefore(div, document.getElementById('lazaro-thinking'));
+      msgs.scrollTop = msgs.scrollHeight;
+      lazaroHistory.push({ role: role === 'user' ? 'user' : 'assistant', content: text });
+    }
+
+    async function lazaroSend() {
+      const input = document.getElementById('lazaro-input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      lazaroAppend('user', text);
+
+      const thinking = document.getElementById('lazaro-thinking');
+      thinking.classList.add('visible');
+      document.getElementById('lazaro-messages').scrollTop = 9999;
+
+      try {
+        const res = await fetch('/api/lazaro', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: text,
+            history: lazaroHistory.slice(-10),
+            context: {
+              projects: allProjects.map(p => ({ name: p.name, status: p.status, next: p.next_action })),
+              open_tasks: allTasks.filter(t => t.status !== 'done').length,
+            }
+          }),
+        });
+        const data = await res.json();
+        thinking.classList.remove('visible');
+        lazaroAppend('agent', data.reply || '(no response)');
+        if (data.actions && data.actions.some(a => a.ok)) await load();
+      } catch(e) {
+        thinking.classList.remove('visible');
+        lazaroAppend('agent', 'Could not reach Lazaro. Make sure he\'s running.');
+      }
+    }
+
+    // ── Invite modal ──
+    function openInvite() {
+      document.getElementById('invite-overlay').classList.add('open');
+    }
+    function closeInvite() {
+      document.getElementById('invite-overlay').classList.remove('open');
+    }
+    function closeInviteIfOverlay(e) {
+      if (e.target === document.getElementById('invite-overlay')) closeInvite();
+    }
+
+    load();
+  </script>
+
+</body>
+</html>
