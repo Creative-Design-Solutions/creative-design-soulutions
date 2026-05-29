@@ -365,6 +365,17 @@
       }
       .vault-col { width: 100%; }
       .vault-float { height: 340px; }
+      .vault-resize-handle {
+        display: flex; align-items: center; justify-content: center;
+        height: 22px; flex-shrink: 0;
+        background: rgba(40,90,78,0.05);
+        border-top: 1px solid rgba(40,90,78,0.1);
+        cursor: ns-resize; touch-action: none;
+      }
+      .vault-resize-handle::after {
+        content: ''; width: 36px; height: 3px;
+        border-radius: 2px; background: rgba(40,90,78,0.22);
+      }
 
       #sticky-board { min-height: 320px; }
 
@@ -510,6 +521,7 @@
       </div><!-- /vault-card -->
     </div><!-- /vault-win -->
   </div><!-- /vault-chrome-ring -->
+  <div class="vault-resize-handle" id="vault-resize-handle"></div>
     </div><!-- /vault-float -->
   </div><!-- /vault-col -->
 </div><!-- /tools-row-split -->
@@ -527,8 +539,14 @@
 const COLORS = ['#5b8af5','#a78bfa','#34d399','#c9768e','#f472b6'];
 let activeColor = COLORS[0];
 let zTop = 10;
+let isDragging = false;
 const board = document.getElementById('sticky-board');
 const SK = 'gs-notes-v2';
+
+// Prevent page scroll while dragging a sticky on touch
+board.addEventListener('touchmove', e => {
+  if (isDragging) e.preventDefault();
+}, { passive: false });
 
 // Color picker
 document.querySelectorAll('.board-color-dot').forEach(dot => {
@@ -597,10 +615,10 @@ function makeDraggable(el) {
   header.addEventListener('touchstart', e => {
     if (e.target.tagName === 'BUTTON') return;
     down = true;
+    isDragging = true;
     el.style.zIndex = ++zTop;
     const t = e.touches[0];
     const r = el.getBoundingClientRect();
-    const br = board.getBoundingClientRect();
     ox = t.clientX - r.left;
     oy = t.clientY - r.top;
   }, { passive: true });
@@ -619,7 +637,7 @@ function makeDraggable(el) {
     el.style.top  = Math.max(0, Math.min(br.height - 180, t.clientY - br.top  - oy)) + 'px';
   }, { passive: true });
   window.addEventListener('mouseup',  () => { if (down) { down = false; save(); } });
-  window.addEventListener('touchend', () => { if (down) { down = false; save(); } });
+  window.addEventListener('touchend', () => { if (down) { down = false; isDragging = false; save(); } });
 }
 
 function save() {
@@ -968,6 +986,20 @@ load();
     const min = floatEl.classList.toggle('collapsed');
     collapseBtn.textContent = min ? '▴' : '▾';
   });
+
+  // Touch resize handle (mobile)
+  const resizeHandle = document.getElementById('vault-resize-handle');
+  let rStartY, rStartH;
+  resizeHandle.addEventListener('touchstart', e => {
+    rStartY = e.touches[0].clientY;
+    rStartH = floatEl.offsetHeight;
+    e.preventDefault();
+  }, { passive: false });
+  resizeHandle.addEventListener('touchmove', e => {
+    const dy = e.touches[0].clientY - rStartY;
+    floatEl.style.height = Math.max(120, rStartH + dy) + 'px';
+    e.preventDefault();
+  }, { passive: false });
 })();
 
 // ─── MOBILE MENU ─────────────────────────────
