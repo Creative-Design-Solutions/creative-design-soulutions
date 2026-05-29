@@ -953,6 +953,84 @@
       to   { transform: rotate(360deg); }
     }
 
+    /* ── MOBILE MENU ── */
+    .mob-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .mob-menu-btn span {
+      display: block;
+      height: 1.5px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: all 0.22s;
+      transform-origin: center;
+    }
+    .mob-menu-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .mob-menu-btn.open span:nth-child(2) { opacity: 0; }
+    .mob-menu-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mob-menu {
+      display: none;
+      position: fixed;
+      top: 57px;
+      left: 0; right: 0;
+      background: rgba(253,248,242,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      z-index: 99;
+      padding: 1.2rem 1.6rem 1.6rem;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .mob-menu.open { display: flex; }
+
+    .mob-menu-section {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 0.6rem 0 0.4rem;
+    }
+    .mob-menu a {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(200,146,42,0.1);
+      transition: color 0.2s;
+    }
+    .mob-menu a:hover { color: var(--gold); }
+    .mob-menu .mob-cta {
+      margin-top: 1rem;
+      display: block;
+      background: var(--sky);
+      color: white;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem;
+      border-radius: 2px;
+      border-bottom: none;
+      transition: background 0.2s;
+    }
+    .mob-menu .mob-cta:hover { background: var(--sky2); }
+
     .metatron-spin {
       animation: spin-slow 18s linear infinite;
       transform-origin: center;
@@ -964,20 +1042,10 @@
     @media (max-width: 680px) {
 
       /* Nav */
-      nav {
-        padding: 1rem 1.4rem;
-      }
-      .nav-links { display: flex; gap: 1rem; }
-      .nav-links li { display: none; }
-      .nav-links li.has-dropdown { display: flex; }
-      .nav-links .has-dropdown > a { font-size: 0.72rem; }
-      .dropdown { left: auto; right: 0; transform: none; }
-      .has-dropdown:hover .dropdown,
-      .has-dropdown.open .dropdown { transform: none; }
-      .nav-cta {
-        font-size: 0.72rem;
-        padding: 0.5rem 1rem;
-      }
+      nav { padding: 1rem 1.4rem; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .mob-menu-btn { display: flex; }
 
       /* Hero */
       .hero {
@@ -1117,7 +1185,18 @@
     </li>
   </ul>
   <a href="#contact" class="nav-cta">Let's Talk</a>
+  <button class="mob-menu-btn" id="mobMenuBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mob-menu" id="mobMenu">
+  <div class="mob-menu-section">Systems</div>
+  <a href="systems.html">Business Hubs</a>
+  <a href="little-things.html">Small Tools</a>
+  <a href="partner-tools.html">Partner Tools</a>
+  <a href="#contact" class="mob-cta">Let's Talk</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1225,6 +1304,20 @@
     } else {
       alert('Something went wrong. Please email bryan@creativedesignsoulutions.com directly.');
     }
+  });
+
+  // Mobile hamburger menu
+  const mobBtn = document.getElementById('mobMenuBtn');
+  const mobMenu = document.getElementById('mobMenu');
+  mobBtn.addEventListener('click', () => {
+    const open = mobMenu.classList.toggle('open');
+    mobBtn.classList.toggle('open', open);
+  });
+  mobMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobMenu.classList.remove('open');
+      mobBtn.classList.remove('open');
+    });
   });
 
   // Dropdown — toggle on click for touch/mobile
