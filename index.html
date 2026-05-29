@@ -967,7 +967,13 @@
       nav {
         padding: 1rem 1.4rem;
       }
-      .nav-links { display: none; }
+      .nav-links { display: flex; gap: 1rem; }
+      .nav-links li { display: none; }
+      .nav-links li.has-dropdown { display: flex; }
+      .nav-links .has-dropdown > a { font-size: 0.72rem; }
+      .dropdown { left: auto; right: 0; transform: none; }
+      .has-dropdown:hover .dropdown,
+      .has-dropdown.open .dropdown { transform: none; }
       .nav-cta {
         font-size: 0.72rem;
         padding: 0.5rem 1rem;
