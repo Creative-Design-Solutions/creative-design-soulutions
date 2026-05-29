@@ -402,6 +402,34 @@
       border-radius: 2px;
     }
 
+    /* ── Desktop-only notice (shown on mobile instead of live demo) ── */
+    .desk-notice {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      gap: 1rem;
+    }
+    .desk-notice svg { opacity: 0.3; }
+    .desk-notice p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 260px;
+    }
+    .desk-notice span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
     /* ── CTA STRIP ── */
     .sys-cta {
       background: var(--sky-light);
@@ -446,6 +474,8 @@
 
       .device-laptop { max-width: 100%; }
       .device-phone { width: 160px; }
+      .sys-screen-iframe { display: none; }
+      .desk-notice { display: flex; }
 
       .sys-cta { padding: 4rem 1.6rem; }
     }
@@ -569,7 +599,7 @@
       <a href="https://creative-design-solutions.github.io/creative-design-soulutions/auto-hub/" target="_blank" class="btn-live" style="background:none;color:var(--navy);border:1.5px solid var(--navy);opacity:0.75;">Apex — Auto Shop</a>
     </div>
   </div>
-  <div class="sys-screen" style="background:#f0ede6;">
+  <div class="sys-screen sys-screen-iframe" style="background:#f0ede6;">
     <div class="device-laptop">
       <div class="laptop-chrome">
         <div class="laptop-dot"></div><div class="laptop-dot"></div><div class="laptop-dot"></div>
@@ -579,6 +609,17 @@
       <div class="laptop-base"></div>
       <div class="laptop-foot"></div>
     </div>
+  </div>
+  <div class="desk-notice">
+    <svg width="38" height="28" viewBox="0 0 38 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="36" height="22" rx="3" stroke="#6b5d4f" stroke-width="1.5"/>
+      <line x1="1" y1="23" x2="37" y2="23" stroke="#6b5d4f" stroke-width="1.5"/>
+      <line x1="13" y1="23" x2="10" y2="27" stroke="#6b5d4f" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="25" y1="23" x2="28" y2="27" stroke="#6b5d4f" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="9" y1="27" x2="29" y2="27" stroke="#6b5d4f" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <p>Best explored on a laptop or desktop — open this page there to see the live demo.</p>
+    <span>Desktop &amp; laptop only</span>
   </div>
 </section>
 

@@ -512,15 +512,77 @@
     .footer-copy { font-size: 0.72rem; color: rgba(107,93,79,0.4); }
 
     /* ── RESPONSIVE ── */
+    /* ── Desktop-only notice ── */
+    .desk-notice {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.8rem;
+      padding: 1.5rem;
+      background: var(--warm);
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+    .desk-notice svg { opacity: 0.3; }
+    .desk-notice p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 240px;
+      margin: 0;
+    }
+    .desk-notice span {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── Mobile menu ── */
+    .mob-menu-btn {
+      display: none; align-items: center; justify-content: center;
+      width: 44px; height: 44px; background: none; border: none;
+      cursor: pointer; padding: 0; flex-shrink: 0;
+    }
+    .mob-menu-btn img { width: 44px; height: 44px; border-radius: 10px; }
+    .mob-icon-close { display: none; }
+    .mob-menu-btn.open .mob-icon-menu { display: none; }
+    .mob-menu-btn.open .mob-icon-close { display: block; }
+    .mob-menu {
+      display: none; position: fixed; top: 57px; left: 0; right: 0;
+      background: rgba(253,248,242,0.97); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line); z-index: 199;
+      padding: 1.2rem 1.6rem 1.6rem; flex-direction: column; gap: 0.2rem;
+    }
+    .mob-menu.open { display: flex; }
+    .mob-menu-section { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); padding: 0.6rem 0 0.4rem; }
+    .mob-menu a { display: block; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 0.65rem 0; border-bottom: 1px solid rgba(200,146,42,0.1); transition: color 0.2s; }
+    .mob-menu a:hover { color: var(--gold); }
+    .mob-menu .mob-cta { margin-top: 1rem; display: block; background: var(--sky); color: white; text-align: center; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.9rem; border-radius: 2px; border-bottom: none; }
+
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
+      nav { padding: 1rem 1.4rem; }
       .nav-links { display: none; }
-      .hero, .tools-section { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .tool-card { padding: 2rem 1.5rem; }
-      .tool-card-header { flex-direction: column-reverse; }
+      .nav-cta { display: none; }
+      .mob-menu-btn { display: flex; }
+
+      .hero { text-align: center; padding-left: 1.5rem; padding-right: 1.5rem; }
+      .tools-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .tool-card { padding: 2rem 1.5rem; text-align: center; }
+      .tool-card-header { flex-direction: column-reverse; align-items: center; }
       .tool-preview { width: 100%; }
       .feature-list { grid-template-columns: 1fr; }
-      .pricing-row { flex-direction: column; gap: 1.2rem; }
+      .pricing-row { flex-direction: column; gap: 1.2rem; align-items: center; }
+      .addon-row { justify-content: center; }
+      .tool-actions { justify-content: center; }
+
+      .desk-only { display: none; }
+      .desk-notice { display: flex; }
     }
   </style>
 </head>
@@ -546,7 +608,18 @@
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
     <a href="index.html#contact" class="nav-cta">Let's Talk</a>
+    <button class="mob-menu-btn" id="mobMenuBtn" aria-label="Menu">
+      <img class="mob-icon-menu" src="icons/compass.svg" alt="Menu">
+      <img class="mob-icon-close" src="icons/star.svg" alt="Close">
+    </button>
   </nav>
+  <div class="mob-menu" id="mobMenu">
+    <div class="mob-menu-section">Systems</div>
+    <a href="systems.html">Business Hubs</a>
+    <a href="little-things.html">Small Tools</a>
+    <a href="partner-tools.html">Partner Tools</a>
+    <a href="index.html#contact" class="mob-cta">Let's Talk</a>
+  </div>
 
   <!-- ── HERO ── -->
   <section class="hero">
@@ -751,7 +824,18 @@
       </ul>
 
       <div class="tool-actions" style="margin-top:2rem;">
-        <a href="work-desk/" target="_blank" class="btn-live">View Demo →</a>
+        <a href="work-desk/" target="_blank" class="btn-live desk-only">View Demo →</a>
+        <div class="desk-notice">
+          <svg width="38" height="28" viewBox="0 0 38 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="36" height="22" rx="3" stroke="#6b5d4f" stroke-width="1.5"/>
+            <line x1="1" y1="23" x2="37" y2="23" stroke="#6b5d4f" stroke-width="1.5"/>
+            <line x1="13" y1="23" x2="10" y2="27" stroke="#6b5d4f" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="25" y1="23" x2="28" y2="27" stroke="#6b5d4f" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="9" y1="27" x2="29" y2="27" stroke="#6b5d4f" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p>Best explored on a laptop or desktop — open this page there to see the full demo.</p>
+          <span>Desktop &amp; laptop only</span>
+        </div>
       </div>
 
       <div class="tool-pricing">
@@ -780,6 +864,18 @@
   </section>
 
   <script>
+    const mobBtn = document.getElementById('mobMenuBtn');
+    const mobMenu = document.getElementById('mobMenu');
+    if (mobBtn) {
+      mobBtn.addEventListener('click', () => {
+        const open = mobMenu.classList.toggle('open');
+        mobBtn.classList.toggle('open', open);
+      });
+      mobMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => { mobMenu.classList.remove('open'); mobBtn.classList.remove('open'); });
+      });
+    }
+
     document.querySelectorAll('.has-dropdown > a').forEach(link => {
       link.addEventListener('click', e => {
         const li = link.closest('.has-dropdown');
