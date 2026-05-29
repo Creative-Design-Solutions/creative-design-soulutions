@@ -364,18 +364,13 @@
         gap: 2.5rem;
       }
       .vault-col { width: 100%; }
-      .vault-float { height: 340px; }
-      .vault-resize-handle {
-        display: flex; align-items: center; justify-content: center;
-        height: 22px; flex-shrink: 0;
-        background: rgba(40,90,78,0.05);
-        border-top: 1px solid rgba(40,90,78,0.1);
-        cursor: ns-resize; touch-action: none;
-      }
-      .vault-resize-handle::after {
-        content: ''; width: 36px; height: 3px;
-        border-radius: 2px; background: rgba(40,90,78,0.22);
-      }
+      .vault-float { height: auto !important; overflow: visible; resize: none; }
+      .vault-chrome-ring { flex: none; }
+      .vault-win { height: auto; }
+      .vault-card { height: auto; overflow: visible; flex: none; }
+      .vault-unlocked { height: auto; flex: none; }
+      .vault-content { max-height: 280px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .vault-resize-handle { display: none; }
 
       #sticky-board { min-height: 320px; }
 
