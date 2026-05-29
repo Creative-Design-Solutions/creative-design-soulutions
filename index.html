@@ -1061,6 +1061,34 @@
         gap: 0.5rem 1rem;
         padding: 1.2rem 1.6rem;
       }
+
+      /* ── Center everything on mobile ── */
+
+      /* Hero */
+      .hero-content { text-align: center; }
+      .hero-eyebrow { justify-content: center; }
+      .hero-eyebrow::before { display: none; }
+      .hero-sub { max-width: 100%; }
+      .hero-actions { align-items: center; }
+
+      /* Zero out staircase offsets */
+      .stair-2 > * { margin-left: 0; }
+      .stair-3 .about-inner,
+      .stair-4 .about-inner { margin-left: 0; text-align: center; }
+      .stair-5 > .section-label,
+      .stair-5 > .section-title,
+      .stair-5 > .section-sub,
+      .stair-5 > .cta-form,
+      .stair-5 > .cta-note { margin-left: 0; }
+      .stair-5 { text-align: center; }
+      .stair-5 .section-label { justify-content: center; }
+      .stair-5 .section-label::before { display: block; }
+      .stair-5 .section-label::after { display: none; }
+
+      /* Section labels and headings */
+      .section-label { justify-content: center; }
+      .section-label::before { display: none; }
+      .services-header { text-align: center; max-width: 100%; }
     }
   </style>
 </head>
