@@ -266,4 +266,17 @@
         fill="none" stroke="url(#rimlight)" stroke-width="2.5"/>
 
   </g>
+
+  <!-- Gold trim border — outside the clip so it sits on top -->
+  <defs>
+    <linearGradient id="goldtrim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f5e090"/>
+      <stop offset="25%"  stop-color="#c8922a"/>
+      <stop offset="50%"  stop-color="#f0c84a"/>
+      <stop offset="75%"  stop-color="#a06820"/>
+      <stop offset="100%" stop-color="#e8c060"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="1012" height="1012" rx="217"
+        fill="none" stroke="url(#goldtrim)" stroke-width="9" opacity="0.85"/>
 </svg>
