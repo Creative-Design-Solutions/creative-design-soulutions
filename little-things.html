@@ -318,11 +318,11 @@
       display: none;
       align-items: center;
       justify-content: center;
-      width: 32px; height: 32px;
+      width: 44px; height: 44px;
       background: none; border: none;
       cursor: pointer; padding: 0; flex-shrink: 0;
     }
-    .mob-menu-btn svg { transition: opacity 0.2s; }
+    .mob-menu-btn img { width: 44px; height: 44px; border-radius: 10px; transition: opacity 0.2s; }
     .mob-icon-close { display: none; }
     .mob-menu-btn.open .mob-icon-menu { display: none; }
     .mob-menu-btn.open .mob-icon-close { display: block; }
@@ -395,23 +395,8 @@
   </ul>
   <a href="index.html#contact" class="nav-cta">Let's Talk</a>
   <button class="mob-menu-btn" id="mobMenuBtn" aria-label="Menu">
-    <svg class="mob-icon-menu" width="28" height="28" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="512,195 530,492 512,532 494,492" fill="#c8922a"/>
-      <polygon points="512,829 530,538 512,500 494,538" fill="#1a1208" opacity="0.45"/>
-      <polygon points="829,512 538,530 500,512 538,494" fill="#1a1208" opacity="0.45"/>
-      <polygon points="195,512 492,530 532,512 492,494" fill="#c8922a"/>
-      <circle cx="512" cy="512" r="52" fill="none" stroke="#c8922a" stroke-width="20" opacity="0.35"/>
-      <circle cx="512" cy="512" r="20" fill="#c8922a"/>
-    </svg>
-    <svg class="mob-icon-close" width="28" height="28" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-      <path d="M512,512 C470,470 458,382 512,278 C566,382 554,470 512,512Z" fill="#c8922a"/>
-      <path transform="rotate(60 512 512)"  d="M512,512 C470,470 458,382 512,278 C566,382 554,470 512,512Z" fill="#c8922a" opacity="0.75"/>
-      <path transform="rotate(120 512 512)" d="M512,512 C470,470 458,382 512,278 C566,382 554,470 512,512Z" fill="#c8922a"/>
-      <path transform="rotate(180 512 512)" d="M512,512 C470,470 458,382 512,278 C566,382 554,470 512,512Z" fill="#c8922a" opacity="0.75"/>
-      <path transform="rotate(240 512 512)" d="M512,512 C470,470 458,382 512,278 C566,382 554,470 512,512Z" fill="#c8922a"/>
-      <path transform="rotate(300 512 512)" d="M512,512 C470,470 458,382 512,278 C566,382 554,470 512,512Z" fill="#c8922a" opacity="0.75"/>
-      <circle cx="512" cy="512" r="30" fill="#c8922a"/>
-    </svg>
+    <img class="mob-icon-menu" src="icons/compass.svg" alt="Menu">
+    <img class="mob-icon-close" src="icons/star.svg" alt="Close">
   </button>
 </nav>
 

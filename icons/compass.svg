@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="squircle">
+      <rect width="1024" height="1024" rx="220" ry="220"/>
+    </clipPath>
+    <radialGradient id="bg" cx="50%" cy="45%" r="60%">
+      <stop offset="0%"   stop-color="#1a2540"/>
+      <stop offset="60%"  stop-color="#0a1020"/>
+      <stop offset="100%" stop-color="#060810"/>
+    </radialGradient>
+    <radialGradient id="nebula1" cx="40%" cy="35%" r="50%">
+      <stop offset="0%"   stop-color="#1a3060" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#1a3060" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="nebula2" cx="65%" cy="68%" r="45%">
+      <stop offset="0%"   stop-color="#2a1040" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#2a1040" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="coreglow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#c8922a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#c8922a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="50%"  stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rimlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04"/>
+    </linearGradient>
+    <filter id="starglow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="goldglow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="roseglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <g clip-path="url(#squircle)">
+
+  <!-- Deep space background -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- Nebula clouds -->
+  <rect width="1024" height="1024" fill="url(#nebula1)"/>
+  <rect width="1024" height="1024" fill="url(#nebula2)"/>
+
+  <!-- Core golden glow -->
+  <circle cx="512" cy="512" r="320" fill="url(#coreglow)"/>
+
+  <!-- ── ORBITAL RINGS ── bold, opposite directions, varied ── -->
+  <!-- Outer circles -->
+  <ellipse cx="512" cy="512" rx="455" ry="455" fill="none"
+           stroke="#4a8fc2" stroke-width="1" stroke-opacity="0.25" stroke-dasharray="3 18"/>
+  <ellipse cx="512" cy="512" rx="415" ry="415" fill="none"
+           stroke="#c8922a" stroke-width="1.2" stroke-opacity="0.30" stroke-dasharray="5 16"/>
+  <!-- Tilted rings — primary direction -->
+  <ellipse cx="512" cy="512" rx="390" ry="115" fill="none"
+           stroke="#c8922a" stroke-width="2" stroke-opacity="0.55" stroke-dasharray="12 10"
+           transform="rotate(-18 512 512)"/>
+  <ellipse cx="512" cy="512" rx="365" ry="100" fill="none"
+           stroke="#4a8fc2" stroke-width="1.6" stroke-opacity="0.45" stroke-dasharray="8 14"
+           transform="rotate(38 512 512)"/>
+  <!-- Opposite direction rings -->
+  <ellipse cx="512" cy="512" rx="345" ry="88" fill="none"
+           stroke="#c8922a" stroke-width="1.8" stroke-opacity="0.50" stroke-dasharray="10 12"
+           transform="rotate(-55 512 512)"/>
+  <ellipse cx="512" cy="512" rx="320" ry="78" fill="none"
+           stroke="#eef4fa" stroke-width="1.2" stroke-opacity="0.35" stroke-dasharray="6 16"
+           transform="rotate(72 512 512)"/>
+  <ellipse cx="512" cy="512" rx="300" ry="65" fill="none"
+           stroke="#4a8fc2" stroke-width="1.4" stroke-opacity="0.40" stroke-dasharray="8 12"
+           transform="rotate(-75 512 512)"/>
+  <ellipse cx="512" cy="512" rx="278" ry="55" fill="none"
+           stroke="#c8922a" stroke-width="1.2" stroke-opacity="0.35" stroke-dasharray="5 18"
+           transform="rotate(52 512 512)"/>
+  <!-- Wide sweeping rings -->
+  <ellipse cx="512" cy="512" rx="470" ry="145" fill="none"
+           stroke="#eef4fa" stroke-width="0.9" stroke-opacity="0.22" stroke-dasharray="4 22"
+           transform="rotate(22 512 512)"/>
+  <ellipse cx="512" cy="512" rx="480" ry="160" fill="none"
+           stroke="#c8922a" stroke-width="0.8" stroke-opacity="0.20" stroke-dasharray="3 26"
+           transform="rotate(-62 512 512)"/>
+  <ellipse cx="512" cy="512" rx="460" ry="130" fill="none"
+           stroke="#4a8fc2" stroke-width="0.7" stroke-opacity="0.18" stroke-dasharray="2 24"
+           transform="rotate(85 512 512)"/>
+
+  <!-- ── STAR FIELD ── dense, glowing, varied ── -->
+
+  <!-- Large bright stars with glow -->
+  <circle cx="185" cy="175" r="3.5" fill="#ffffff" opacity="0.95" filter="url(#starglow)"/>
+  <circle cx="840" cy="160" r="3.0" fill="#ffffff" opacity="0.90" filter="url(#starglow)"/>
+  <circle cx="855" cy="755" r="3.2" fill="#ffffff" opacity="0.92" filter="url(#starglow)"/>
+  <circle cx="160" cy="810" r="2.8" fill="#ffffff" opacity="0.85" filter="url(#starglow)"/>
+  <circle cx="615" cy="72"  r="3.0" fill="#c8922a" opacity="0.90" filter="url(#starglow)"/>
+  <circle cx="925" cy="390" r="2.6" fill="#4a8fc2" opacity="0.85" filter="url(#starglow)"/>
+  <circle cx="95"  cy="420" r="2.4" fill="#4a8fc2" opacity="0.80" filter="url(#starglow)"/>
+  <circle cx="512" cy="58"  r="2.8" fill="#c8922a" opacity="0.85" filter="url(#starglow)"/>
+  <circle cx="945" cy="630" r="2.5" fill="#ffffff" opacity="0.80" filter="url(#starglow)"/>
+  <circle cx="72"  cy="620" r="2.2" fill="#ffffff" opacity="0.78" filter="url(#starglow)"/>
+
+  <!-- Medium stars -->
+  <circle cx="310" cy="100" r="1.8" fill="#eef4fa" opacity="0.75"/>
+  <circle cx="430" cy="88"  r="1.6" fill="#eef4fa" opacity="0.70"/>
+  <circle cx="720" cy="95"  r="1.9" fill="#eef4fa" opacity="0.72"/>
+  <circle cx="890" cy="225" r="1.7" fill="#eef4fa" opacity="0.68"/>
+  <circle cx="960" cy="310" r="1.5" fill="#eef4fa" opacity="0.65"/>
+  <circle cx="975" cy="490" r="1.6" fill="#c8922a" opacity="0.60"/>
+  <circle cx="970" cy="720" r="1.8" fill="#eef4fa" opacity="0.70"/>
+  <circle cx="895" cy="870" r="1.7" fill="#eef4fa" opacity="0.68"/>
+  <circle cx="760" cy="940" r="1.5" fill="#eef4fa" opacity="0.62"/>
+  <circle cx="620" cy="960" r="1.6" fill="#4a8fc2" opacity="0.60"/>
+  <circle cx="460" cy="955" r="1.4" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="310" cy="945" r="1.7" fill="#eef4fa" opacity="0.65"/>
+  <circle cx="160" cy="905" r="1.5" fill="#eef4fa" opacity="0.60"/>
+  <circle cx="65"  cy="820" r="1.6" fill="#eef4fa" opacity="0.62"/>
+  <circle cx="48"  cy="700" r="1.4" fill="#4a8fc2" opacity="0.55"/>
+  <circle cx="52"  cy="520" r="1.5" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="58"  cy="310" r="1.6" fill="#eef4fa" opacity="0.62"/>
+  <circle cx="115" cy="195" r="1.4" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="250" cy="115" r="1.5" fill="#c8922a" opacity="0.55"/>
+
+  <!-- Small scattered stars — dense field -->
+  <circle cx="145" cy="380" r="1.2" fill="#eef4fa" opacity="0.65"/>
+  <circle cx="200" cy="490" r="1.0" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="155" cy="620" r="1.1" fill="#eef4fa" opacity="0.60"/>
+  <circle cx="220" cy="720" r="1.3" fill="#4a8fc2" opacity="0.65"/>
+  <circle cx="290" cy="830" r="1.1" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="390" cy="870" r="1.2" fill="#eef4fa" opacity="0.60"/>
+  <circle cx="510" cy="890" r="1.0" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="660" cy="875" r="1.1" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="775" cy="875" r="1.3" fill="#eef4fa" opacity="0.62"/>
+  <circle cx="870" cy="800" r="1.1" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="930" cy="690" r="1.2" fill="#c8922a" opacity="0.62"/>
+  <circle cx="955" cy="570" r="1.0" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="945" cy="450" r="1.1" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="905" cy="320" r="1.2" fill="#eef4fa" opacity="0.62"/>
+  <circle cx="830" cy="220" r="1.1" fill="#4a8fc2" opacity="0.60"/>
+  <circle cx="715" cy="148" r="1.2" fill="#eef4fa" opacity="0.65"/>
+  <circle cx="580" cy="110" r="1.0" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="440" cy="108" r="1.1" fill="#eef4fa" opacity="0.60"/>
+  <circle cx="320" cy="138" r="1.2" fill="#c8922a" opacity="0.62"/>
+  <circle cx="215" cy="192" r="1.0" fill="#eef4fa" opacity="0.58"/>
+  <circle cx="340" cy="280" r="1.0" fill="#eef4fa" opacity="0.52"/>
+  <circle cx="680" cy="260" r="1.1" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="780" cy="420" r="1.0" fill="#eef4fa" opacity="0.52"/>
+  <circle cx="240" cy="770" r="1.1" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="740" cy="800" r="1.0" fill="#4a8fc2" opacity="0.55"/>
+  <!-- Extra fill stars -->
+  <circle cx="420" cy="200" r="1.0" fill="#eef4fa" opacity="0.50"/>
+  <circle cx="560" cy="165" r="1.1" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="660" cy="190" r="0.9" fill="#c8922a" opacity="0.50"/>
+  <circle cx="750" cy="235" r="1.0" fill="#eef4fa" opacity="0.52"/>
+  <circle cx="820" cy="310" r="1.1" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="875" cy="430" r="1.0" fill="#eef4fa" opacity="0.50"/>
+  <circle cx="900" cy="560" r="1.1" fill="#4a8fc2" opacity="0.52"/>
+  <circle cx="870" cy="660" r="1.0" fill="#eef4fa" opacity="0.50"/>
+  <circle cx="810" cy="770" r="1.1" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="700" cy="860" r="1.0" fill="#eef4fa" opacity="0.50"/>
+  <circle cx="555" cy="920" r="1.1" fill="#eef4fa" opacity="0.52"/>
+  <circle cx="400" cy="910" r="1.0" fill="#c8922a" opacity="0.50"/>
+  <circle cx="270" cy="870" r="1.1" fill="#eef4fa" opacity="0.52"/>
+  <circle cx="175" cy="780" r="1.0" fill="#eef4fa" opacity="0.50"/>
+  <circle cx="110" cy="665" r="1.1" fill="#eef4fa" opacity="0.52"/>
+  <circle cx="80"  cy="535" r="1.0" fill="#4a8fc2" opacity="0.50"/>
+  <circle cx="98"  cy="400" r="1.1" fill="#eef4fa" opacity="0.52"/>
+  <circle cx="138" cy="280" r="1.0" fill="#eef4fa" opacity="0.50"/>
+  <circle cx="210" cy="155" r="1.1" fill="#eef4fa" opacity="0.55"/>
+  <circle cx="358" cy="105" r="1.0" fill="#eef4fa" opacity="0.50"/>
+  <!-- Tiny deep field stars -->
+  <circle cx="488" cy="130" r="0.7" fill="#eef4fa" opacity="0.45"/>
+  <circle cx="625" cy="120" r="0.8" fill="#eef4fa" opacity="0.42"/>
+  <circle cx="178" cy="450" r="0.7" fill="#eef4fa" opacity="0.40"/>
+  <circle cx="835" cy="490" r="0.8" fill="#eef4fa" opacity="0.42"/>
+  <circle cx="290" cy="195" r="0.7" fill="#eef4fa" opacity="0.40"/>
+  <circle cx="730" cy="165" r="0.8" fill="#eef4fa" opacity="0.42"/>
+  <circle cx="938" cy="255" r="0.7" fill="#eef4fa" opacity="0.38"/>
+  <circle cx="60"  cy="360" r="0.8" fill="#eef4fa" opacity="0.40"/>
+  <circle cx="48"  cy="780" r="0.7" fill="#eef4fa" opacity="0.38"/>
+  <circle cx="960" cy="820" r="0.8" fill="#eef4fa" opacity="0.40"/>
+  <circle cx="550" cy="970" r="0.7" fill="#eef4fa" opacity="0.38"/>
+  <circle cx="185" cy="980" r="0.8" fill="#eef4fa" opacity="0.40"/>
+
+  <!-- 4-pointed star bursts -->
+  <g transform="translate(185,175)" fill="#ffffff" opacity="0.9" filter="url(#starglow)">
+    <polygon points="0,-8 1,-1 8,0 1,1 0,8 -1,1 -8,0 -1,-1"/>
+  </g>
+  <g transform="translate(840,160)" fill="#ffffff" opacity="0.85" filter="url(#starglow)">
+    <polygon points="0,-7 1,-1 7,0 1,1 0,7 -1,1 -7,0 -1,-1"/>
+  </g>
+  <g transform="translate(615,72)" fill="#c8922a" opacity="0.9" filter="url(#starglow)">
+    <polygon points="0,-7 1,-1 7,0 1,1 0,7 -1,1 -7,0 -1,-1"/>
+  </g>
+  <g transform="translate(855,755)" fill="#ffffff" opacity="0.85" filter="url(#starglow)">
+    <polygon points="0,-6 0.8,-0.8 6,0 0.8,0.8 0,6 -0.8,0.8 -6,0 -0.8,-0.8"/>
+  </g>
+  <g transform="translate(160,810)" fill="#ffffff" opacity="0.80" filter="url(#starglow)">
+    <polygon points="0,-6 0.8,-0.8 6,0 0.8,0.8 0,6 -0.8,0.8 -6,0 -0.8,-0.8"/>
+  </g>
+  <g transform="translate(925,390)" fill="#4a8fc2" opacity="0.85" filter="url(#starglow)">
+    <polygon points="0,-5 0.7,-0.7 5,0 0.7,0.7 0,5 -0.7,0.7 -5,0 -0.7,-0.7"/>
+  </g>
+
+  <!-- Crescent moon -->
+  <g transform="translate(790,168) rotate(-25)">
+    <circle cx="0"  cy="0"  r="34" fill="#c8922a" opacity="0.28" filter="url(#starglow)"/>
+    <circle cx="16" cy="-10" r="27" fill="#060810"/>
+  </g>
+
+  <!-- ── COMPASS ROSE ── -->
+  <!-- N -->
+  <polygon points="512,178 532,492 512,534 492,492"
+           fill="#c8922a" filter="url(#goldglow)"/>
+  <!-- S -->
+  <polygon points="512,846 532,538 512,496 492,538"
+           fill="#eef4fa" opacity="0.88"/>
+  <!-- E -->
+  <polygon points="846,512 538,532 496,512 538,492"
+           fill="#eef4fa" opacity="0.88"/>
+  <!-- W -->
+  <polygon points="178,512 492,532 534,512 492,492"
+           fill="#c8922a" filter="url(#goldglow)"/>
+
+  <!-- Intercardinal points -->
+  <polygon points="748,276 532,508 508,532 526,504"
+           fill="#eef4fa" opacity="0.38"/>
+  <polygon points="748,748 508,520 532,492 526,518"
+           fill="#eef4fa" opacity="0.38"/>
+  <polygon points="276,748 510,518 486,538 512,520"
+           fill="#eef4fa" opacity="0.38"/>
+  <polygon points="276,276 512,508 486,486 510,508"
+           fill="#eef4fa" opacity="0.38"/>
+
+  <!-- Compass tick marks -->
+  <g stroke="#c8922a" stroke-width="1" stroke-opacity="0.35">
+    <line x1="512" y1="162" x2="512" y2="172"/>
+    <line x1="512" y1="852" x2="512" y2="862"/>
+    <line x1="162" y1="512" x2="172" y2="512"/>
+    <line x1="852" y1="512" x2="862" y2="512"/>
+  </g>
+
+  <!-- Center rings -->
+  <circle cx="512" cy="512" r="55" fill="#060810" stroke="#c8922a" stroke-width="1.5" stroke-opacity="0.5"/>
+  <circle cx="512" cy="512" r="35" fill="#0f1830" stroke="#c8922a" stroke-width="1"   stroke-opacity="0.3"/>
+  <circle cx="512" cy="512" r="14" fill="#c8922a" opacity="0.95" filter="url(#goldglow)"/>
+
+  <!-- N label -->
+  <text x="512" y="155" text-anchor="middle"
+        font-family="Georgia, serif" font-size="58" font-weight="bold"
+        fill="#c8922a" opacity="0.95" filter="url(#goldglow)">N</text>
+
+  <!-- Glass highlight — top half -->
+  <ellipse cx="512" cy="280" rx="420" ry="300"
+           fill="url(#glass)"/>
+
+  <!-- Inner rim -->
+  <rect x="3" y="3" width="1018" height="1018" rx="218"
+        fill="none" stroke="url(#rimlight)" stroke-width="2.5"/>
+
+  </g>
+</svg>

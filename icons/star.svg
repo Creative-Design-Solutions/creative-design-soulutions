@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#243F72"/>
+      <stop offset="100%" stop-color="#1A3260"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.2"/>
+    </radialGradient>
+    <linearGradient id="goldA" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFFFF"/>
+      <stop offset="20%"  stop-color="#FFE570"/>
+      <stop offset="55%"  stop-color="#D4A020"/>
+      <stop offset="80%"  stop-color="#FFE060"/>
+      <stop offset="100%" stop-color="#FFFAC0"/>
+    </linearGradient>
+    <linearGradient id="goldB" x1="80%" y1="0%" x2="20%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFCE8"/>
+      <stop offset="30%"  stop-color="#FFE060"/>
+      <stop offset="65%"  stop-color="#DDA010"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="25%"  stop-color="#FFE570" stop-opacity="0.80"/>
+      <stop offset="50%"  stop-color="#D4A020" stop-opacity="0.60"/>
+      <stop offset="75%"  stop-color="#FFE060" stop-opacity="0.80"/>
+      <stop offset="100%" stop-color="#FFFAC0" stop-opacity="0.95"/>
+    </linearGradient>
+    <filter id="depth">
+      <feDropShadow dx="4" dy="6" stdDeviation="8" flood-color="#1A0800" flood-opacity="0.35"/>
+    </filter>
+    <filter id="ringGlow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background with rounded corners -->
+  <rect width="1024" height="1024" rx="220" fill="url(#bg)"/>
+  <rect width="1024" height="1024" rx="220" fill="url(#vignette)"/>
+
+  <!-- Six-arm symbol centred at 512,512 -->
+  <!-- Each arm: teardrop petal pointing up, then rotated 60° increments -->
+  <!-- Arm tip reaches y=130, centre at 512,512 — arm length ~245px -->
+
+  <!-- Floating halo ring — outside arms, not touching -->
+  <circle cx="512" cy="512" r="295"
+    fill="none"
+    stroke="url(#ringGrad)"
+    stroke-width="6"
+    filter="url(#ringGlow)"
+    opacity="0.9"/>
+
+  <!-- Six arms -->
+  <g filter="url(#depth)">
+    <!-- arm 0° — points up -->
+    <path d="M 512,512 C 470,470 460,370 512,270 C 564,370 554,470 512,512 Z"
+          fill="url(#goldA)"/>
+    <!-- arm 60° -->
+    <path transform="rotate(60 512 512)"
+          d="M 512,512 C 470,470 460,370 512,270 C 564,370 554,470 512,512 Z"
+          fill="url(#goldB)"/>
+    <!-- arm 120° -->
+    <path transform="rotate(120 512 512)"
+          d="M 512,512 C 470,470 460,370 512,270 C 564,370 554,470 512,512 Z"
+          fill="url(#goldA)"/>
+    <!-- arm 180° -->
+    <path transform="rotate(180 512 512)"
+          d="M 512,512 C 470,470 460,370 512,270 C 564,370 554,470 512,512 Z"
+          fill="url(#goldB)"/>
+    <!-- arm 240° -->
+    <path transform="rotate(240 512 512)"
+          d="M 512,512 C 470,470 460,370 512,270 C 564,370 554,470 512,512 Z"
+          fill="url(#goldA)"/>
+    <!-- arm 300° -->
+    <path transform="rotate(300 512 512)"
+          d="M 512,512 C 470,470 460,370 512,270 C 564,370 554,470 512,512 Z"
+          fill="url(#goldB)"/>
+  </g>
+
+  <!-- Centre jewel -->
+  <circle cx="512" cy="512" r="28" fill="url(#goldA)" filter="url(#depth)"/>
+
+</svg>
