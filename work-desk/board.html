@@ -1802,52 +1802,37 @@
       body.innerHTML = `
         <div style="padding:28px 24px;max-width:900px;">
 
-          <div style="font-family:'Cormorant',serif;font-size:1.6rem;font-weight:300;color:var(--ink);letter-spacing:-0.02em;margin-bottom:24px;">Dashboard</div>
+          <div style="font-family:'Cormorant',serif;font-size:1.6rem;font-weight:300;color:var(--ink);letter-spacing:-0.02em;margin-bottom:4px;">Dashboard</div>
+          <div style="font-size:0.6rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:28px;">Claude Skills — Quick Reference</div>
 
-          <button onclick="toggleSkills()" id="skills-btn" style="
-            display:inline-flex;align-items:center;gap:8px;
-            background:var(--off);border:1px solid var(--faint);
-            border-radius:10px;padding:10px 18px;
-            font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;
-            color:var(--ink);cursor:pointer;transition:all 0.15s;
-          " onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--faint)'">
-            <span style="font-size:0.9rem;">✦</span> Claude Skills
-            <span id="skills-chevron" style="font-size:0.65rem;color:var(--muted);transition:transform 0.2s;">▼</span>
-          </button>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;">
 
-          <div id="skills-panel" style="display:none;margin-top:14px;">
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;">
-              ${[
-                { name: '/snag', desc: 'Search before debugging. Type the error — it searches first.', when: 'Something breaks unexpectedly or an API stops working' },
-                { name: '/brainstorming', desc: 'Explore intent and design before any build or creative work.', when: 'Starting something new and the direction isn\'t fully clear yet' },
-                { name: '/writing-plans', desc: 'Turn a spec into a solid plan before touching code.', when: 'The build has multiple moving parts or spans more than one session' },
-                { name: '/executing-plans', desc: 'Execute a written plan with review checkpoints. Pairs with /writing-plans.', when: 'You have a finished plan and are ready to build in a clean session' },
-                { name: '/code-review', desc: 'Built-in second opinion. Add --fix to apply findings directly.', when: 'Before anything that touches client work or goes live' },
-                { name: '/verification-before-completion', desc: 'Evidence before claiming done. Run before any commit or PR.', when: 'You think something is fixed — prove it before moving on' },
-                { name: '/dispatching-parallel-agents', desc: 'Run independent tasks simultaneously.', when: 'Two or more tasks don\'t depend on each other' },
-                { name: '/skill-builder', desc: 'Teach your AIOS a new behavior. Run when patterns repeat.', when: 'You\'ve given the same instructions three or more times' },
-                { name: '/superpowers', desc: 'Activates the full skill system at the start of a session.', when: 'Opening a complex or multi-step project session' },
-                { name: 'GSD Core', desc: 'Keeps Claude focused across long builds. Install once per project: npx @opengsd/gsd-core@latest — then /gsd-new-project, /gsd-next, /gsd-ship', when: 'Day one of a complex project — seatbelt, not airbag' },
-              ].map(s => `
-                <div style="background:#fff;border-radius:10px;padding:14px 16px;border:1px solid var(--faint);transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(28,35,51,0.08)'" onmouseout="this.style.boxShadow='none'">
-                  <div style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--ink);margin-bottom:4px;">${s.name}</div>
-                  <div style="font-size:0.7rem;color:var(--muted);line-height:1.5;margin-bottom:6px;">${s.desc}</div>
-                  <div style="font-size:0.62rem;font-weight:600;color:var(--gold);">Best when: ${s.when}</div>
-                </div>
-              `).join('')}
+            ${[
+              { name: '/snag', desc: 'Search before debugging. Type the error — it searches first.', when: 'Something breaks unexpectedly or an API stops working' },
+              { name: '/brainstorming', desc: 'Explore intent and design before any build or creative work.', when: 'Starting something new and the direction isn\'t fully clear yet' },
+              { name: '/writing-plans', desc: 'Turn a spec into a solid plan before touching code.', when: 'The build has multiple moving parts or spans more than one session' },
+              { name: '/executing-plans', desc: 'Execute a written plan with review checkpoints. Pairs with /writing-plans.', when: 'You have a finished plan and are ready to build in a clean session' },
+              { name: '/code-review', desc: 'Built-in second opinion. Add --fix to apply findings directly.', when: 'Before anything that touches client work or goes live' },
+              { name: '/verification-before-completion', desc: 'Evidence before claiming done. Run before any commit or PR.', when: 'You think something is fixed — prove it before moving on' },
+              { name: '/dispatching-parallel-agents', desc: 'Run independent tasks simultaneously.', when: 'Two or more tasks don\'t depend on each other and can run at the same time' },
+              { name: '/skill-builder', desc: 'Teach your AIOS a new behavior. Run when patterns repeat.', when: 'You\'ve given the same instructions three or more times' },
+              { name: '/superpowers', desc: 'Activates the full skill system at the start of a session.', when: 'Opening a complex or multi-step project session' },
+              { name: 'GSD Core', desc: 'Keeps Claude focused across long builds — prevents context drift. Run once per project: npx @opengsd/gsd-core@latest — then use /gsd-new-project, /gsd-next, /gsd-ship', when: 'Day one of a complex project — like a seatbelt, not an airbag' },
+            ].map(s => `
+              <div style="background:#fff;border-radius:10px;padding:14px 16px;border:1px solid var(--faint);transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 2px 12px rgba(28,35,51,0.08)'" onmouseout="this.style.boxShadow='none'">
+                <div style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--ink);margin-bottom:4px;">${s.name}</div>
+                <div style="font-size:0.7rem;color:var(--muted);line-height:1.5;margin-bottom:6px;">${s.desc}</div>
+                <div style="font-size:0.62rem;font-weight:600;color:var(--gold);letter-spacing:0.02em;">Best when: ${s.when}</div>
+              </div>
+            `).join('')}
+
+            <div style="background:var(--off);border-radius:10px;padding:14px 16px;border:1px solid var(--faint);display:flex;align-items:center;justify-content:center;">
+              <a href="../partner-tools.html" style="font-size:0.72rem;font-weight:600;color:var(--sage);text-decoration:none;letter-spacing:0.02em;">Full reference → partner-tools.html</a>
             </div>
-          </div>
 
+          </div>
         </div>
       `;
-    }
-
-    function toggleSkills() {
-      const panel = document.getElementById('skills-panel');
-      const chevron = document.getElementById('skills-chevron');
-      const open = panel.style.display === 'none';
-      panel.style.display = open ? 'block' : 'none';
-      chevron.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
     }
 
   </script>
