@@ -578,7 +578,8 @@
       .tool-card .tool-desc, .tool-card .tool-features-label, .tool-card .tool-tagline { text-align: left; }
       .tool-card-header { flex-direction: column; align-items: center; }
       .tool-icon-row { flex-direction: column !important; align-items: center !important; gap: 1rem !important; }
-      .tool-icon-row img { width: 96px !important; height: 96px !important; }
+      .tool-icon-row .cp-icon-mob { display: block !important; }
+      .tool-icon-row .cp-icon-desk { display: none !important; }
       .tool-preview { width: 100%; }
       .feature-list { grid-template-columns: 1fr; }
       .pricing-row { flex-direction: column; gap: 1.2rem; align-items: center; }
@@ -656,7 +657,8 @@
       <div class="tool-card-header">
         <span class="tool-badge">Freelancers &amp; Creative Professionals</span>
         <div class="tool-icon-row" style="display:flex;align-items:flex-end;gap:1.4rem;">
-          <img src="icons/creative-partner-icon.png" alt="Creative Partner" style="width:88px;height:88px;flex-shrink:0;">
+          <img src="icons/creative-partner-icon.png" alt="Creative Partner" class="cp-icon-desk" style="width:88px;height:88px;flex-shrink:0;">
+          <img src="icons/creative-partner-icon-transparent.png" alt="Creative Partner" class="cp-icon-mob" style="display:none;width:96px;height:96px;flex-shrink:0;">
           <div class="tool-card-title-wrap">
             <h2>Creative Partner <em>AIOS</em></h2>
             <p class="tool-tagline">Your creative partner. Always ready.</p>
@@ -664,7 +666,7 @@
         </div>
       </div>
 
-      <p class="tool-desc">A personal AI operating system built around how you work. It learns your business, your voice, your priorities, and how it can help with systems that might distract you. From my perspective, AI isn&#8217;t going to make anyone more creative, or is even meant to take the human being out of the work. It&#8217;s made to support human beings live more as their soul and creative spark.</p>
+      <p class="tool-desc" style="margin-top:1.6rem;">A personal AI operating system built around how you work. It learns your business, your voice, your priorities, and how it can help with systems that might distract you. From my perspective, AI isn&#8217;t going to make anyone more creative, or is even meant to take the human being out of the work. It&#8217;s made to support human beings live more as their soul and creative spark.</p>
 
       <p class="tool-desc">Start the day with a morning brief, think through decisions together, find what to automate next, and ship more seamlessly &#8212; with a system that grows with you.</p>
 
@@ -677,14 +679,14 @@
         <li>Voice &amp; context setup — it knows how you think and what you're building</li>
         <li>Invoice generator — white-labeled for your business</li>
         <li>Connections — Gmail, Xero, calendar, and more wired in from day one</li>
-        <li>3 setup sessions with Bryan — so you're running, not guessing</li>
+        <li>Three setup sessions with Bryan — he'll walk with you through your creative process</li>
       </ul>
 
-      <div class="tool-pricing">
+      <div class="tool-pricing" style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--line);">
         <div class="price-block">
           <span class="price-label">Setup</span>
           <div class="price-value">$500</div>
-          <div class="price-note">Three setup sessions with Bryan — he'll walk with you through your creative process</div>
+          <div class="price-note">One-time · no monthly</div>
         </div>
         <a href="index.html#contact" class="tool-cta">Get yours →</a>
       </div>
