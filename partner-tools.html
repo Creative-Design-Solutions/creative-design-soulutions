@@ -574,7 +574,9 @@
       .hero { text-align: center; padding-left: 1.5rem; padding-right: 1.5rem; }
       .tools-section { padding-left: 1.5rem; padding-right: 1.5rem; }
       .tool-card { padding: 2rem 1.5rem; text-align: center; }
-      .tool-card-header { flex-direction: column-reverse; align-items: center; }
+      .tool-card-header { flex-direction: column; align-items: center; }
+      .tool-icon-row { flex-direction: column !important; align-items: center !important; gap: 1rem !important; }
+      .tool-icon-row img { width: 96px !important; height: 96px !important; }
       .tool-preview { width: 100%; }
       .feature-list { grid-template-columns: 1fr; }
       .pricing-row { flex-direction: column; gap: 1.2rem; align-items: center; }
@@ -651,7 +653,7 @@
     <div class="tool-card">
       <div class="tool-card-header">
         <span class="tool-badge">Freelancers &amp; Creative Professionals</span>
-        <div style="display:flex;align-items:flex-end;gap:1.4rem;">
+        <div class="tool-icon-row" style="display:flex;align-items:flex-end;gap:1.4rem;">
           <img src="icons/creative-partner-icon.png" alt="Creative Partner" style="width:88px;height:88px;flex-shrink:0;">
           <div class="tool-card-title-wrap">
             <h2>Creative Partner <em>AIOS</em></h2>
@@ -680,7 +682,7 @@
         <div class="price-block">
           <span class="price-label">Setup</span>
           <div class="price-value">$500</div>
-          <div class="price-note">One-time · 3 sessions included · no monthly</div>
+          <div class="price-note">Three setup sessions with Bryan — he'll walk with you through your creative process</div>
         </div>
         <a href="index.html#contact" class="tool-cta">Get yours →</a>
       </div>
