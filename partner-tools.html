@@ -584,6 +584,9 @@
       .tool-card .tool-features, .tool-card .feature-list { text-align: left; }
       .tool-card .tool-desc, .tool-card .tool-features-label, .tool-card .tool-tagline { text-align: left; }
       .tool-card-header { flex-direction: column; align-items: center; }
+      /* the header stacks on mobile, so the two badges become separate rows and the
+         left offset that spaces them side by side just pushes one off-centre */
+      .tool-badge.beta { margin-left: 0; }
       .tool-icon-row { flex-direction: column !important; align-items: center !important; gap: 1rem !important; }
       .tool-icon-row .cp-icon-mob { display: block !important; }
       .tool-icon-row .cp-icon-desk { display: none !important; }
