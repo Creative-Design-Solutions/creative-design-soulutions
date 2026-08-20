@@ -509,23 +509,17 @@
       .sys-cta { padding: 4rem 1.6rem; }
     }
 
-    /* ── DEMOS HELD BACK FOR A LIVE SHOWING — 20 Aug 2026, Bryan's call ──────────
-       The laptop screens, the demo buttons, the green "Live Demo" tags, the demo
-       password, the desktop-only notice and the sentences that point at a demo are
-       hidden — not deleted. restaurant-hub/, retail-hub/, auto-hub/ and the Practice
-       Portal all still work and still resolve if you hand someone a URL directly.
-       Deleting this one block puts every demo back exactly as it was. */
-    .sys-section { grid-template-columns: 1fr; min-height: 0; }
-    /* .flip only existed to put the screen on the other side; with no screen it
-       would push the copy to the right half of an empty row. */
-    .sys-section.flip { direction: ltr; }
-    .sys-section.flip .sys-copy { padding: 5rem 5rem 5rem 6rem; }
-    .sys-section .sys-tag.live,
-    .sys-section .sys-actions,
-    .sys-section .sys-screen,
-    .sys-section .desk-notice,
-    .sys-demo-note { display: none; }
-    .sys-copy { max-width: 940px; }
+    /* ── THE THREE SYSTEM SECTIONS ARE HELD BACK — 20 Aug 2026, Bryan's call ─────
+       Restaurant OS, the Practice Staff Portal and Business Hub OS are hidden whole:
+       copy, features, screens and demo links. These are prototypes he may build from
+       scratch for a client, and he would rather have a few in real use before showing
+       them as samples. The page is the hero and the invitation to meet, nothing else.
+
+       NOTHING IS DELETED. Every section, every screenshot and every demo link is still
+       in this file and still on the server — restaurant-hub/, retail-hub/, auto-hub/
+       and the Practice Portal all still resolve, so he can open one to walk somebody
+       through it. Deleting this one rule brings the whole page back as it was. */
+    .sys-section { display: none; }
     /* ─────────────────────────────────────────────────────────────────────────── */
   </style>
 </head>
@@ -590,7 +584,7 @@
     <div class="sys-actions">
       <a href="restaurant-hub/" target="_blank" class="btn-live">View Live Demo</a>
     </div>
-    <p style="margin-top:1.4rem;font-size:0.78rem;color:var(--muted);line-height:1.7;max-width:380px;">For farm-to-table and sourcing-forward restaurants, this system can also include a guest-facing ingredient traceability page — guests scan a QR code on the menu and see exactly which farm their food came from. <a href="restaurant-hub/trace.html" target="_blank" class="sys-demo-note" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,146,42,0.3);">See that demo →</a></p>
+    <p style="margin-top:1.4rem;font-size:0.78rem;color:var(--muted);line-height:1.7;max-width:380px;">For farm-to-table and sourcing-forward restaurants, this system can also include a guest-facing ingredient traceability page — guests scan a QR code on the menu and see exactly which farm their food came from. <a href="restaurant-hub/trace.html" target="_blank" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,146,42,0.3);">See that demo →</a></p>
   </div>
   <div class="sys-screen">
     <div class="device-laptop">
@@ -622,7 +616,7 @@
     <div class="sys-actions">
       <a href="https://creative-design-solutions.github.io/Practice-Portal/" target="_blank" class="btn-live">View Demo</a>
     </div>
-    <p class="sys-demo-note" style="margin-top:1rem;font-size:0.76rem;color:var(--muted);line-height:1.6;">Demo password: <code style="font-family:monospace;background:rgba(200,146,42,0.08);border:1px solid rgba(200,146,42,0.2);border-radius:3px;padding:2px 6px;font-size:0.8rem;color:var(--gold);">portal2025</code></p>
+    <p style="margin-top:1rem;font-size:0.76rem;color:var(--muted);line-height:1.6;">Demo password: <code style="font-family:monospace;background:rgba(200,146,42,0.08);border:1px solid rgba(200,146,42,0.2);border-radius:3px;padding:2px 6px;font-size:0.8rem;color:var(--gold);">portal2025</code></p>
     <p style="margin-top:1rem;font-size:0.76rem;color:var(--muted);line-height:1.75;font-style:italic;border-top:1px solid var(--line);padding-top:1rem;">Some of these features are dependent upon your practice software and the availability of its API keys, build, and availability to you. We work with each practice to see what's available, and work with what's possible.</p>
   </div>
   <div class="sys-screen" style="background:#e8eef5;">
@@ -644,7 +638,7 @@
     <span class="sys-tag live">Live Demo</span>
     <h2>Business Hub OS<br><em>Built for your world</em></h2>
     <p class="sys-subtitle">Daily Operations — Any Business Type</p>
-    <p class="sys-body">A daily operations hub designed around how your specific business actually runs.<span class="sys-demo-note"> Two demos below — a boutique retail version and a dark-mode creative studio version. Each one is a fully working example of what yours could look like.</span></p>
+    <p class="sys-body">A daily operations hub designed around how your specific business actually runs. Two demos below — a boutique retail version and a dark-mode creative studio version. Each one is a fully working example of what yours could look like.</p>
     <div class="sys-features">
       <span class="sys-feat">Morning brief — what matters today, at a glance</span>
       <span class="sys-feat">Sales, sessions, projects, or bookings — your language</span>
