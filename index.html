@@ -386,9 +386,19 @@
       background: var(--cream);
     }
 
+    /* Two blocks side by side, each one a gold label rail + its body.
+       Stacked one per row below 1750px: at 1440 two bodies come out 362px
+       wide, about 45 characters, which is too narrow a measure to read. */
     .services-header {
-      max-width: 1040px;
+      max-width: 2100px;
       margin-bottom: 4rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3.4rem 4rem;
+      align-items: start;
+    }
+
+    .services-header-col {
       display: grid;
       grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
       gap: 3.4rem 2.6rem;
@@ -396,7 +406,7 @@
     }
 
     .services-header .section-label { margin-bottom: 0; padding-top: 0.45rem; }
-    .services-header > .about-body { margin: 0; }
+    .services-header-col > .about-body { margin: 0; }
 
     .services-grid {
       display: grid;
@@ -1068,6 +1078,10 @@
     }
 
     /* ── MOBILE ── */
+    @media (max-width: 1750px) {
+      .services-header { grid-template-columns: minmax(0, 1fr); max-width: 1040px; }
+    }
+
     @media (max-width: 680px) {
 
       /* Nav */
@@ -1193,6 +1207,7 @@
       .section-label { justify-content: center; }
       .section-label::before { display: none; }
       .services-header { text-align: center; max-width: 100%; grid-template-columns: 1fr; gap: 1.1rem; }
+      .services-header-col { grid-template-columns: 1fr; gap: 1.1rem; }
       .services-header .section-label { padding-top: 0; }
       /* the paragraphs centre with the rest of the page, but a centred bullet list
          puts every dash in a different place and stops reading as a list */
@@ -1254,25 +1269,29 @@
 <!-- SERVICES -->
 <section class="services stair-1" id="services">
   <div class="services-header">
-    <p class="section-label">How we serve</p>
-    <p class="about-body">We're a small business helping clients on a case by case basis, devoted to bringing creative workflow automation, AI partnership, and custom web design or systems to your practice or business. We're also devoting time to create systems that are simplified and serve people; so they may create on their own with technology that helps support and connect with those they are here to serve, without the high financial costs and time on technical tasks. We'd love to meet and learn about you, and see how we can help.</p>
+    <div class="services-header-col">
+      <p class="section-label">How we serve</p>
+      <p class="about-body">We're a small business helping clients on a case by case basis, devoted to bringing creative workflow automation, AI partnership, and custom web design or systems to your practice or business. We're also devoting time to create systems that are simplified and serve people; so they may create on their own with technology that helps support and connect with those they are here to serve, without the high financial costs and time on technical tasks. We'd love to meet and learn about you, and see how we can help.</p>
+    </div>
 
-    <p class="section-label">Relating with AI</p>
-    <div class="services-header-block">
-      <p class="about-body">
-        AI is not inherently wise or harmful. It amplifies the state of the one engaging with it. This means:
-      </p>
-      <ul class="about-list">
-        <li>If you are rushed → AI accelerates noise</li>
-        <li>If you are clear → AI amplifies clarity</li>
-        <li>If you are present → AI becomes a mirror of intelligence itself</li>
-      </ul>
-      <p class="about-body">
-        AI doesn't just respond to what you ask. It responds to how you are when you ask — and how you relate to what you are asking about.
-      </p>
-      <p class="about-body">
-        Our idea and direction with AI is a relationship and creative service that helps bridge a co-creative working partnership with technology — and not a codependent one. Our intention is to help bridge the gap for those finding a need for technology in certain instances and areas where you may not know, or have discovered an aversion to it. Ultimately, you still bring the qualities that make it most effective to help do the work you may not be able to do alone technically.
-      </p>
+    <div class="services-header-col">
+      <p class="section-label">Relating with AI</p>
+      <div class="services-header-block">
+        <p class="about-body">
+          AI is not inherently wise or harmful. It amplifies the state of the one engaging with it. This means:
+        </p>
+        <ul class="about-list">
+          <li>If you are rushed → AI accelerates noise</li>
+          <li>If you are clear → AI amplifies clarity</li>
+          <li>If you are present → AI becomes a mirror of intelligence itself</li>
+        </ul>
+        <p class="about-body">
+          AI doesn't just respond to what you ask. It responds to how you are when you ask — and how you relate to what you are asking about.
+        </p>
+        <p class="about-body">
+          Our idea and direction with AI is a relationship and creative service that helps bridge a co-creative working partnership with technology — and not a codependent one. Our intention is to help bridge the gap for those finding a need for technology in certain instances and areas where you may not know, or have discovered an aversion to it. Ultimately, you still bring the qualities that make it most effective to help do the work you may not be able to do alone technically.
+        </p>
+      </div>
     </div>
   </div>
   <div class="services-grid">
