@@ -479,6 +479,25 @@
 
       .sys-cta { padding: 4rem 1.6rem; }
     }
+
+    /* ── DEMOS HELD BACK FOR A LIVE SHOWING — 20 Aug 2026, Bryan's call ──────────
+       The laptop screens, the demo buttons, the green "Live Demo" tags, the demo
+       password, the desktop-only notice and the sentences that point at a demo are
+       hidden — not deleted. restaurant-hub/, retail-hub/, auto-hub/ and the Practice
+       Portal all still work and still resolve if you hand someone a URL directly.
+       Deleting this one block puts every demo back exactly as it was. */
+    .sys-section { grid-template-columns: 1fr; min-height: 0; }
+    /* .flip only existed to put the screen on the other side; with no screen it
+       would push the copy to the right half of an empty row. */
+    .sys-section.flip { direction: ltr; }
+    .sys-section.flip .sys-copy { padding: 5rem 5rem 5rem 6rem; }
+    .sys-section .sys-tag.live,
+    .sys-section .sys-actions,
+    .sys-section .sys-screen,
+    .sys-section .desk-notice,
+    .sys-demo-note { display: none; }
+    .sys-copy { max-width: 940px; }
+    /* ─────────────────────────────────────────────────────────────────────────── */
   </style>
 </head>
 <body>
@@ -497,8 +516,8 @@
       <ul class="dropdown">
         <li class="drop-special"><a href="partner-tools.html">Partner Tools</a></li>
         <li><div class="drop-divider"></div></li>
-        <li><a href="systems.html">Business Hubs</a></li>
         <li><a href="little-things.html">Small Tools</a></li>
+        <li><a href="systems.html">Business Hubs</a></li>
       </ul>
     </li>
   </ul>
@@ -508,8 +527,8 @@
 <!-- HERO -->
 <section class="sys-hero">
   <p class="section-label">What we build</p>
-  <h1>Systems that work<br><em>while you do.</em></h1>
-  <p>These are tools built for your business. We design each one around how your team actually works, then built to run quietly in the background so you can spend more time doing what you love. And when it's time to do the admin, it's not the same task. We walk through where you are, with you, and explore options available that will help this work for &amp; with your business.</p>
+  <h1>Systems that work<br><em>with you.</em></h1>
+  <p>These are tools we're considering exploring building for your business. We have some prototypes built and designed already. If you're interested in a hub that keeps everything connected in one place as much as possible and helps your team keep the admin/attention on the tracking to a minimum, ask us for a meeting.</p>
   <p style="font-size:0.82rem;color:var(--muted);opacity:0.7;max-width:520px;margin:1rem auto 0;line-height:1.7;font-style:italic;">A note: these systems are one part of a fuller setup. We'll coordinate the right tools, integrations, and workflow together — there's no one-size-fits-all, and some pieces carry added cost depending on your needs. We'll be upfront with options, why &amp; how each work, and walk through it with you.</p>
 </section>
 
@@ -530,7 +549,7 @@
     <div class="sys-actions">
       <a href="restaurant-hub/" target="_blank" class="btn-live">View Live Demo</a>
     </div>
-    <p style="margin-top:1.4rem;font-size:0.78rem;color:var(--muted);line-height:1.7;max-width:380px;">For farm-to-table and sourcing-forward restaurants, this system can also include a guest-facing ingredient traceability page — guests scan a QR code on the menu and see exactly which farm their food came from. <a href="restaurant-hub/trace.html" target="_blank" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,146,42,0.3);">See that demo →</a></p>
+    <p style="margin-top:1.4rem;font-size:0.78rem;color:var(--muted);line-height:1.7;max-width:380px;">For farm-to-table and sourcing-forward restaurants, this system can also include a guest-facing ingredient traceability page — guests scan a QR code on the menu and see exactly which farm their food came from. <a href="restaurant-hub/trace.html" target="_blank" class="sys-demo-note" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(200,146,42,0.3);">See that demo →</a></p>
   </div>
   <div class="sys-screen">
     <div class="device-laptop">
@@ -562,7 +581,7 @@
     <div class="sys-actions">
       <a href="https://creative-design-solutions.github.io/Practice-Portal/" target="_blank" class="btn-live">View Demo</a>
     </div>
-    <p style="margin-top:1rem;font-size:0.76rem;color:var(--muted);line-height:1.6;">Demo password: <code style="font-family:monospace;background:rgba(200,146,42,0.08);border:1px solid rgba(200,146,42,0.2);border-radius:3px;padding:2px 6px;font-size:0.8rem;color:var(--gold);">portal2025</code></p>
+    <p class="sys-demo-note" style="margin-top:1rem;font-size:0.76rem;color:var(--muted);line-height:1.6;">Demo password: <code style="font-family:monospace;background:rgba(200,146,42,0.08);border:1px solid rgba(200,146,42,0.2);border-radius:3px;padding:2px 6px;font-size:0.8rem;color:var(--gold);">portal2025</code></p>
     <p style="margin-top:1rem;font-size:0.76rem;color:var(--muted);line-height:1.75;font-style:italic;border-top:1px solid var(--line);padding-top:1rem;">Some of these features are dependent upon your practice software and the availability of its API keys, build, and availability to you. We work with each practice to see what's available, and work with what's possible.</p>
   </div>
   <div class="sys-screen" style="background:#e8eef5;">
@@ -584,7 +603,7 @@
     <span class="sys-tag live">Live Demo</span>
     <h2>Business Hub OS<br><em>Built for your world</em></h2>
     <p class="sys-subtitle">Daily Operations — Any Business Type</p>
-    <p class="sys-body">A daily operations hub designed around how your specific business actually runs. Two demos below — a boutique retail version and a dark-mode creative studio version. Each one is a fully working example of what yours could look like.</p>
+    <p class="sys-body">A daily operations hub designed around how your specific business actually runs.<span class="sys-demo-note"> Two demos below — a boutique retail version and a dark-mode creative studio version. Each one is a fully working example of what yours could look like.</span></p>
     <div class="sys-features">
       <span class="sys-feat">Morning brief — what matters today, at a glance</span>
       <span class="sys-feat">Sales, sessions, projects, or bookings — your language</span>

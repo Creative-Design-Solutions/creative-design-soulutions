@@ -387,9 +387,16 @@
     }
 
     .services-header {
-      max-width: 560px;
+      max-width: 1040px;
       margin-bottom: 4rem;
+      display: grid;
+      grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+      gap: 2.6rem;
+      align-items: start;
     }
+
+    .services-header .section-label { margin-bottom: 0; padding-top: 0.45rem; }
+    .services-header .about-body { margin: 0; }
 
     .services-grid {
       display: grid;
@@ -919,6 +926,35 @@
       font-size: 1.2rem;
     }
 
+    .about-body + .about-body,
+    .about-body + .about-list,
+    .about-list + .about-body { margin-top: 1.4rem; }
+
+    .about-list {
+      list-style: none;
+      margin: 1.4rem 0;
+    }
+
+    .about-list li {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      line-height: 1.9;
+      font-weight: 300;
+      color: var(--muted);
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .about-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.05em;
+      width: 0.8rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
     .about-divider {
       height: 1px;
       background: var(--line);
@@ -1156,7 +1192,8 @@
       /* Section labels and headings */
       .section-label { justify-content: center; }
       .section-label::before { display: none; }
-      .services-header { text-align: center; max-width: 100%; }
+      .services-header { text-align: center; max-width: 100%; grid-template-columns: 1fr; gap: 1.1rem; }
+      .services-header .section-label { padding-top: 0; }
     }
   </style>
 </head>
@@ -1173,8 +1210,8 @@
       <ul class="dropdown">
         <li class="drop-special"><a href="partner-tools.html">Partner Tools</a></li>
         <li><div class="drop-divider"></div></li>
-        <li><a href="systems.html">Business Hubs</a></li>
         <li><a href="little-things.html">Small Tools</a></li>
+        <li><a href="systems.html">Business Hubs</a></li>
       </ul>
     </li>
   </ul>
@@ -1188,8 +1225,8 @@
 <div class="mob-menu" id="mobMenu">
   <div class="mob-menu-section">Systems</div>
   <a href="partner-tools.html">Partner Tools</a>
-  <a href="systems.html">Business Hubs</a>
   <a href="little-things.html">Small Tools</a>
+  <a href="systems.html">Business Hubs</a>
   <a href="#contact" class="mob-cta">Let's Talk</a>
 </div>
 
@@ -1215,40 +1252,55 @@
 <section class="services stair-1" id="services">
   <div class="services-header">
     <p class="section-label">How we serve</p>
-    <p class="about-body" style="max-width:660px;margin:1.5rem auto 0;">We're a small business helping clients on a case by case basis, devoted to bringing creative workflow automation, AI integration, and custom web design to your practice or business. We'd love to meet and learn about you, and see how we can help.</p>
+    <p class="about-body">We're a small business helping clients on a case by case basis, devoted to bringing creative workflow automation, AI partnership, and custom web design or systems to your practice or business. We're also devoting time to create systems that are simplified and serve people; so they may create on their own with technology that helps support and connect with those they are here to serve, without the high financial costs and time on technical tasks. We'd love to meet and learn about you, and see how we can help.</p>
   </div>
   <div class="services-grid">
     <div class="service-card">
       <div class="service-number">01 <span class="service-label">Creativity</span></div>
       <h3>Websites &amp; Design</h3>
-      <p>Custom sites built around how you serve — beautiful, intentional, and yours to own.</p>
+      <p>We focus a small part of what we do on specialized web design for businesses that want function and connection more than advertising. These are done on a case by case basis.</p>
     </div>
     <div class="service-card">
       <div class="service-number">02 <span class="service-label">Flow</span></div>
       <h3>Workflow Automation</h3>
-      <p>Systems that remove the friction — so your team spends less time on admin and more on what matters.</p>
+      <p>Explore systems you want to work with in your practice or business with your team. These require you and your team's partnership.</p>
     </div>
     <div class="service-card">
       <div class="service-number">03 <span class="service-label">Partnership</span></div>
-      <h3>AI Integration</h3>
-      <p>Practical AI woven into your existing workflows — not replacing people, amplifying them.</p>
+      <h3>AI Partnership</h3>
+      <p>Practical AI woven into your existing workflows — not replacing people, amplifying with them.</p>
     </div>
     <div class="service-card">
       <div class="service-number">04 <span class="service-label">Small Tools</span></div>
       <h3>Apps &amp; Systems</h3>
-      <p>Custom-built apps for the problems off-the-shelf software doesn't quite solve.</p>
+      <p>Custom-built apps for the problems off-the-shelf software doesn't quite solve, or partners with you in a more personal and connected way.</p>
     </div>
   </div>
 </section>
 
 
-<!-- WEB DESIGN -->
-<section class="about about-cream stair-2" id="web-design">
+<!-- RELATING WITH AI -->
+<!-- This slot used to hold a "Web design, for function and connection." section. Its one
+     paragraph now lives on service card 01, where Bryan intended it, so the section itself
+     was retired rather than left duplicating the card. -->
+<section class="about about-cream stair-2" id="relating-with-ai">
   <div class="about-inner">
     <div class="about-block">
-      <h2 class="section-title">Web design, for function<br><em>and connection.</em></h2>
+      <p class="section-label">Relating with AI</p>
+      <h2 class="section-title">AI is not inherently wise<br><em>or harmful.</em></h2>
       <p class="about-body">
-        We focus a small part of what we do on specialized web design for businesses that want function and connection more than advertising. These are done on a case by case basis.
+        It amplifies the state of the one engaging with it. This means:
+      </p>
+      <ul class="about-list">
+        <li>If you are rushed → AI accelerates noise</li>
+        <li>If you are clear → AI amplifies clarity</li>
+        <li>If you are present → AI becomes a mirror of intelligence itself</li>
+      </ul>
+      <p class="about-body">
+        AI doesn't just respond to what you ask. It responds to how you are when you ask — and how you relate to what you are asking about.
+      </p>
+      <p class="about-body">
+        Our idea and direction with AI is a relationship and creative service that helps bridge a co-creative working partnership with technology — and not a codependent one. Our intention is to help bridge the gap for those finding a need for technology in certain instances and areas where you may not know, or have discovered an aversion to it. Ultimately, you still bring the qualities that make it most effective to help do the work you may not be able to do alone technically.
       </p>
     </div>
   </div>
@@ -1260,7 +1312,7 @@
     <div class="about-block">
       <h2 class="section-title">How we walk you through<br><em>each project.</em></h2>
       <p class="about-body">
-        We learn how you actually work before we build anything — and where you're open to change. Before we build a system with you, we want to spend time and connect with your team and current systems. Everything we make is yours, with no lock-in and no subscriptions to us, unless we agree on a short term management during transition. We aim to discover how to support your team. AI may support in areas, but its purpose isn't to replace a human touch.
+        We learn how you actually work before we build anything — and where you're open to change. Before we build a system with you, we want to spend time and connect with your team and current systems. Everything we make is yours, with no lock-in and no subscriptions to us, unless we agree on a short term management during transition. We aim to discover how to support your team. AI may support in areas, but its purpose isn't to replace a human touch. Our work is done with the purpose of leaving you with a technical and creative partner that supports and works alongside you.
       </p>
     </div>
   </div>
@@ -1271,7 +1323,7 @@
     <div class="about-block">
       <h2 class="section-title">Feel ready to grow and<br><em>meet the change.</em></h2>
       <p class="about-body">
-        We grow with each partnership. Each project is unique and we work with you to shape it and see it through. We want to walk through it in curiosity with you. The question we ask — what would it feel like for your work week to be more filled with what you love, and partnered in the areas you innocently may overlook? Oftentimes, clarity comes after we spend a week with you and your team inside your business. Sometimes it's just the questions that haven't been asked or heard that really transform things.
+        We grow with each partnership. Each project is unique and we work with you to shape it and see it through. We want to walk through it in curiosity with you. The question we ask — what would it feel like for your work week to be more filled with what you love, and partnered in the areas you innocently may overlook? Oftentimes, clarity comes after we spend a week with you and your team inside your business. Sometimes it's just the questions that haven't been asked or heard that really transform things. What I've discovered is most of the time, it's questions that aren't asked, or time that has yet to be given to areas asking for change that often helps guide what can help support everyone more.
       </p>
     </div>
   </div>
