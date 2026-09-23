@@ -409,7 +409,7 @@
          looked fine in the page and went soft the moment Bryan put it full screen — a 1.5×
          stretch back up on a 1920 display. Kept at native it is sharp at every size, and the
          page shows it at 560 CSS pixels, which is a clean reduction rather than a guess. -->
-    <button class="demo-link" id="demo-link" type="button">Watch a demo here.</button>
+    <button class="demo-link" data-demo="demo-video" type="button">Watch a demo here.</button>
     <video class="app-demo" id="demo-video" width="1920" height="1080"
            controls preload="none" playsinline
            poster="downloads/notes-vault.png"
@@ -442,11 +442,45 @@
     <div class="app-body">
       <span class="tool-tag tag-live">Mac app</span>
       <h2>AYA</h2>
-      <p class="lead">This helps you share your voice without typing.</p>
-      <p>Where this differs is everything is local for places where regulation and compliance are wanting to be respected.</p>
+    </div>
+
+    <!-- The poster is a frame of the film itself, so the still and the video are
+         the same thing rather than two pictures of it. Chosen for the size the
+         page shows it at: at 560 CSS pixels the frames of the app window go small
+         and soft, and this one is the only one that still reads.
+
+         JPEG, not PNG like the screenshots above — this is a photograph of a
+         gradient, and PNG made it 640 kB for no visible gain. The others are flat
+         UI, where PNG is right.
+
+         Same arrangement as Notes Vault: the still is what loads, `preload="none"`
+         means the 6.6 MB film is only fetched when somebody asks for it, and the
+         still swaps out for the player rather than sitting above it. -->
+    <img class="app-hero" src="downloads/aya-promo-poster.jpg" width="1920" height="1080"
+         alt="AYA: You think faster than you type">
+    <button class="demo-link" type="button" data-demo="aya-demo">Watch the film here.</button>
+    <video class="app-demo" id="aya-demo" width="1920" height="1080"
+           controls preload="none" playsinline
+           poster="downloads/aya-promo-poster.jpg"
+           aria-label="A minute with AYA: dictating a long message, the same message in As You Are, Tidy and Shorter, British and Australian spelling, and what stays on your own machine">
+      <source src="downloads/aya-promo.mp4" type="video/mp4">
+      Your browser cannot play this video.
+      <a href="downloads/aya-promo.mp4">Download it instead.</a>
+    </video>
+
+    <div class="app-body">
+      <!-- Two lines came out on 2026-09-22 at Bryan's word — an opening line and a
+           paragraph about regulation and compliance. What is left is the description
+           exactly as he sent it, in three paragraphs.
+
+           So AYA has no `.lead` where the two rows above it do. Promoting his first
+           paragraph into that slot was the obvious move and is wrong: `.lead` is a
+           1.2rem serif meant for one short sentence, and his opening is two long
+           technical ones. It would read as a wall where the others read as a welcome.
+           The row losing its lead is the smaller cost. -->
       <p>The speech model runs on your own Mac, on its own graphics chip, so nothing you say is sent anywhere; and there's no monthly fee. Nothing you are saying is stored on a server or your computer beyond where it's sent.</p>
       <p>Choose your own hot key to activate the mic to listen. Hear a small note to know it's active (or turn it off), talk, then let go and it records it into text. Share with AYA the words it keeps mishearing regularly and it evolves. Let it tidy up the ums, or just keep every word, as you are.</p>
-      <p>(It's a one time install with no monthly subscription)</p>
+      <p>(It's a one-time install with no monthly subscription &amp; updates as needed for the app's lifespan.)</p>
       <div class="buy-row">
         <span class="buy-price">$29.99<span class="once">once</span></span>
         <!-- Polar checkout, live 2026-08-17. Same arrangement as Notes Vault: Polar is the legal
@@ -607,17 +641,20 @@ load();
 // The video carries preload="none", so nothing is fetched until this runs. Swapping the
 // class rather than the styles keeps the "which one is showing" decision in the CSS, where
 // the two rules that hide the still and reveal the player sit next to each other.
-const demoLink = document.getElementById('demo-link');
-const demoVideo = document.getElementById('demo-video');
-if (demoLink && demoVideo) {
-  demoLink.addEventListener('click', () => {
-    demoVideo.closest('.app-row').classList.add('playing');
-    demoVideo.play().catch(() => {
+// Every button carries the id of the video it starts, so adding a third film is a
+// button and a <video> and nothing here. It was one hard-coded pair until AYA got a
+// film of its own on 2026-09-22.
+document.querySelectorAll('.demo-link').forEach((link) => {
+  const video = document.getElementById(link.dataset.demo);
+  if (!video) return;
+  link.addEventListener('click', () => {
+    video.closest('.app-row').classList.add('playing');
+    video.play().catch(() => {
       // Autoplay refused, or the file is missing. The player is on screen with its controls
       // either way, so the person can still start it themselves.
     });
   });
-}
+});
 
 // ─── MOBILE MENU ─────────────────────────────
 const mobBtn = document.getElementById('mobMenuBtn');
