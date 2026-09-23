@@ -400,10 +400,16 @@
     <img class="app-hero" src="downloads/notes-vault.png" width="712" height="473"
          alt="Notes Vault open on a Mac, passwords grouped into Personal, Work and Finance">
 
-    <!-- The still stays as the thing that loads. The 1.9 MB video is only fetched when
+    <!-- The still stays as the thing that loads. The 2.3 MB video is only fetched when
          somebody asks for it — `preload="none"` — so nobody pays for a film they did not
          want. The screenshot swaps out for the player rather than sitting above it, because
          two pictures of the same window at once reads as a mistake.
+
+         It carries a voiceover as of 2026-09-22, which is why it grew from 1.9 MB. The
+         spoken lines are the clip's own captions, word for word — the voice says nothing
+         the screen does not already say. Source and re-render in downloads/narration/.
+         Playing it needs no `muted` attribute: the click on the button is the user gesture
+         browsers want before they will let audio start.
 
          1920×1080, the size it was recorded at, with no downscale anywhere. A 1280 version
          looked fine in the page and went soft the moment Bryan put it full screen — a 1.5×
@@ -413,7 +419,7 @@
     <video class="app-demo" id="demo-video" width="1920" height="1080"
            controls preload="none" playsinline
            poster="downloads/notes-vault.png"
-           aria-label="A walk through Notes Vault: unlocking, searching, resizing, the command palette, importing a CSV, dark mode and the menu bar">
+           aria-label="A narrated walk through Notes Vault: unlocking, searching, resizing, the command palette, importing a CSV, dark mode and the menu bar">
       <source src="downloads/notes-vault-demo.mp4" type="video/mp4">
       Your browser cannot play this video.
       <a href="downloads/notes-vault-demo.mp4">Download it instead.</a>
