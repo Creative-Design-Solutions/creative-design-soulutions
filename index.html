@@ -765,6 +765,26 @@
       min-height: 110px;
     }
 
+    /* Bryan's three questions (2026-10-06), each with its question above
+       its box. Optional; the field name is the question, so the Formspree
+       email reads question and answer together. */
+    .cta-q {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      text-align: left;
+      margin-top: 0.4rem;
+    }
+    .cta-q label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.02rem;
+      line-height: 1.4;
+      color: var(--navy);
+    }
+    .cta-form .cta-q textarea {
+      min-height: 76px;
+    }
+
     .cta-form button {
       background: var(--sky);
       color: white;
@@ -1403,7 +1423,19 @@
       <input type="text" name="name" placeholder="Your name" required>
       <input type="email" name="email" placeholder="your@email.com" required>
     </div>
-    <textarea name="message" placeholder="Tell us a bit about your business and what you're looking for..." required></textarea>
+    <div class="cta-q">
+      <label for="q-transform">What is the area you'd most like to create transformation in your business?</label>
+      <textarea id="q-transform" name="What is the area you'd most like to create transformation in your business?"></textarea>
+    </div>
+    <div class="cta-q">
+      <label for="q-feedback">Do you ask for feedback and creative ideas from your team?</label>
+      <textarea id="q-feedback" name="Do you ask for feedback and creative ideas from your team?"></textarea>
+    </div>
+    <div class="cta-q">
+      <label for="q-enough">What's the one thing you couldn't have enough of in your business, with your team (aside from money)?</label>
+      <textarea id="q-enough" name="What's the one thing you couldn't have enough of in your business, with your team (aside from money)?"></textarea>
+    </div>
+    <textarea name="message" placeholder="Tell us a bit about your business and what you're looking for..." required aria-label="Tell us a bit about your business and what you're looking for" style="margin-top: 0.6rem;"></textarea>
     <button type="submit">Start a Conversation</button>
   </form>
   <div class="cta-success" id="contact-success">
