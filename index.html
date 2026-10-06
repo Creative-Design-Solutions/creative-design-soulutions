@@ -189,18 +189,26 @@
       position: relative;
       z-index: 1;
     }
+    /* A slim bezel around it (Bryan, 2026-10-06): a dark frame with a
+       hairline of gold at its edge, like a screen. */
+    .hero-frame {
+      padding: 8px;
+      border-radius: 18px;
+      background: linear-gradient(160deg, #2a3550, #141b2c);
+      border: 1px solid rgba(201, 161, 91, 0.45);
+      box-shadow: 0 18px 48px rgba(26, 37, 64, 0.18);
+    }
     .hero-video {
       width: 100%;
       height: auto;
       aspect-ratio: 16 / 9;
       display: block;
-      border-radius: 10px;
-      background: var(--navy);
-      box-shadow: 0 18px 48px rgba(26, 37, 64, 0.16);
+      border-radius: 11px;
+      background: #141b2c;
     }
     @media (max-width: 1000px) {
       .hero-inner { grid-template-columns: 1fr; gap: 2.8rem; }
-      .hero-video { max-width: 640px; }
+      .hero-frame { max-width: 640px; }
     }
 
     .hero-eyebrow {
@@ -1293,12 +1301,14 @@
       <a href="#services" class="btn-ghost">See what we do</a>
     </div>
   </div>
+  <div class="hero-frame">
   <video class="hero-video" width="1280" height="720" controls playsinline preload="metadata"
          poster="downloads/cds-intro.jpg"
          aria-label="Bryan Gallagher introduces Creative Design SOULutions">
     <source src="downloads/cds-intro.mp4" type="video/mp4">
     <a href="downloads/cds-intro.mp4">Watch the introduction.</a>
   </video>
+  </div>
   </div>
 </section>
 
