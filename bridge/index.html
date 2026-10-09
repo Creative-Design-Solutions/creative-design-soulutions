@@ -39,7 +39,7 @@
         {"@type": "Question", "name": "How do referrals work in Bridge?", "acceptedAnswer": {"@type": "Answer", "text": "When a referral and its attachments arrive through the practice's referral portal, Bridge is designed to create the patient file and file the documents automatically, so the front desk is not retyping details or uploading files by hand."}},
         {"@type": "Question", "name": "Does Bridge work with Xero or MYOB?", "acceptedAnswer": {"@type": "Answer", "text": "Xero and MYOB integration is part of the plan, so invoices and payments flow into your accounts without double entry. Each practice uses its own subscription to its preferred accounting software, which isn't included in the Bridge subscription itself."}},
         {"@type": "Question", "name": "How will Bridge protect patient information?", "acceptedAnswer": {"@type": "Answer", "text": "Bridge is being designed around Australia's Privacy Act and the Australian Privacy Principles, with health-grade hosting. Full security details will be published before launch."}},
-        {"@type": "Question", "name": "When will Bridge be available?", "acceptedAnswer": {"@type": "Answer", "text": "Bridge is in development and will launch in Australia. Practices on the waitlist and in the Founding Circle will be the first ones signed up for its launch. Other countries may follow."}},
+        {"@type": "Question", "name": "When will Bridge be available?", "acceptedAnswer": {"@type": "Answer", "text": "Bridge is in development and will launch in Australia. Other countries may follow."}},
         {"@type": "Question", "name": "What is the Bridgeworld directory?", "acceptedAnswer": {"@type": "Answer", "text": "A free directory included for every practice that uses Bridge, with separate searches for dentists and specialists. Each practice gets its own page with its logo, description, locations, practitioners, hours and contact details, and patients can book new patient appointments that go straight into the practice's Bridge schedule. There are no ads, paid placements or star ratings."}},
         {"@type": "Question", "name": "What is the Bridge Founding Circle?", "acceptedAnswer": {"@type": "Answer", "text": "A small group of surgeons, practice managers and billing staff who help shape Bridge before launch. Members share how their practice works, test early versions, and get access before anyone else."}}
       ]
@@ -308,7 +308,7 @@ footer p{margin:.25rem 0}
           <p class="msg" id="msg" role="status" aria-live="polite"></p>
         </div>
         <div class="done" tabindex="-1" id="done">
-          <h3>You're on the waitlist</h3>
+          <h3>Thanks for sharing your interest</h3>
           <p>Thanks for helping us build Bridge. We'll be in touch soon, and if you ticked the Founding Circle box, we'll reach out to set up a short chat.</p>
         </div>
       </form>
@@ -325,7 +325,7 @@ footer p{margin:.25rem 0}
         <details><summary>How do referrals work in Bridge?</summary><p>When a referral and its attachments arrive through your referral portal, Bridge is designed to create the patient file and file the documents automatically, so your front desk isn't retyping details or uploading files by hand.</p></details>
         <details><summary>Does Bridge work with Xero or MYOB?</summary><p>Xero and MYOB integration is part of the plan, so invoices and payments flow into your accounts without double entry. Each practice uses its own subscription to its preferred accounting software, which isn't included in the Bridge subscription itself.</p></details>
         <details><summary>How will Bridge protect patient information?</summary><p>Bridge is being designed around Australia's Privacy Act and the Australian Privacy Principles, with health-grade hosting. We'll publish full security details before launch.</p></details>
-        <details><summary>When will Bridge be available?</summary><p>Bridge is in development and will launch in Australia. Practices on the waitlist and in the Founding Circle will be the first ones signed up for its launch. Other countries may follow.</p></details>
+        <details><summary>When will Bridge be available?</summary><p>Bridge is in development and will launch in Australia. Other countries may follow.</p></details>
         <details><summary>What is the Bridgeworld directory?</summary><p>A free directory included for every practice that uses Bridge, with separate searches for dentists and specialists. Each practice gets its own page with its logo, description, locations, practitioners, hours and contact details, and patients can book new patient appointments that go straight into the practice's Bridge schedule. There are no ads, paid placements or star ratings.</p></details>
         <details><summary>What is the Founding Circle?</summary><p>A small group of surgeons, practice managers and billing staff who help shape Bridge before launch. Members share how their practice works, test early versions, and get access before anyone else.</p></details>
       </div>
@@ -406,7 +406,7 @@ form.addEventListener("submit", async (e) => {
   }catch(err){
     btn.disabled = false; btn.textContent = "Join the Interest";
     setMsg(err.message === "duplicate"
-      ? "This email is already on the waitlist. We'll be in touch."
+      ? "We already have your interest with this email. We'll be in touch."
       : "Your details weren't sent. Check your connection and try again.", err.message !== "duplicate");
   }
 });
