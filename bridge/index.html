@@ -190,7 +190,7 @@ footer p{margin:.25rem 0}
   <a class="brand" href="#" aria-label="Bridge home">
     <img src="brand/bridge-logo.png" alt="Bridge" width="480" height="302">
   </a>
-  <a class="top-link" href="#join">Join the waitlist</a>
+  <a class="top-link" href="#join">Join the Interest</a>
 </header>
 
 <main>
@@ -198,7 +198,7 @@ footer p{margin:.25rem 0}
     <p class="status">In development, looking to launch in Australia.</p>
     <h1>Can we create practice software together that supports everyone's journey in the care process?</h1>
     <p class="lede">The vision with Bridge is to make it a co-creative journey together. Helping bring dentists, surgeons they refer to, practice teams and patients into a system built by them, with billing that handles MBS and ADA items side by side. Built for oral and maxillofacial surgery and specialist dental practices. Created through community and participation. Here's a glimpse at what this is leading us to.</p>
-    <a class="btn" href="#join">Join the waitlist</a>
+    <a class="btn" href="#join">Join the Interest</a>
 
     <div class="span">
       <img src="brand/bridge-hero.jpg" width="2172" height="724" alt="A stone bridge over a bay at sunrise linking a patient and referring dentist, the practice team, and a surgeon">
@@ -247,7 +247,7 @@ footer p{margin:.25rem 0}
       <h2>Help shape Bridge as part of the Founding Circle</h2>
       <p class="measure">We're asking for interest and participants, including small groups of surgeons, dentists, practice managers, and billing staff to share input in helping build and design Bridge with us, with the intention it stays focused. But the main page with updates is open to everyone and feedback and questions will be welcomed.</p>
       <ol class="steps">
-        <li><h3>Join the waitlist</h3><p>Tell us a little about your practice and tick the Founding Circle box.</p></li>
+        <li><h3>Join the Interest</h3><p>Tell us a little about your practice and tick the Founding Circle box.</p></li>
         <li><h3>Have a short chat</h3><p>A 20-minute conversation about how your practice runs today and where it gets stuck.</p></li>
         <li><h3>Test early versions</h3><p>Those who participate will be able to test versions and try Bridge with sample data and share experiences.</p></li>
         <li><h3>Get early access</h3><p>Start using Bridge before it opens to everyone else.</p></li>
@@ -258,8 +258,9 @@ footer p{margin:.25rem 0}
   <section class="alt" id="join">
     <div class="wrap join">
       <div>
-        <h2>Join the waitlist</h2>
+        <h2>Join the Interest</h2>
         <p class="measure">It's free and there's no commitment. We'll only contact you about Bridge.</p>
+        <p class="measure small">(Please note that this is intended to begin in Australia and available there and the immediate areas like New Zealand only as this is explored. You may share feedback if you are outside of this area, but the future waitlist will only be for those in Australia initially.)</p>
         <p class="small">Please don't include any patient details in this form.</p>
       </div>
       <form id="waitlist" novalidate>
@@ -303,7 +304,7 @@ footer p{margin:.25rem 0}
           <div class="field"><label for="biggest_headache">What's most meaningful for you in your practice, work, and life currently? <span class="hint">Optional. One or two sentences is plenty.</span></label><textarea id="biggest_headache" name="biggest_headache" maxlength="1000"></textarea></div>
           <label class="check"><input type="checkbox" id="founding_circle" name="founding_circle"> I'd like to join the Founding Circle and help shape Bridge.</label>
           <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-          <button class="btn" type="submit">Join the waitlist</button>
+          <button class="btn" type="submit">Join the Interest</button>
           <p class="msg" id="msg" role="status" aria-live="polite"></p>
         </div>
         <div class="done" tabindex="-1" id="done">
@@ -403,7 +404,7 @@ form.addEventListener("submit", async (e) => {
     form.classList.add("sent");
     done.focus();
   }catch(err){
-    btn.disabled = false; btn.textContent = "Join the waitlist";
+    btn.disabled = false; btn.textContent = "Join the Interest";
     setMsg(err.message === "duplicate"
       ? "This email is already on the waitlist. We'll be in touch."
       : "Your details weren't sent. Check your connection and try again.", err.message !== "duplicate");
