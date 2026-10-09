@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bridgeworld directory demo | Find a dentist or specialist near you</title>
+<meta name="description" content="Demo of the Bridgeworld directory: find a dentist or specialist near you, meet the team, see live availability and book as a new patient.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FCE7CF">
+<link rel="icon" type="image/png" href="../brand/icon-192.png">
+<link rel="apple-touch-icon" href="../brand/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF8F3; --sky:#F6EEE2; --sky-2:#EFE2CF;
+  /* Same sunrise as the Bridge page: dawn glow at the top, cream below. */
+  --dawn:radial-gradient(ellipse 60% 420px at 88% 0, rgba(255,186,84,.42), transparent 70%), linear-gradient(180deg,#FCE7CF 0,#FBF1E4 420px,#FBF8F3 760px); --warm:#FFF6E5; --blush:#FFEDE6;
+  --ink:#15303F; --ink-soft:#4F6475; --green:#1E8C72; --green-dk:#16705B; --sun:#FFC23D; --line:#E2E9EE;
+  --shadow:0 10px 30px rgba(21,48,63,.08);
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{background:var(--bg)}
+body{margin:0; background:var(--dawn) no-repeat, var(--bg); color:var(--ink); font:1rem/1.55 var(--body); -webkit-font-smoothing:antialiased}
+a{color:var(--green-dk)}
+main:focus{outline:none}
+:focus-visible{outline:3px solid var(--sun); outline-offset:2px; border-radius:6px}
+.wrap{width:min(1140px,100% - 2rem); margin-inline:auto}
+h1,h2,h3{font-family:var(--display); letter-spacing:-.015em; line-height:1.12; margin:0}
+h1,h2{font-family:var(--serif); font-weight:500; letter-spacing:-.015em}
+button{font:inherit; cursor:pointer}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
+
+.demo-note{background:#F3DDB0; color:var(--ink); font-size:.9rem; text-align:center; padding:.45rem 1rem; font-weight:700}
+.demo-note a{color:var(--ink)}
+header.top{background:transparent}
+.top .wrap{display:flex; justify-content:space-between; align-items:center; padding:1rem 0}
+.brand{display:flex; gap:.55rem; align-items:center; font:800 1.3rem var(--display); color:var(--ink); text-decoration:none}
+.brand img{height:46px; width:auto; display:block}
+.brand{align-items:flex-end; line-height:1}
+.top nav a{font-weight:700; color:var(--ink); text-decoration:none; margin-left:1.25rem}
+
+.btn{border:0; border-radius:999px; background:var(--green); color:#fff; font-weight:700; padding:.8rem 1.3rem; text-decoration:none; display:inline-block; text-align:center}
+.btn:hover{background:var(--green-dk)}
+.btn.soft{background:#fff; color:var(--ink); border:1.5px solid var(--line)}
+.btn.soft:hover{border-color:var(--green); color:var(--green-dk)}
+
+/* ---- Search hero ---- */
+.hero{background:transparent; padding:2rem 0 3.25rem; position:relative; overflow:hidden}
+.hero .sunball{display:none; position:absolute; width:340px; height:340px; border-radius:50%; background:var(--sun); opacity:.35; right:-90px; top:-120px}
+.hero h1{font-size:clamp(2.3rem,5.6vw,3.9rem); font-weight:500; line-height:1.04; max-width:16ch; position:relative}
+.hero p.sub{font-size:1.15rem; color:var(--ink-soft); margin:.8rem 0 1.6rem; max-width:34rem; position:relative}
+.finder{background:#fff; border-radius:24px; box-shadow:var(--shadow); padding:1rem; position:relative}
+.toggle{display:flex; gap:.4rem; margin-bottom:.8rem; flex-wrap:wrap}
+.toggle button{border:1.5px solid var(--line); background:#fff; color:var(--ink); font-weight:700; padding:.5rem 1rem; border-radius:999px}
+.toggle button[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:#fff}
+.fields{display:grid; grid-template-columns:1.3fr 1fr auto; gap:.6rem}
+.fields label{display:block; font-size:.8rem; font-weight:700; color:var(--ink-soft); margin:0 0 .2rem .9rem}
+.fields input{width:100%; font:inherit; font-size:1.05rem; color:var(--ink); background:var(--sky); border:2px solid transparent; border-radius:16px; padding:.85rem 1rem}
+.fields input:focus{outline:none; border-color:var(--green); background:#fff}
+.fields .btn{align-self:end; padding:.95rem 1.6rem; font-size:1.05rem}
+.chips{display:flex; flex-wrap:wrap; gap:.45rem; margin-top:1rem; position:relative}
+.chips button{border:0; background:rgba(255,255,255,.8); color:var(--ink); border-radius:999px; padding:.4rem .85rem; font-weight:700; font-size:.92rem}
+.chips button:hover{background:#fff}
+
+/* ---- Results ---- */
+.res-head{max-width:920px; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; margin:2rem 0 1rem}
+.res-head h2{font-size:1.75rem}
+.res-head label{display:flex; gap:.45rem; align-items:center; color:var(--ink-soft); font-weight:700}
+.res-head input{accent-color:var(--green); width:1.15rem; height:1.15rem}
+.cards{list-style:none; padding:0; margin:0 0 4rem; display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5rem}
+.card{background:#fff; border-radius:24px; box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column; border:1px solid var(--line)}
+.card .scene{aspect-ratio:16/8; display:block}
+.card .scene svg{width:100%; height:100%; display:block}
+.card .body{padding:0 1.25rem 1.25rem; display:flex; flex-direction:column; flex:1}
+.card .logo{margin-top:-30px}
+.logo{width:60px; height:60px; border-radius:18px; display:grid; place-items:center; color:#fff; font:800 1.2rem var(--display); border:4px solid #fff; box-shadow:0 4px 12px rgba(21,48,63,.12); flex:none}
+.card h3{font-size:1.3rem; margin-top:.6rem}
+.card .where{color:var(--ink-soft); margin:.15rem 0 .8rem}
+.team{display:flex; align-items:center; gap:.7rem; margin-bottom:.9rem}
+.faces{display:flex}
+.faces .face{width:44px; height:44px; border-radius:50%; border:3px solid #fff; margin-left:-10px; overflow:hidden; background:var(--sky)}
+.faces .face:first-child{margin-left:0}
+.team small{color:var(--ink-soft); font-size:.9rem; line-height:1.3}
+.avail{display:inline-flex; align-items:center; gap:.45rem; background:#E6F6F0; color:var(--green-dk); font-weight:700; border-radius:999px; padding:.35rem .8rem; font-size:.9rem; align-self:flex-start}
+.avail.off{background:var(--blush); color:#8A3B22}
+.dot{width:8px; height:8px; border-radius:50%; background:currentColor}
+.card .acts{display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin-top:auto; padding-top:1.1rem}
+.card .acts .btn{display:flex; align-items:center; justify-content:center; white-space:nowrap; padding:.75rem .6rem}
+.empty{padding:2rem; background:var(--warm); border-radius:20px; list-style:none}
+
+
+/* ---- Practitioner cards ----
+   Bridge's own take: an inset photo with the practice's tile pinned to it
+   (person and practice belong together), gold notes for role and focus,
+   and a sunrise strip at the foot for the next time and booking. */
+.results{background:transparent; padding:.5rem 0 1rem}
+.results .res-head{max-width:none}
+.plist{list-style:none; padding:0; margin:0 0 4rem; display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; align-items:stretch}
+.pcard{display:flex; flex-direction:column; background:#fff; border:1px solid #ECE5DA; border-radius:24px; box-shadow:0 12px 30px -18px rgba(21,48,63,.25); overflow:hidden}
+.frame{position:relative; margin:.75rem .75rem 0}
+.pcard .photo{display:block; aspect-ratio:1/1; border-radius:18px; overflow:hidden; background:#EFEAE2}
+.pcard .photo img{object-position:50% 22%}
+.pcard .photo svg{width:100%; height:100%; display:block}
+.flag{position:absolute; top:.7rem; right:.7rem; background:rgba(255,255,255,.92); color:#9A4A26; font:700 .7rem/1 var(--body); letter-spacing:.14em; text-transform:uppercase; padding:.5rem .7rem; border-radius:999px; box-shadow:0 2px 8px rgba(21,48,63,.12)}
+.plogo{position:absolute; left:1rem; bottom:-22px; width:52px; height:52px; border-radius:15px; display:grid; place-items:center; color:#fff; font:800 1rem var(--display); border:4px solid #fff; box-shadow:0 4px 12px rgba(21,48,63,.15); text-decoration:none}
+.pcard .info{padding:1.9rem 1.25rem 1rem; display:flex; flex-direction:column; gap:.4rem; flex:1}
+.kicker{font:700 .76rem/1.45 var(--body); letter-spacing:.16em; text-transform:uppercase; color:#B8862B}
+.pname{font:600 1.55rem/1.1 var(--serif); letter-spacing:-.005em; margin:0; color:var(--ink)}
+.at{color:var(--ink-soft); font-size:.94rem; display:flex; flex-wrap:wrap; gap:.15rem .7rem; align-items:center}
+.at a{font-weight:700; color:var(--ink); text-decoration:none; border-bottom:2px solid var(--sun)}
+.pin{display:inline-flex; gap:.3rem; align-items:center}
+.pin svg{width:14px; height:14px; flex:none; color:#B8862B}
+.bio{margin:.25rem 0 0; font-size:.98rem; color:var(--ink-soft); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.bio.open{-webkit-line-clamp:unset; display:block}
+.more{align-self:flex-start; border:0; background:none; padding:0; font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:.74rem; color:#B8862B}
+.more span{display:inline-block; transition:transform .2s}
+.more[aria-expanded="true"] span{transform:rotate(180deg)}
+.focus{display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.35rem}
+.focus span{background:#F4EFE7; color:var(--ink); border-radius:999px; padding:.3rem .7rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase}
+.foot{background:linear-gradient(100deg,#FFF4DF 0%,#FDEFE6 45%,#E7F4EF 100%); padding:.95rem 1.25rem 1.1rem; display:flex; flex-direction:column; gap:.75rem}
+.next{display:flex; align-items:center; gap:.5rem; font-weight:700; font-size:.92rem; color:var(--ink)}
+.next .dot{width:10px; height:10px; background:#F2A33A; box-shadow:0 0 0 4px rgba(242,163,58,.22)}
+.next.off{color:#8A3B22} .next.off .dot{background:#C9714F; box-shadow:none}
+.acts2{display:flex; align-items:center; gap:.9rem; flex-wrap:wrap}
+.acts2 .btn{display:inline-flex; align-items:center; gap:.45rem; padding:.7rem 1.15rem}
+.acts2 .link{font-weight:700; color:var(--ink); text-decoration:none}
+.acts2 .link:hover{color:var(--green-dk)}
+.icons{display:flex; gap:.25rem; margin-left:auto}
+.icons a{width:36px; height:36px; display:grid; place-items:center; color:var(--ink); border-radius:50%; background:rgba(255,255,255,.7)}
+.icons a:hover{background:#fff}
+.icons svg{width:17px; height:17px}
+@media (max-width:420px){ .icons{margin-left:0; width:100%; justify-content:flex-start} }
+
+/* ---- Practice page ---- */
+.p-hero{position:relative}
+.p-hero .scene{height:clamp(200px,32vw,340px)}
+.p-hero .scene svg{width:100%; height:100%; display:block}
+.p-head{display:flex; gap:1.2rem; align-items:flex-start; margin-top:-56px; position:relative}
+.p-head .logo{width:110px; height:110px; border-radius:28px; font-size:2rem; border-width:6px}
+.p-head .t{padding-top:66px; min-width:0}
+.p-head h1{font-size:clamp(2rem,4.6vw,3rem); font-weight:500}
+.pills{display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.5rem}
+.pill{background:var(--sky); border-radius:999px; padding:.25rem .75rem; font-size:.88rem; font-weight:700; color:var(--ink)}
+.pill.ok{background:#E6F6F0; color:var(--green-dk)}
+.pill.warm{background:var(--warm)}
+.layout{display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:2.5rem; margin:2.2rem 0 4rem; align-items:start}
+.welcome{background:var(--warm); border-radius:24px; padding:1.6rem}
+.welcome h2{font-size:1.7rem; margin-bottom:.6rem}
+.welcome p{font-size:1.08rem; margin:0 0 .8rem}
+.services{display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.4rem}
+.services span{background:#fff; border-radius:999px; padding:.3rem .8rem; font-size:.9rem; font-weight:700}
+.blk{margin-top:2.5rem}
+.blk > h2{font-size:1.9rem; margin-bottom:1rem}
+.teamgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.1rem}
+.person{background:#fff; border:1px solid var(--line); border-radius:22px; overflow:hidden; box-shadow:var(--shadow)}
+.person .portrait{aspect-ratio:1/1; background:var(--sky)}
+.person .portrait svg{width:100%; height:100%; display:block}
+.person .pb{padding:1rem 1.1rem 1.2rem}
+.person h3{font-size:1.15rem}
+.person .role{color:var(--ink-soft); font-size:.9rem; margin:.1rem 0 .55rem}
+.person blockquote{margin:0; font-size:.98rem; border-left:3px solid var(--sun); padding-left:.7rem}
+.locs{display:grid; gap:1rem}
+.loc{background:var(--sky); border-radius:22px; padding:1.3rem}
+.loc h3{font-size:1.2rem}
+.loc .addr{margin:.2rem 0 .8rem}
+.hours{display:grid; grid-template-columns:auto 1fr; gap:.15rem 1.2rem; font-size:.95rem; background:#fff; border-radius:14px; padding:.8rem 1rem}
+.hours .today{font-weight:700; color:var(--green-dk)}
+.contact{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.9rem}
+.refer{background:#fff; border:1.5px dashed var(--line); border-radius:22px; padding:1.3rem}
+.refer h2{font-size:1.25rem; margin-bottom:.4rem}
+
+/* booking panel */
+.book{background:#fff; border-radius:26px; box-shadow:0 18px 45px rgba(21,48,63,.12); border:1px solid var(--line); padding:1.4rem; position:sticky; top:calc(env(safe-area-inset-top,0px) + 1rem)}
+.book h2{font-size:1.45rem}
+.live{display:flex; gap:.45rem; align-items:center; font-size:.88rem; color:var(--green-dk); font-weight:700; margin:.35rem 0 1rem}
+.live .dot{background:#2DB37F; box-shadow:0 0 0 4px rgba(45,179,127,.2)}
+.book label{display:block; font-weight:700; font-size:.9rem; margin:.8rem 0 .35rem}
+.who{display:flex; gap:.5rem; flex-wrap:wrap}
+.who button{display:flex; align-items:center; gap:.5rem; border:2px solid var(--line); background:#fff; border-radius:999px; padding:.25rem .8rem .25rem .25rem; font-weight:700; color:var(--ink)}
+.who button .face{width:34px; height:34px; border-radius:50%; overflow:hidden}
+.who button[aria-pressed="true"]{border-color:var(--green); background:#E6F6F0}
+.book select{width:100%; font:inherit; color:var(--ink); background:var(--sky); border:2px solid transparent; border-radius:12px; padding:.65rem .8rem}
+.days{display:flex; gap:.45rem; overflow-x:auto; padding:.15rem 0 .5rem}
+.days button{flex:none; border:2px solid var(--line); background:#fff; color:var(--ink); border-radius:14px; padding:.45rem .65rem; min-width:64px; line-height:1.2; font-weight:700}
+.days button small{display:block; font-weight:400; color:var(--ink-soft); font-size:.78rem}
+.days button[aria-pressed="true"]{border-color:var(--ink); background:var(--ink); color:#fff}
+.days button[aria-pressed="true"] small{color:#fff}
+.days button:disabled{opacity:.35; cursor:not-allowed}
+.slots{display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; margin-top:.4rem}
+.slots button{border:0; background:#E6F6F0; color:var(--green-dk); font-weight:700; border-radius:12px; padding:.7rem 0}
+.slots button:hover{background:var(--green); color:#fff}
+.note{font-size:.9rem; background:var(--warm); border-radius:14px; padding:.75rem .9rem; margin-top:1rem}
+
+/* dialog */
+dialog{border:0; padding:0; border-radius:26px; width:min(560px,100% - 1.5rem); max-height:calc(100% - 2rem); background:#fff; color:var(--ink)}
+dialog::backdrop{background:rgba(21,48,63,.45)}
+.dlg{padding:1.5rem}
+.dlg-head{display:flex; justify-content:space-between; gap:1rem; align-items:start}
+.dlg-head h2{font-size:1.5rem}
+.x{border:0; background:var(--sky); width:38px; height:38px; border-radius:50%; font-size:1.4rem; line-height:1; color:var(--ink); flex:none}
+.chosen{display:flex; gap:.8rem; align-items:center; background:var(--sky); border-radius:18px; padding:.8rem 1rem; margin:1rem 0}
+.chosen .face{width:52px; height:52px; border-radius:50%; overflow:hidden; flex:none}
+.form .row{display:grid; grid-template-columns:1fr 1fr; gap:.8rem}
+.form .f{margin-bottom:.85rem}
+.form label{display:block; font-weight:700; font-size:.9rem; margin-bottom:.3rem}
+.form .hint{font-weight:400; color:var(--ink-soft); font-size:.83rem}
+.form input,.form select,.form textarea{width:100%; font:inherit; color:var(--ink); background:var(--sky); border:2px solid transparent; border-radius:12px; padding:.65rem .8rem}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none; border-color:var(--green); background:#fff}
+.form textarea{min-height:4.5rem; resize:vertical}
+.form .chk{display:flex; gap:.6rem; align-items:flex-start; font-weight:400; font-size:.93rem; margin:.4rem 0 1rem}
+.form .chk input{width:1.2rem; height:1.2rem; margin-top:.15rem; accent-color:var(--green); flex:none; padding:0}
+.err{color:#B3402A; font-weight:700; min-height:1.4em; margin:.2rem 0 .6rem}
+.done{text-align:center}
+.done .big{width:72px; height:72px; border-radius:50%; background:#E6F6F0; display:grid; place-items:center; margin:0 auto 1rem}
+.done .contact{justify-content:center}
+
+@media (max-width:900px){ .layout{grid-template-columns:minmax(0,1fr)} .book{position:static} .layout > aside{order:-1} }
+@media (max-width:640px){
+  .fields{grid-template-columns:1fr} .fields .btn{width:100%}
+  .top nav a{margin-left:.7rem; font-size:.9rem} .brand{font-size:1.15rem} .brand img{height:38px}
+  .p-head .logo{width:84px; height:84px; border-radius:22px; font-size:1.5rem}
+  .p-head{margin-top:-42px; flex-direction:column; gap:.6rem} .p-head .t{padding-top:0}
+  .form .row{grid-template-columns:1fr; gap:0}
+  .cards{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){ *{scroll-behavior:auto!important; transition:none!important} }
+</style>
+</head>
+<body>
+<div class="demo-note">Demo with sample practices. Nothing you enter is sent or saved. <a href="../">About Bridge</a></div>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#/" aria-label="Bridgeworld home">
+    <img src="../brand/bridge-mark.png" alt="" width="240" height="106">
+    Bridgeworld
+  </a>
+  <nav><a href="#/?t=dentist">Dentists</a><a href="#/?t=specialist">Specialists</a></nav>
+</div></header>
+<main id="app" tabindex="-1"></main>
+<dialog id="dlg" aria-labelledby="dlg-title"><div class="dlg" id="dlg-body"></div></dialog>
+<div class="sr" aria-live="polite" id="live"></div>
+
+<script>
+/* ===== Sample data. In the real product each practice edits this from its Bridge account. ===== */
+const WEEK=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const H = (a,b,c,d,e,f,g)=>({Mon:a,Tue:b,Wed:c,Thu:d,Fri:e,Sat:f,Sun:g});
+const PRACTICES=[
+ {id:"riverbend-oms", type:"specialist", name:"Riverbend Oral & Facial Surgery", initials:"RF", color:"#1E8C72", tint:"#DDF3EC",
+  specialty:"Oral and maxillofacial surgery", referral:true, accepting:true,
+  services:["Wisdom teeth","Dental implants","Jaw surgery","Facial trauma","Sedation"],
+  welcome:"Surgery should feel calm, clear and unhurried",
+  about:["Most of our patients come to us a little nervous, so we take the time to explain every step before anything happens. We'll answer every question, as many times as you need.",
+         "What we love most is the moment a patient realises the hard part is over. We work closely with your dentist before and after surgery, so your care feels like one connected journey."],
+  locations:[{name:"Brisbane City", address:"Level 2, 48 Wharf Street, Brisbane City QLD 4000", phone:"07 5550 1842", email:"hello@riverbend.example", hours:H("8:00 am to 5:00 pm","8:00 am to 5:00 pm","8:00 am to 5:00 pm","8:00 am to 6:30 pm","8:00 am to 3:00 pm","Closed","Closed")},
+             {name:"Chermside", address:"14 Gympie Road, Chermside QLD 4032", phone:"07 5550 1843", email:"northside@riverbend.example", hours:H("Closed","8:30 am to 4:30 pm","Closed","8:30 am to 4:30 pm","Closed","Closed","Closed")}],
+  people:[{name:"Dr Amelia Hart", photo:"photos/amelia-hart.jpg", bio:"Hi, I'm Amelia. I love helping nervous patients feel at ease before surgery. Most people who see me are having wisdom teeth or implants, and I make sure you know exactly what will happen, step by step, before we begin.", focus:["Wisdom teeth", "Dental implants", "Sedation"], role:"Oral and maxillofacial surgeon", quals:"BDSc, MBBS, FRACDS (OMS)", love:"I love seeing nervous patients walk out relieved and smiling.", locs:[0,1], look:{skin:"#F1C7A5", hair:"#6B3E26", style:"long", top:"#1E8C72"}},
+          {name:"Dr Kenji Morales", photo:"photos/kenji-morales.jpg", bio:"I'm Kenji. Corrective jaw surgery can change how someone eats, breathes and smiles, and walking alongside patients through that change is a privilege. I also look after facial injuries and fractures.", focus:["Jaw surgery", "Facial trauma"], role:"Oral and maxillofacial surgeon", quals:"BDS, MBBS, FRACDS (OMS)", love:"Jaw surgery changes how people eat, breathe and smile. That never gets old.", locs:[0], look:{skin:"#D9A47E", hair:"#1E1A18", style:"short", top:"#2E5E8C"}}]},
+ {id:"saltwater-perio", type:"specialist", name:"Saltwater Periodontics", initials:"SP", color:"#2F7FD0", tint:"#DCEBFB",
+  specialty:"Periodontics", referral:false, accepting:true,
+  services:["Gum disease treatment","Gum grafts","Dental implants","Maintenance care"],
+  welcome:"Healthy gums, explained in plain English",
+  about:["Healthy gums are the foundation for everything else in your mouth. We help you get gum disease under control and keep it there, gently and without judgement.",
+         "Referrals are welcome but not required, so you can book with us directly."],
+  locations:[{name:"Manly", address:"7 The Corso, Manly NSW 2095", phone:"02 5550 3317", email:"care@saltwater.example", hours:H("8:30 am to 5:00 pm","8:30 am to 5:00 pm","Closed","8:30 am to 7:00 pm","8:30 am to 5:00 pm","8:30 am to 12:30 pm","Closed")}],
+  people:[{name:"Dr Priya Raman", photo:"photos/priya-raman.jpg", bio:"Hi, I'm Priya. If you've been told your gums are a problem, you're not alone and it's rarely too late. I'll explain what's happening in plain English and help you keep your natural teeth for as long as possible.", focus:["Gum disease", "Gum grafts", "Implants"], role:"Periodontist", quals:"BDS, DClinDent (Perio)", love:"Helping someone keep teeth they were told they'd lose is the best part of my week.", locs:[0], look:{skin:"#B07A55", hair:"#1E1A18", style:"bun", top:"#2F7FD0"}}]},
+ {id:"wattle-family", type:"dentist", name:"Wattle Lane Family Dental", initials:"WL", color:"#E39B12", tint:"#FFF0CC",
+  specialty:"General dentistry", referral:false, accepting:true,
+  services:["Check-ups and cleans","Children's dentistry","Fillings","Crowns and bridges","Emergency appointments"],
+  welcome:"A family practice where kids actually look forward to visiting",
+  about:["Three generations of some families have sat in our chairs. We keep things relaxed, friendly and on time.",
+         "If you ever need a specialist, we'll refer you to someone we trust and stay in touch with them about your care."],
+  locations:[{name:"Ascot", address:"22 Racecourse Road, Ascot QLD 4007", phone:"07 5550 2290", email:"smile@wattlelane.example", hours:H("7:30 am to 5:30 pm","7:30 am to 5:30 pm","7:30 am to 7:00 pm","7:30 am to 5:30 pm","7:30 am to 4:00 pm","8:00 am to 1:00 pm","Closed")}],
+  people:[{name:"Dr Sophie Nguyen", bio:"Hi, I'm Sophie! I look after families, and especially love working with little ones and anyone who feels anxious at the dentist. We go at your pace, always.", focus:["Children's dentistry", "Nervous patients", "Check-ups"], role:"Dentist", quals:"BDSc", love:"Turning a scared five-year-old into a proud high-fiver is my favourite thing.", locs:[0], look:{skin:"#EBC39D", hair:"#2A1D17", style:"long", top:"#E39B12"}},
+          {name:"Dr Callum Reid", photo:"photos/callum-reid.jpg", bio:"I'm Callum. I focus on restoring teeth with fillings, crowns and bridges, and I love the moment someone sees their smile looking like theirs again.", focus:["Crowns and bridges", "Fillings"], role:"Dentist", quals:"BDS", love:"I love restoring a smile someone has been hiding for years.", locs:[0], look:{skin:"#F4D2B6", hair:"#C98B3A", style:"short", top:"#1E8C72"}},
+          {name:"Grace Allen", photo:"photos/grace-allen.jpg", bio:"Hi, I'm Grace, an oral health therapist. I do cleans, check-ups and lots of encouragement. Small daily habits make a big difference, and I'm here to cheer you on.", focus:["Cleans", "Kids", "Prevention"], role:"Oral health therapist", quals:"BOH", love:"Small habits, big results. I love cheering people on.", locs:[0], look:{skin:"#7A4E33", hair:"#1E1A18", style:"curly", top:"#D9577A"}}]},
+ {id:"harbourlight", type:"dentist", name:"Harbourlight Dental", initials:"HD", color:"#14A0B5", tint:"#D7F2F6",
+  specialty:"General dentistry", referral:false, accepting:true,
+  services:["Check-ups and cleans","Whitening","Clear aligners","Emergency appointments"],
+  welcome:"Longer appointments, no rushing",
+  about:["We're a small, quiet practice. We'd rather spend an extra ten minutes talking with you than hurry you out the door."],
+  locations:[{name:"Balmain", address:"301 Darling Street, Balmain NSW 2041", phone:"02 5550 8810", email:"hi@harbourlight.example", hours:H("9:00 am to 5:00 pm","9:00 am to 5:00 pm","9:00 am to 5:00 pm","9:00 am to 5:00 pm","9:00 am to 5:00 pm","Closed","Closed")}],
+  people:[{name:"Dr Isabel Costa", bio:"I'm Isabel. My appointments run longer than most because I'd rather listen properly and give you honest advice than rush. Calm care for every age.", focus:["Check-ups", "Whitening", "Clear aligners"], role:"Dentist", quals:"BDS, MSc", love:"Honest advice and a calm chair. That's what I'd want, so that's what I give.", locs:[0], look:{skin:"#E2B48C", hair:"#4A2A1A", style:"bob", top:"#14A0B5"}}]},
+ {id:"bluegum-ortho", type:"specialist", name:"Bluegum Orthodontics", initials:"BO", color:"#7A5BD0", tint:"#ECE6FB",
+  specialty:"Orthodontics", referral:false, accepting:true,
+  services:["Braces","Clear aligners","Early orthodontic checks","Retainers"],
+  welcome:"Smiles for kids, teens and grown-ups",
+  about:["We build a plan that fits your life and your budget, and we'll explain it all before you commit to anything."],
+  locations:[{name:"South Brisbane", address:"88 Grey Street, South Brisbane QLD 4101", phone:"07 5550 4471", email:"hello@bluegum.example", hours:H("8:00 am to 5:00 pm","10:00 am to 7:00 pm","8:00 am to 5:00 pm","10:00 am to 7:00 pm","8:00 am to 3:00 pm","8:00 am to 12:00 pm","Closed")}],
+  people:[{name:"Dr Hannah Okafor", bio:"Hi, I'm Hannah! I help kids, teens and adults straighten their smiles with braces or clear aligners, and I'll always explain your options and costs before you decide anything.", focus:["Braces", "Clear aligners", "Early checks"], role:"Orthodontist", quals:"BDSc, DClinDent (Ortho)", love:"Braces-off day is pure joy, every single time.", locs:[0], look:{skin:"#6E4630", hair:"#1E1A18", style:"curly", top:"#7A5BD0"}}]},
+ {id:"ironbark-endo", type:"specialist", name:"Ironbark Endodontics", initials:"IE", color:"#C0603A", tint:"#FBE3D8",
+  specialty:"Endodontics", referral:true, accepting:false,
+  services:["Root canal treatment","Retreatment","Dental trauma","Cracked teeth"],
+  welcome:"We save teeth, comfortably",
+  about:["Root canal treatment has an old reputation it no longer deserves, and we'd love the chance to change your mind.",
+         "We're not taking new patients this month, but referring dentists can still send urgent cases."],
+  locations:[{name:"Parramatta", address:"Suite 5, 120 Church Street, Parramatta NSW 2150", phone:"02 5550 6624", email:"team@ironbark.example", hours:H("8:00 am to 5:00 pm","8:00 am to 5:00 pm","8:00 am to 5:00 pm","8:00 am to 5:00 pm","8:00 am to 2:00 pm","Closed","Closed")}],
+  people:[{name:"Dr Tom Whitfield", bio:"I'm Tom. Root canal treatment today is far more comfortable than its reputation, and saving a natural tooth is almost always worth it. I've been doing it for twenty years.", focus:["Root canals", "Dental trauma", "Cracked teeth"], role:"Endodontist", quals:"BDSc, DClinDent (Endo)", love:"Saving a tooth someone else gave up on is my favourite puzzle.", locs:[0], look:{skin:"#F0C9A8", hair:"#9A9A9A", style:"short", top:"#C0603A"}}]}
+];
+
+/* ===== Illustrations (stand-ins for each practice's real banner photo and team photos) ===== */
+// A practice's banner until it uploads its own photo: the Bridge sunrise,
+// tinted with the practice's colour, with the logo's sweeping waves.
+function scene(p){
+  return `<svg viewBox="0 0 1600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Banner for ${esc(p.name)}">
+    <defs><linearGradient id="sky-${p.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCE2C2"/><stop offset="1" stop-color="${p.tint}"/></linearGradient>
+    <radialGradient id="sun-${p.id}" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFD27A"/><stop offset=".55" stop-color="#F6A84A"/><stop offset="1" stop-color="#F6A84A" stop-opacity="0"/></radialGradient></defs>
+    <rect width="1600" height="400" fill="url(#sky-${p.id})"/>
+    <circle cx="1180" cy="190" r="220" fill="url(#sun-${p.id})" opacity=".55"/>
+    <circle cx="1180" cy="190" r="78" fill="#F7B54E"/>
+    <path d="M0 300 C 380 200, 820 230, 1600 280 V400 H0Z" fill="${p.color}" opacity=".28"/>
+    <path d="M0 340 C 420 260, 900 300, 1600 320 V400 H0Z" fill="${p.color}" opacity=".5"/>
+    <path d="M0 375 C 500 320, 1000 345, 1600 360 V400 H0Z" fill="#FBF8F3"/>
+  </svg>`;
+}
+// A practitioner's photo, or a plain card with their initials until they add one.
+// Real photos go in each person's `photo` field (a path under photos/).
+function portrait(x, bg, tall){
+  if(x.photo) return `<img src="${esc(x.photo)}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">`;
+  const ini=x.name.replace(/^Dr\s+/,"").split(/\s+/).map(w=>w[0]).slice(0,2).join("");
+  const w=tall?160:200, h=200;
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="${w}" height="${h}" fill="#EFEAE2"/>
+    <text x="${w/2}" y="${h/2}" dy=".35em" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-weight="500" font-size="${tall?44:56}" fill="#B9AE9C">${esc(ini)}</text></svg>`;
+}
+
+/* ===== Availability (simulates the live feed from each practice's Bridge schedule) ===== */
+function seeded(str){let h=2166136261; for(const c of str){h^=c.charCodeAt(0); h=Math.imul(h,16777619);} return ()=>{h^=h<<13; h^=h>>>17; h^=h<<5; return ((h>>>0)%1000)/1000;};}
+function nextDays(n){const out=[],d=new Date(); d.setHours(0,0,0,0); while(out.length<n){d.setDate(d.getDate()+1); out.push(new Date(d));} return out;}
+const dayKey=d=>WEEK[(d.getDay()+6)%7];
+function slotsFor(p,l,i,date){
+  if(!p.accepting) return [];
+  const hrs=p.locations[l].hours[dayKey(date)];
+  if(!hrs||hrs==="Closed"||!p.people[i].locs.includes(l)) return [];
+  const r=seeded(p.id+l+i+date.toDateString());
+  return ["8:30 am","9:15 am","10:00 am","10:45 am","11:30 am","1:15 pm","2:00 pm","2:45 pm","3:30 pm"].filter(()=>r()>.6);
+}
+function firstAvailable(p){ for(const d of nextDays(14)) for(let l=0;l<p.locations.length;l++) for(let i=0;i<p.people.length;i++){const s=slotsFor(p,l,i,d); if(s.length) return {d,t:s[0]};} return null; }
+const fmtDay=d=>{const t=new Date(); t.setDate(t.getDate()+1); t.setHours(0,0,0,0); return d.getTime()===t.getTime()?"Tomorrow":d.toLocaleDateString("en-AU",{weekday:"short",day:"numeric",month:"short"});};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const app=document.getElementById("app"), live=document.getElementById("live");
+
+/* ===== Search ===== */
+const st={tab:"all", what:"", where:"", open:false};
+function renderSearch(){
+  const qs=new URLSearchParams(location.hash.split("?")[1]||""); if(qs.get("t")) st.tab=qs.get("t");
+  app.innerHTML=`
+  <section class="hero"><div class="sunball" aria-hidden="true"></div><div class="wrap">
+    <h1>Find a dentist or specialist who feels right for you</h1>
+    <p class="sub">Meet the people who'll look after you, see real appointment times and book in a few taps.</p>
+    <form class="finder" id="finder" role="search">
+      <div class="toggle" role="group" aria-label="Type of practice">
+        ${[["all","Everyone"],["dentist","Dentists"],["specialist","Specialists"]].map(([k,l])=>`<button type="button" data-t="${k}" aria-pressed="${st.tab===k}">${l}</button>`).join("")}
+      </div>
+      <div class="fields">
+        <div><label for="what">What do you need?</label><input id="what" placeholder="e.g. wisdom teeth, check-up, Dr Hart" value="${esc(st.what)}" autocomplete="off"></div>
+        <div><label for="where">Where?</label><input id="where" placeholder="Suburb or postcode" value="${esc(st.where)}" autocomplete="off"></div>
+        <button class="btn" type="submit">Search</button>
+      </div>
+    </form>
+    <div class="chips" aria-label="Popular searches">${["Check-up","Wisdom teeth","Implants","Braces","Root canal","Kids"].map(c=>`<button type="button" data-chip="${c}">${c}</button>`).join("")}</div>
+  </div></section>
+  <section class="results"><div class="wrap">
+    <div class="res-head"><h2 id="count"></h2><label><input type="checkbox" id="open" ${st.open?"checked":""}> Available this week</label></div>
+    <ul class="cards" id="cards"></ul>
+  </div></section>`;
+  app.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{st.tab=b.dataset.t; app.querySelectorAll("[data-t]").forEach(x=>x.setAttribute("aria-pressed",x===b)); draw();});
+  const w=document.getElementById("what"), wh=document.getElementById("where");
+  w.oninput=()=>{st.what=w.value; draw();}; wh.oninput=()=>{st.where=wh.value; draw();};
+  document.getElementById("finder").onsubmit=e=>{e.preventDefault(); draw(); document.getElementById("count").scrollIntoView({behavior:"smooth"});};
+  app.querySelectorAll("[data-chip]").forEach(b=>b.onclick=()=>{const map={"Check-up":"check-ups","Kids":"children","Root canal":"root canal"}; st.what=map[b.dataset.chip]||b.dataset.chip; w.value=st.what; draw();});
+  document.getElementById("open").onchange=e=>{st.open=e.target.checked; draw();};
+  draw();
+}
+function matches(p){
+  if(st.tab!=="all"&&p.type!==st.tab) return false;
+  const what=st.what.trim().toLowerCase(), where=st.where.trim().toLowerCase();
+  const hay=[p.name,p.specialty,...p.services,...p.people.map(x=>x.name+" "+x.role)].join(" ").toLowerCase();
+  const place=p.locations.map(l=>l.name+" "+l.address).join(" ").toLowerCase();
+  if(what && !what.split(/\s+/).every(t=>hay.includes(t.replace(/s$/,"")))) return false;
+  if(where && !where.split(/\s+/).every(t=>place.includes(t))) return false;
+  if(st.open){const fa=firstAvailable(p), lim=new Date(); lim.setDate(lim.getDate()+7); if(!(fa&&fa.d<=lim)) return false;}
+  return true;
+}
+const ICON={
+  pin:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.6" fill="currentColor"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3h3l1.6 4.4-2.2 1.4a12 12 0 0 0 6.2 6.2l1.4-2.2L21 14.4v3A2.6 2.6 0 0 1 18.4 20 15.4 15.4 0 0 1 4 5.6 2.6 2.6 0 0 1 6.6 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  mail:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+  map:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z M9 4v14 M15 6v14" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2"/></svg>'
+};
+function personFirst(p,i){
+  for(const d of nextDays(14)) for(let l=0;l<p.locations.length;l++){const s=slotsFor(p,l,i,d); if(s.length) return {d,t:s[0]};}
+  return null;
+}
+function draw(){
+  const items=[];
+  PRACTICES.filter(matches).forEach(p=>p.people.forEach((x,i)=>items.push({p,x,i})));
+  const what=st.what.trim().toLowerCase();
+  // when searching for a person by name, show just that person
+  const named=items.filter(o=>what && o.x.name.toLowerCase().includes(what.replace(/^dr\s*/,"")));
+  const rows=named.length?named:items;
+  document.getElementById("count").textContent=rows.length?`${rows.length} ${rows.length===1?"practitioner":"practitioners"} ready to welcome you`:"No practitioners found";
+  live.textContent=`${rows.length} practitioners found`;
+  const ul=document.getElementById("cards"); ul.className="plist";
+  if(!rows.length){ul.innerHTML=`<li class="empty"><h3>Nothing matches that search yet</h3><p>Try a nearby suburb, a treatment like "implants", or switch to Everyone.</p></li>`; return;}
+  ul.innerHTML=rows.map(({p,x,i},n)=>{
+    const fa=personFirst(p,i), loc=p.locations[x.locs[0]];
+    const maps="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(loc.address);
+    return `<li class="pcard">
+      <div class="frame">
+        <a class="photo" href="#/p/${p.id}" tabindex="-1" aria-hidden="true">${portrait(x,"#EFEAE2")}</a>
+        ${p.referral?'<span class="flag">Referral needed</span>':""}
+        <a class="plogo" href="#/p/${p.id}" style="background:${p.color}" tabindex="-1" aria-hidden="true">${p.initials}</a>
+      </div>
+      <div class="info">
+        <div class="kicker">${esc(x.role)}</div>
+        <h3 class="pname">${esc(x.name)}</h3>
+        <div class="at"><a href="#/p/${p.id}">${esc(p.name)}</a><span class="pin">${ICON.pin}${x.locs.map(k=>esc(p.locations[k].name)).join(", ")}</span></div>
+        <p class="bio" id="bio${n}">${esc(x.bio)}</p>
+        <button class="more" type="button" aria-expanded="false" aria-controls="bio${n}">Read more <span aria-hidden="true">&#8595;</span></button>
+        <div class="focus">${x.focus.map(f=>`<span>${esc(f)}</span>`).join("")}</div>
+      </div>
+      <div class="foot">
+        ${fa?`<div class="next"><span class="dot"></span>Next available: ${fmtDay(fa.d)}, ${fa.t}</div>`:`<div class="next off"><span class="dot"></span>Not taking new patients right now</div>`}
+        <div class="acts2">
+          ${fa?`<a class="btn" href="#/p/${p.id}/book/${i}">${ICON.cal}Book a visit</a>`:""}
+          <a class="link" href="#/p/${p.id}">View practice &rarr;</a>
+          <div class="icons">
+            <a href="tel:${loc.phone.replace(/\s/g,"")}" aria-label="Call ${esc(p.name)}">${ICON.phone}</a>
+            <a href="mailto:${esc(loc.email)}" aria-label="Email ${esc(p.name)}">${ICON.mail}</a>
+            <a href="${maps}" target="_blank" rel="noopener" aria-label="Directions to ${esc(p.name)}">${ICON.map}</a>
+          </div>
+        </div>
+      </div></li>`;}).join("");
+  ul.querySelectorAll(".more").forEach(b=>b.onclick=()=>{const bio=document.getElementById(b.getAttribute("aria-controls")); const open=b.getAttribute("aria-expanded")!=="true"; bio.classList.toggle("open",open); b.setAttribute("aria-expanded",open); b.firstChild.textContent=open?"Read less ":"Read more ";});
+}
+
+/* ===== Practice page ===== */
+const bk={loc:0,person:0,day:null};
+function renderPractice(p, jump, who){
+  bk.person=(who!==null&&who!==undefined&&p.people[who])?who:0; bk.loc=p.people[bk.person].locs[0]; bk.day=null;
+  const today=dayKey(new Date()), map=a=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(a);
+  app.innerHTML=`
+  <div class="p-hero"><div class="scene">${scene(p)}</div></div>
+  <div class="wrap">
+    <div class="p-head"><div class="logo" style="background:${p.color}" aria-hidden="true">${p.initials}</div>
+      <div class="t"><h1>${esc(p.name)}</h1>
+        <div class="pills"><span class="pill">${esc(p.specialty)}</span>${p.accepting?'<span class="pill ok">Welcoming new patients</span>':'<span class="pill warm">Not taking new patients right now</span>'}${p.referral?'<span class="pill warm">Referral needed</span>':''}${p.locations.map(l=>`<span class="pill">${esc(l.name)}</span>`).join("")}</div></div></div>
+    <div class="layout">
+      <div>
+        <div class="welcome"><h2>${esc(p.welcome)}</h2>${p.about.map(t=>`<p>${esc(t)}</p>`).join("")}
+          <div class="services">${p.services.map(s=>`<span>${esc(s)}</span>`).join("")}</div></div>
+        <div class="blk"><h2>Meet the team</h2><div class="teamgrid">
+          ${p.people.map(x=>`<article class="person"><div class="portrait">${portrait(x,p.tint)}</div><div class="pb">
+            <h3>${esc(x.name)}</h3><div class="role">${esc(x.role)} &nbsp;|&nbsp; ${esc(x.quals)}</div><blockquote>${esc(x.love)}</blockquote></div></article>`).join("")}
+        </div></div>
+        <div class="blk"><h2>${p.locations.length>1?"Where to find us":"Where to find us"}</h2><div class="locs">
+          ${p.locations.map(l=>`<div class="loc"><h3>${esc(l.name)}</h3><div class="addr">${esc(l.address)}</div>
+            <div class="hours">${WEEK.map(d=>`<span class="${d===today?"today":""}">${d===today?"Today":d}</span><span class="${d===today?"today":""}">${l.hours[d]}</span>`).join("")}</div>
+            <div class="contact"><a class="btn soft" href="tel:${l.phone.replace(/\s/g,"")}">Call ${esc(l.phone)}</a><a class="btn soft" href="mailto:${esc(l.email)}">Email us</a><a class="btn soft" href="${map(l.address)}" target="_blank" rel="noopener">Directions</a></div></div>`).join("")}
+        </div></div>
+        <div class="blk refer"><h2>Referring a patient?</h2><p>Dentists and doctors can send referrals, imaging and notes through the secure Bridge referral portal, straight into the patient's file.</p><button class="btn soft" type="button" id="refbtn">Send a referral</button></div>
+      </div>
+      <aside id="book"><div class="book">
+        <h2>Book your first visit</h2>
+        <div class="live"><span class="dot" aria-hidden="true"></span>Live times from the practice's schedule</div>
+        ${p.accepting?`
+          ${p.locations.length>1?`<label for="bl">Location</label><select id="bl">${p.locations.map((l,i)=>`<option value="${i}" ${i===bk.loc?"selected":""}>${esc(l.name)}</option>`).join("")}</select>`:""}
+          <label id="wl">Who would you like to see?</label><div class="who" id="who" role="group" aria-labelledby="wl"></div>
+          <label id="dl">Pick a day</label><div class="days" id="days" role="group" aria-labelledby="dl"></div>
+          <div class="slots" id="slots" aria-live="polite"></div>
+          ${p.referral?`<p class="note">This practice needs a referral from your dentist or doctor. You can book now and add it in the next step, or bring it on the day.</p>`:""}`
+        :`<p>${esc(p.name)} isn't taking new patients right now. Call them to join their waitlist, or <a href="#/">find another practice</a>.</p>`}
+      </div></aside>
+    </div>
+  </div>`;
+  document.getElementById("refbtn").onclick=()=>openDlg(`<div class="dlg-head"><h2 id="dlg-title">Send a referral</h2><button class="x" type="button" aria-label="Close" onclick="dlg.close()">&times;</button></div><p style="margin:1rem 0">In the real product, referring dentists and doctors sign in to the Bridge referral portal and send the referral, imaging and notes securely. ${esc(p.name)} receives them with the patient file already created.</p><button class="btn" type="button" onclick="dlg.close()">Close</button>`);
+  if(p.accepting){ const bl=document.getElementById("bl"); if(bl) bl.onchange=()=>{bk.loc=+bl.value; bk.day=null; people(p);}; people(p); }
+  if(jump) setTimeout(()=>document.getElementById("book").scrollIntoView({behavior:"smooth",block:"start"}),50);
+}
+function people(p){
+  const opts=p.people.map((x,i)=>({x,i})).filter(o=>o.x.locs.includes(bk.loc));
+  if(!opts.some(o=>o.i===bk.person)) bk.person=opts[0].i;
+  const w=document.getElementById("who");
+  w.innerHTML=opts.map(o=>`<button type="button" data-i="${o.i}" aria-pressed="${o.i===bk.person}"><span class="face">${portrait(o.x,p.tint)}</span>${esc(o.x.name.replace(/^Dr /,"Dr "))}</button>`).join("");
+  w.querySelectorAll("button").forEach(b=>b.onclick=()=>{bk.person=+b.dataset.i; bk.day=null; people(p);});
+  days(p);
+}
+function days(p){
+  const ds=nextDays(14), av=ds.map(d=>slotsFor(p,bk.loc,bk.person,d)), w=document.getElementById("days");
+  if(bk.day===null) bk.day=av.findIndex(a=>a.length);
+  w.innerHTML=ds.map((d,i)=>`<button type="button" data-i="${i}" ${av[i].length?"":"disabled"} aria-pressed="${i===bk.day}">${d.toLocaleDateString("en-AU",{weekday:"short"})}<small>${d.getDate()} ${d.toLocaleDateString("en-AU",{month:"short"})}</small></button>`).join("");
+  w.querySelectorAll("button").forEach(b=>b.onclick=()=>{bk.day=+b.dataset.i; days(p);});
+  const s=document.getElementById("slots");
+  if(bk.day<0){s.innerHTML=`<p style="grid-column:1/-1;color:var(--ink-soft)">No times in the next two weeks. Try someone else on the team.</p>`; return;}
+  s.innerHTML=av[bk.day].map(t=>`<button type="button" data-t="${t}">${t}</button>`).join("");
+  s.querySelectorAll("button").forEach(b=>b.onclick=()=>booking(p,ds[bk.day],b.dataset.t));
+}
+
+/* ===== Booking ===== */
+const dlg=document.getElementById("dlg");
+function openDlg(h){document.getElementById("dlg-body").innerHTML=h; dlg.showModal();}
+function booking(p,date,time){
+  const loc=p.locations[bk.loc], x=p.people[bk.person];
+  const when=`${date.toLocaleDateString("en-AU",{weekday:"long",day:"numeric",month:"long"})} at ${time}`;
+  openDlg(`<div class="dlg-head"><h2 id="dlg-title">Almost there</h2><button class="x" type="button" aria-label="Close" onclick="dlg.close()">&times;</button></div>
+    <div class="chosen"><span class="face">${portrait(x,p.tint)}</span><div><strong>${esc(when)}</strong><br>${esc(x.name)}, ${esc(p.name)} (${esc(loc.name)})</div></div>
+    <form class="form" id="bf" novalidate>
+      <div class="row"><div class="f"><label for="fn">First name</label><input id="fn" autocomplete="given-name"></div><div class="f"><label for="ln">Last name</label><input id="ln" autocomplete="family-name"></div></div>
+      <div class="row"><div class="f"><label for="dob">Date of birth</label><input id="dob" type="date"></div><div class="f"><label for="mob">Mobile</label><input id="mob" type="tel" autocomplete="tel"></div></div>
+      <div class="f"><label for="em">Email</label><input id="em" type="email" autocomplete="email"></div>
+      <div class="f"><label for="why">What's the visit for?</label><select id="why"><option>${p.type==="specialist"?"Consultation":"Check-up and clean"}</option>${p.services.map(s=>`<option>${esc(s)}</option>`).join("")}<option>Something else</option></select></div>
+      ${p.referral?`<div class="f"><label for="ref">Referral letter <span class="hint">Optional now. You can also bring it on the day.</span></label><input id="ref" type="file" accept=".pdf,image/*"></div>`:""}
+      <div class="f"><label for="notes">Anything we should know? <span class="hint">Optional, e.g. if you feel nervous</span></label><textarea id="notes"></textarea></div>
+      <label class="chk"><input type="checkbox" id="ok"> I agree to ${esc(p.name)} using these details to manage my appointment and care.</label>
+      <p class="err" id="ferr" role="alert"></p>
+      <button class="btn" type="submit" style="width:100%">Book appointment</button>
+    </form>`);
+  document.getElementById("bf").onsubmit=e=>{
+    e.preventDefault(); const er=document.getElementById("ferr");
+    const need=["fn","ln","dob","mob","em"].find(id=>!document.getElementById(id).value.trim());
+    if(need){er.textContent="Fill in your name, date of birth, mobile and email to book."; document.getElementById(need).focus(); return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("em").value.trim())){er.textContent="Enter a valid email address."; document.getElementById("em").focus(); return;}
+    if(!document.getElementById("ok").checked){er.textContent="Tick the box to agree before booking."; document.getElementById("ok").focus(); return;}
+    const first=document.getElementById("fn").value.trim();
+    openDlg(`<div class="done"><div class="big" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#1E8C72" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h2 id="dlg-title">Appointment booked</h2>
+      <p style="margin:.6rem 0">See you soon, ${esc(first)}! You're booked with ${esc(x.name)} on ${esc(when)} at ${esc(loc.address)}.</p>
+      <p style="color:var(--ink-soft);font-size:.95rem">In the real product, this lands in the practice's Bridge schedule straight away and you'd get a confirmation by email and SMS. This demo didn't send or save anything.</p>
+      <div class="contact"><a class="btn soft" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}" target="_blank" rel="noopener">Directions</a><button class="btn" type="button" onclick="dlg.close()">Done</button></div></div>`);
+    live.textContent="Appointment booked";
+  };
+}
+
+/* ===== Router ===== */
+function route(){
+  const m=location.hash.match(/^#\/p\/([^/?]+)(\/book)?(?:\/(\d+))?/);
+  const p=m&&PRACTICES.find(x=>x.id===m[1]);
+  if(p){document.title=`${p.name} | Bridgeworld demo`; renderPractice(p,!!m[2], m[3]!==undefined?+m[3]:null);}
+  else {document.title="Bridgeworld directory demo | Find a dentist or specialist near you"; renderSearch();}
+  if(!(m&&m[2])) window.scrollTo(0,0);
+  app.focus({preventScroll:true});
+}
+addEventListener("hashchange",route); route();
+</script>
+</body>
+</html>

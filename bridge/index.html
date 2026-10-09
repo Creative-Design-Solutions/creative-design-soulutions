@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bridge | Practice software for oral and maxillofacial surgery and specialist dental practices</title>
+<meta name="description" content="Bridge is practice management software being built for oral and maxillofacial surgery and specialist dental practices. One system for referrals, scheduling, patient files, and billing MBS and ADA items side by side, plus a free Bridgeworld directory page where patients can book. In development, looking to launch in Australia.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bridge | Can we create practice software together that supports everyone&#39;s journey in the care process?">
+<meta property="og:description" content="Referrals, scheduling, patient files and MBS + ADA billing in one system, built for oral and maxillofacial surgery and specialist dental practices.">
+<meta name="theme-color" content="#15303F">
+<link rel="icon" type="image/png" href="brand/icon-192.png">
+<link rel="apple-touch-icon" href="brand/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Bridge",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Dental and specialist practice management software",
+      "operatingSystem": "Web browser",
+      "description": "Practice management software being built for oral and maxillofacial surgery and specialist dental practices: referral intake that creates patient files, scheduling linked to patient records, post-procedure quotes and invoices, flexible letter templates, billing of MBS and ADA items side by side, and Xero and MYOB integration.",
+      "audience": {"@type": "BusinessAudience", "audienceType": "Oral and maxillofacial surgeons, specialist dentists, practice managers and billing staff"},
+      "areaServed": "Australia",
+      "publisher": {"@type": "Organization", "name": "Creative Design Soulutions"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "What is Bridge?", "acceptedAnswer": {"@type": "Answer", "text": "Bridge is practice management software being built for oral and maxillofacial surgery and specialist dental practices. It brings referrals, patient files, scheduling, quotes, invoices and billing into one system, so the people around each patient stay connected."}},
+        {"@type": "Question", "name": "Can Bridge bill MBS and ADA items in the same practice?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, that is the core of what Bridge is being built to do. Oral and maxillofacial surgery practices often bill Medicare (MBS) items and dental (ADA) items for the same patient, and Bridge keeps both side by side instead of splitting them across systems or spreadsheets."}},
+        {"@type": "Question", "name": "Who is Bridge for?", "acceptedAnswer": {"@type": "Answer", "text": "Oral and maxillofacial surgeons, specialist dental practices, and the practice managers and billing staff who run them. It is designed for practices that receive referrals from dentists and doctors and bill across medical and dental item numbers."}},
+        {"@type": "Question", "name": "How do referrals work in Bridge?", "acceptedAnswer": {"@type": "Answer", "text": "When a referral and its attachments arrive through the practice's referral portal, Bridge is designed to create the patient file and file the documents automatically, so the front desk is not retyping details or uploading files by hand."}},
+        {"@type": "Question", "name": "Does Bridge work with Xero or MYOB?", "acceptedAnswer": {"@type": "Answer", "text": "Xero and MYOB integration is part of the plan, so invoices and payments flow into your accounts without double entry. Each practice uses its own subscription to its preferred accounting software, which isn't included in the Bridge subscription itself."}},
+        {"@type": "Question", "name": "How will Bridge protect patient information?", "acceptedAnswer": {"@type": "Answer", "text": "Bridge is being designed around Australia's Privacy Act and the Australian Privacy Principles, with health-grade hosting. Full security details will be published before launch."}},
+        {"@type": "Question", "name": "When will Bridge be available?", "acceptedAnswer": {"@type": "Answer", "text": "Bridge is in development and will launch in Australia. Practices on the waitlist and in the Founding Circle will be the first ones signed up for its launch. Other countries may follow."}},
+        {"@type": "Question", "name": "What is the Bridgeworld directory?", "acceptedAnswer": {"@type": "Answer", "text": "A free directory included for every practice that uses Bridge, with separate searches for dentists and specialists. Each practice gets its own page with its logo, description, locations, practitioners, hours and contact details, and patients can book new patient appointments that go straight into the practice's Bridge schedule. There are no ads, paid placements or star ratings."}},
+        {"@type": "Question", "name": "What is the Bridge Founding Circle?", "acceptedAnswer": {"@type": "Answer", "text": "A small group of surgeons, practice managers and billing staff who help shape Bridge before launch. Members share how their practice works, test early versions, and get access before anyone else."}}
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+:root{
+  /* The sunrise in the Bridge logo sets the palette: dawn cream, warm sand, teal water, gold sun. */
+  --bg:#FBF8F3; --bg-alt:#F5EDE1; --surface:#FFFFFF;
+  --ink:#15303F; --ink-soft:#4A5D6B;
+  --euc:#1E7F6A; --sun:#E3A33A; --gold:#B8862B; --line:#E4D9C8;
+  --focus:#E3A33A;
+  --dawn:radial-gradient(ellipse 60% 420px at 88% 0, rgba(255,186,84,.42), transparent 70%), linear-gradient(180deg,#FCE7CF 0,#FBF1E4 480px,#FBF8F3 920px);
+  --serif:"Newsreader", Georgia, "Times New Roman", serif;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1F28; --bg-alt:#152A35; --surface:#1A323F;
+    --ink:#E8F0EC; --ink-soft:#A9BDB5;
+    --euc:#7CC0AE; --sun:#F0BE5C; --gold:#E0B565; --line:#2C4654; --dawn:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1F28; --bg-alt:#152A35; --surface:#1A323F;
+  --ink:#E8F0EC; --ink-soft:#A9BDB5;
+  --euc:#7CC0AE; --sun:#F0BE5C; --gold:#E0B565; --line:#2C4654; --dawn:none;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{margin:0; background:var(--dawn) no-repeat, var(--bg); color:var(--ink); font-family:var(--body); font-size:1.0625rem; line-height:1.6; -webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+a{color:var(--euc)}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px; border-radius:4px}
+.wrap{width:min(1120px, 100% - 2.5rem); margin-inline:auto}
+.measure{max-width:38rem}
+
+/* Header */
+.top{display:flex; align-items:center; justify-content:space-between; padding:1.25rem 0}
+.brand{display:flex; align-items:center; gap:.6rem; font-family:var(--display); font-weight:700; font-size:1.35rem; color:var(--ink); text-decoration:none; letter-spacing:-.01em}
+.brand img{display:block; height:104px; width:auto}
+@media (max-width:600px){ .brand img{height:80px} }
+.top-link{font-weight:700; color:var(--ink); text-decoration:none; border-bottom:2px solid var(--sun); padding-bottom:2px}
+
+/* Hero */
+.hero{padding:clamp(2.5rem,7vw,5.5rem) 0 0}
+.status{display:inline-block; font:700 .78rem/1.4 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin:0 0 1.25rem}
+h1{font-family:var(--serif); font-weight:500; font-size:clamp(2.3rem, 5.6vw, 4.1rem); line-height:1.05; letter-spacing:-.022em; margin:0; max-width:22ch}
+.lede{font-size:clamp(1.1rem,2vw,1.3rem); color:var(--ink-soft); margin:1.5rem 0 2rem; max-width:36rem}
+.btn{display:inline-block; font:700 1.05rem/1 var(--body); background:var(--euc); color:#fff; border:0; border-radius:999px; padding:1rem 1.4rem; text-decoration:none; cursor:pointer}
+.btn:hover{background:var(--ink)}
+
+/* The bridge */
+.span{margin-top:clamp(2.5rem,6vw,4rem)}
+.span img{display:block; width:100%; height:auto; border-radius:18px}
+
+/* Sections */
+section{padding:clamp(3.5rem,8vw,6rem) 0}
+.alt{background:var(--bg-alt)}
+.world{background:linear-gradient(100deg,#FFF4DF 0%,#FDEFE6 45%,#E7F4EF 100%)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .world{background:var(--bg-alt)} }
+:root[data-theme="dark"] .world{background:var(--bg-alt)}
+h2{font-family:var(--serif); font-weight:500; font-size:clamp(1.9rem,3.9vw,2.9rem); line-height:1.08; letter-spacing:-.015em; margin:0 0 1rem; max-width:22ch}
+h3{font-family:var(--display); font-weight:700; font-size:1.2rem; margin:0 0 .35rem; letter-spacing:-.01em}
+p{margin:0 0 1rem}
+
+.connects{margin-top:2.5rem; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 3rem; border-top:2px solid var(--ink)}
+.connects div{padding:1.5rem 0; border-bottom:1px solid var(--line)}
+.connects p{color:var(--ink-soft); margin:0}
+
+.story{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:3rem; align-items:start}
+.story blockquote{margin:0; font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(1.3rem,2.6vw,1.75rem); line-height:1.3; letter-spacing:-.01em; border-left:4px solid var(--sun); padding-left:1.25rem}
+.walls{list-style:none; padding:0; margin:1.25rem 0 0}
+.walls li{padding:.6rem 0 .6rem 1.6rem; position:relative; border-bottom:1px solid var(--line)}
+.walls li::before{content:""; position:absolute; left:0; top:1.2rem; width:.85rem; height:2px; background:var(--euc)}
+
+.steps{counter-reset:s; list-style:none; padding:0; margin:2rem 0 0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1.5rem; position:relative}
+.steps li{counter-increment:s; position:relative; padding-top:3rem}
+.steps li::before{content:counter(s); position:absolute; top:0; left:0; width:2.2rem; height:2.2rem; border-radius:50%; background:var(--sun); color:#15303F; font:700 1rem/2.2rem var(--display); text-align:center; z-index:1}
+.steps::before{content:""; position:absolute; top:1.1rem; left:1.1rem; right:1.1rem; height:2px; background:var(--euc); opacity:.5}
+.steps p{color:var(--ink-soft); margin:0}
+
+/* Form */
+.join{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:3rem; align-items:start}
+form{background:var(--surface); border:1px solid var(--line); border-radius:24px; box-shadow:0 12px 30px -18px rgba(21,48,63,.25); padding:clamp(1.25rem,3vw,2rem)}
+.row{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+.field{margin-bottom:1rem}
+label{display:block; font-weight:700; font-size:.95rem; margin-bottom:.35rem}
+.hint{display:block; font-weight:400; color:var(--ink-soft); font-size:.88rem}
+input[type=text],input[type=email],select,textarea{width:100%; font:inherit; font-size:1rem; color:var(--ink); background:var(--bg); border:1.5px solid var(--line); border-radius:8px; padding:.7rem .8rem}
+textarea{min-height:6rem; resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none; border-color:var(--euc); box-shadow:0 0 0 3px color-mix(in srgb, var(--euc) 25%, transparent)}
+.check{display:flex; gap:.7rem; align-items:flex-start; margin:.25rem 0 1.25rem; font-weight:400}
+.check input{width:1.2rem; height:1.2rem; margin-top:.2rem; accent-color:var(--euc); flex:none}
+.hp{position:absolute; left:-9999px}
+.msg{margin:1rem 0 0; font-weight:700; min-height:1.5em}
+.msg.err{color:#B3402A}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .msg.err{color:#F08C74} }
+.done{display:none; text-align:left}
+.done h3{font-size:1.5rem}
+form.sent .fields{display:none}
+form.sent .done{display:block}
+.small{font-size:.88rem; color:var(--ink-soft)}
+
+/* FAQ */
+.faq{margin-top:2rem; border-top:2px solid var(--ink); max-width:48rem}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer; list-style:none; padding:1.15rem 2.5rem 1.15rem 0; position:relative; font-family:var(--display); font-weight:700; font-size:1.15rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+"; position:absolute; right:.25rem; top:50%; transform:translateY(-50%); font-size:1.5rem; color:var(--euc); transition:transform .2s}
+details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+details p{color:var(--ink-soft); padding-bottom:1.15rem; margin:0; max-width:40rem}
+
+.world-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:3rem; align-items:start}
+.world-grid p{color:var(--ink-soft); max-width:34rem}
+.world-grid .btn{margin-top:.5rem}
+.world-list{list-style:none; margin:0; padding:0; border-top:2px solid var(--ink)}
+.world-list li{padding:1.1rem 0; border-bottom:1px solid var(--line)}
+.world-list p{margin:0}
+@media (max-width: 820px){ .world-grid{grid-template-columns:1fr} }
+footer{padding:2.5rem 0 3rem; border-top:1px solid var(--line); color:var(--ink-soft); font-size:.92rem}
+footer p{margin:.25rem 0}
+
+@media (max-width: 820px){
+  .connects,.story,.join{grid-template-columns:1fr}
+  .connects{gap:0}
+  .steps{grid-template-columns:1fr 1fr; gap:2rem 1.5rem}
+  .steps::before{display:none}
+}
+@media (max-width: 520px){
+  .row{grid-template-columns:1fr; gap:0}
+  .steps{grid-template-columns:1fr}
+  .top-link{font-size:.95rem}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="#" aria-label="Bridge home">
+    <img src="brand/bridge-logo.png" alt="Bridge" width="480" height="302">
+  </a>
+  <a class="top-link" href="#join">Join the waitlist</a>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <p class="status">In development, looking to launch in Australia.</p>
+    <h1>Can we create practice software together that supports everyone's journey in the care process?</h1>
+    <p class="lede">The vision with Bridge is to make it a co-creative journey together. Helping bring dentists, surgeons they refer to, practice teams and patients into a system built by them, with billing that handles MBS and ADA items side by side. Built for oral and maxillofacial surgery and specialist dental practices. Created through community and participation. Here's a glimpse at what this is leading us to.</p>
+    <a class="btn" href="#join">Join the waitlist</a>
+
+    <div class="span">
+      <img src="brand/bridge-hero.jpg" width="2172" height="724" alt="A stone bridge over a bay at sunrise linking four people: a referring dentist, a surgeon, the practice team and a patient">
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <h2>What people have shared with us</h2>
+      <p class="measure">Our intention is to build towards connection and service, and keeping important details focused and easy for everyone to see when it's needed.</p>
+      <div class="connects">
+        <div><h3>Referring dentists</h3><p>Sending a referral, then sending the attachments again. Could it be sent once and filed automatically?</p></div>
+        <div><h3>Surgeons</h3><p>Letters and hospital templates that don't fit how they work. Could templates bend to the surgeon instead?</p></div>
+        <div><h3>Practice team</h3><p>Retyping quotes and invoices after procedures. Could the schedule and the patient record share the work?</p></div>
+        <div><h3>Billing</h3><p>MBS and ADA items split across systems. Could they sit side by side, and flow into Xero or MYOB?</p></div>
+        <div><h3>Patients</h3><p>Filling in the same forms twice, and unclear quotes. Could the quote be clear before treatment?</p></div>
+        <div><h3>Your existing tools</h3><p>Systems that don't talk to each other. Could Bridge sit alongside the portals practices already use?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="world">
+    <div class="wrap world-grid">
+      <div>
+        <h2>An idea we're exploring: Bridgeworld, a directory patients can book from</h2>
+        <p>We'd love every practice using Bridge to have a free page, with no ads, no paid placement and no star ratings. Not only for patients, but a place where practitioners could discover one another too. Here's an early demo of how it might feel.</p>
+        <a class="btn" href="directory/">Explore the directory demo</a>
+      </div>
+      <ul class="world-list">
+        <li><h3>Your page, your words</h3><p>Your logo and banner, plus a description of what you specialise in and why you love doing it.</p></li>
+        <li><h3>Everything patients need</h3><p>All your locations, practitioners, hours, phone numbers, email and directions in one place.</p></li>
+        <li><h3>Live availability</h3><p>We intend for Bridge practice software to link directly into your directory as it's updated and bookings happen.</p></li>
+        <li><h3>New patient bookings</h3><p>A built-in new patient form, with referral upload for specialists, that lands directly in your diary.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap story">
+      <blockquote>Bridge started inside a working oral and maxillofacial surgery practice that kept hitting the same walls.</blockquote>
+      <div>
+        <p>Specialist practices sit between medicine and dentistry, and most software only fits one side. These were the walls we hit every week:</p>
+        <ul class="walls">
+          <li>Billing split across medical and dental item numbers</li>
+          <li>Letter and hospital templates that wouldn't bend</li>
+          <li>Referral details and attachments typed in by hand</li>
+          <li>Quotes and invoices after procedures built from scratch</li>
+        </ul>
+        <p style="margin-top:1.25rem">We are looking to build software we want, shaped by the surgeons, doctors, staff, and patients who use it and rely on it in their work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Help shape Bridge as part of the Founding Circle</h2>
+      <p class="measure">We're asking for interest and participants, including small groups of surgeons, dentists, practice managers, and billing staff to share input in helping build and design Bridge with us, with the intention it stays focused. But the main page with updates is open to everyone and feedback and questions will be welcomed.</p>
+      <ol class="steps">
+        <li><h3>Join the waitlist</h3><p>Tell us a little about your practice and tick the Founding Circle box.</p></li>
+        <li><h3>Have a short chat</h3><p>A 20-minute conversation about how your practice runs today and where it gets stuck.</p></li>
+        <li><h3>Test early versions</h3><p>Those who participate will be able to test versions and try Bridge with sample data and share experiences.</p></li>
+        <li><h3>Get early access</h3><p>Start using Bridge before it opens to everyone else.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="alt" id="join">
+    <div class="wrap join">
+      <div>
+        <h2>Join the waitlist</h2>
+        <p class="measure">It's free and there's no commitment. We'll only contact you about Bridge.</p>
+        <p class="small">Please don't include any patient details in this form.</p>
+      </div>
+      <form id="waitlist" novalidate>
+        <div class="fields">
+          <div class="row">
+            <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="role">Your role</label>
+              <select id="role" name="role" required>
+                <option value="">Choose one</option>
+                <option>Surgeon or specialist</option>
+                <option>Dentist</option>
+                <option>Practice manager</option>
+                <option>Billing or reception</option>
+                <option>Practice owner</option>
+                <option>Other</option>
+              </select></div>
+            <div class="field"><label for="practice_type">Practice type</label>
+              <select id="practice_type" name="practice_type" required>
+                <option value="">Choose one</option>
+                <option>Oral and maxillofacial surgery</option>
+                <option>Specialist dental (perio, endo, ortho, other)</option>
+                <option>General dental</option>
+                <option>Medical specialist</option>
+                <option>Other</option>
+              </select></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="country">Country</label>
+              <select id="country" name="country" required>
+                <option value="">Choose one</option>
+                <option>Australia</option>
+                <option>New Zealand</option>
+                <option>United States</option>
+                <option>United Kingdom</option>
+                <option>Other</option>
+              </select></div>
+          </div>
+          <div class="field"><label for="biggest_headache">What's most meaningful for you in your practice, work, and life currently? <span class="hint">Optional. One or two sentences is plenty.</span></label><textarea id="biggest_headache" name="biggest_headache" maxlength="1000"></textarea></div>
+          <label class="check"><input type="checkbox" id="founding_circle" name="founding_circle"> I'd like to join the Founding Circle and help shape Bridge.</label>
+          <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <button class="btn" type="submit">Join the waitlist</button>
+          <p class="msg" id="msg" role="status" aria-live="polite"></p>
+        </div>
+        <div class="done" tabindex="-1" id="done">
+          <h3>You're on the waitlist</h3>
+          <p>Thanks for helping us build Bridge. We'll be in touch soon, and if you ticked the Founding Circle box, we'll reach out to set up a short chat.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Questions practices ask</h2>
+      <div class="faq">
+        <details><summary>What is Bridge?</summary><p>Bridge is practice management software being built for oral and maxillofacial surgery and specialist dental practices. It brings referrals, patient files, scheduling, quotes, invoices and billing into one system, so the people around each patient stay connected.</p></details>
+        <details><summary>Can Bridge bill MBS and ADA items in the same practice?</summary><p>Yes, that's the core of what Bridge is being built to do. Oral and maxillofacial surgery practices often bill Medicare (MBS) items and dental (ADA) items for the same patient, and Bridge keeps both side by side instead of splitting them across systems or spreadsheets.</p></details>
+        <details><summary>Who is Bridge for?</summary><p>Oral and maxillofacial surgeons, specialist dental practices, and the practice managers and billing staff who run them. It's designed for practices that receive referrals from dentists and doctors and bill across medical and dental item numbers.</p></details>
+        <details><summary>How do referrals work in Bridge?</summary><p>When a referral and its attachments arrive through your referral portal, Bridge is designed to create the patient file and file the documents automatically, so your front desk isn't retyping details or uploading files by hand.</p></details>
+        <details><summary>Does Bridge work with Xero or MYOB?</summary><p>Xero and MYOB integration is part of the plan, so invoices and payments flow into your accounts without double entry. Each practice uses its own subscription to its preferred accounting software, which isn't included in the Bridge subscription itself.</p></details>
+        <details><summary>How will Bridge protect patient information?</summary><p>Bridge is being designed around Australia's Privacy Act and the Australian Privacy Principles, with health-grade hosting. We'll publish full security details before launch.</p></details>
+        <details><summary>When will Bridge be available?</summary><p>Bridge is in development and will launch in Australia. Practices on the waitlist and in the Founding Circle will be the first ones signed up for its launch. Other countries may follow.</p></details>
+        <details><summary>What is the Bridgeworld directory?</summary><p>A free directory included for every practice that uses Bridge, with separate searches for dentists and specialists. Each practice gets its own page with its logo, description, locations, practitioners, hours and contact details, and patients can book new patient appointments that go straight into the practice's Bridge schedule. There are no ads, paid placements or star ratings.</p></details>
+        <details><summary>What is the Founding Circle?</summary><p>A small group of surgeons, practice managers and billing staff who help shape Bridge before launch. Members share how their practice works, test early versions, and get access before anyone else.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Bridge is being built by <a href="/">Creative Design Soulutions</a>.</p>
+    <p>Bridge is in development. Features described on this page are planned and may change before launch.</p>
+  </div>
+</footer>
+
+<script>
+/* ---- Connect your Supabase project here (see README.md) ---- */
+const SUPABASE_URL = "https://glaifwtcjcaazkkxlarb.supabase.co";
+const SUPABASE_KEY = "sb_publishable_XTk30td6n-iD1eVnhG8BTQ_Q0SC9MJh";   // the anon / publishable key, never the service_role key
+const TABLE = "bridge_waitlist";
+
+const form = document.getElementById("waitlist");
+const msg = document.getElementById("msg");
+const done = document.getElementById("done");
+
+function setMsg(text, isErr){ msg.textContent = text; msg.className = "msg" + (isErr ? " err" : ""); }
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  setMsg("");
+  const f = new FormData(form);
+  if (f.get("website")) return; // spam bot filled the hidden field
+
+  const required = ["name","email","role","practice_type","country"];
+  const missing = required.find(k => !String(f.get(k) || "").trim());
+  if (missing){
+    setMsg("Fill in your name, email, role, practice type and country to join.", true);
+    document.getElementById(missing).focus();
+    return;
+  }
+  const email = String(f.get("email")).trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    setMsg("Enter a valid email address, like name@practice.com.au.", true);
+    document.getElementById("email").focus();
+    return;
+  }
+  if (SUPABASE_URL.startsWith("YOUR_")){
+    setMsg("The waitlist isn't connected yet. Add your Supabase details to the script at the bottom of this page.", true);
+    return;
+  }
+
+  const row = {
+    name: String(f.get("name")).trim(),
+    email,
+    role: f.get("role"),
+    practice_type: f.get("practice_type"),
+    country: f.get("country"),
+    biggest_headache: String(f.get("biggest_headache") || "").trim() || null,
+    founding_circle: f.get("founding_circle") === "on"
+  };
+
+  const btn = form.querySelector("button[type=submit]");
+  btn.disabled = true; btn.textContent = "Joining...";
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(row)
+    });
+    if (res.status === 409){ throw new Error("duplicate"); }
+    if (!res.ok){ throw new Error("failed"); }
+    form.classList.add("sent");
+    done.focus();
+  }catch(err){
+    btn.disabled = false; btn.textContent = "Join the waitlist";
+    setMsg(err.message === "duplicate"
+      ? "This email is already on the waitlist. We'll be in touch."
+      : "Your details weren't sent. Check your connection and try again.", err.message !== "duplicate");
+  }
+});
+</script>
+</body>
+</html>
