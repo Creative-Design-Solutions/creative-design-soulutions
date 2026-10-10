@@ -90,6 +90,12 @@ a{color:var(--euc)}
 .brand{display:flex; align-items:center; gap:.6rem; font-family:var(--display); font-weight:700; font-size:1.35rem; color:var(--ink); text-decoration:none; letter-spacing:-.01em}
 .brand img{display:block; height:104px; width:auto}
 @media (max-width:600px){ .brand img{height:80px} }
+/* Dark mode: a cream wordmark, and a soft dawn glow behind the sun so its rays read as light, not lines */
+@media (prefers-color-scheme: dark){
+  .brand{position:relative}
+  .brand::before{content:""; position:absolute; left:50%; top:34%; width:78%; height:70%; transform:translate(-50%,-50%); background:radial-gradient(closest-side, rgba(252,231,207,.42), rgba(252,231,207,0)); filter:blur(6px); pointer-events:none}
+  .brand picture{position:relative}
+}
 .top-link{font-weight:700; color:var(--ink); text-decoration:none; border-bottom:2px solid var(--sun); padding-bottom:2px}
 
 /* Hero */
@@ -188,7 +194,7 @@ footer p{margin:.25rem 0}
 
 <header class="wrap top">
   <a class="brand" href="#" aria-label="Bridge home">
-    <img src="brand/bridge-logo.png" alt="Bridge" width="480" height="302">
+    <picture><source srcset="brand/bridge-logo-dark.png" media="(prefers-color-scheme: dark)"><img src="brand/bridge-logo.png" alt="Bridge" width="480" height="302"></picture>
   </a>
   <a class="top-link" href="#join">Join the Interest</a>
 </header>
