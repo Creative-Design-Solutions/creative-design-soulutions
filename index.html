@@ -164,10 +164,12 @@
       content: '';
       position: absolute;
       top: 0; right: 0;
-      width: 45%;
+      /* Wider and less slanted than it was (45% wide, 15% slant) so the video sits wholly
+         inside the blue panel instead of across its edge (Bryan, 2026-10-12). */
+      width: 50%;
       height: 100%;
       background: linear-gradient(135deg, rgba(74,143,194,0.04) 0%, rgba(74,143,194,0.08) 100%);
-      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+      clip-path: polygon(3% 0, 100% 0, 100% 100%, 0% 100%);
     }
 
     .hero-content {
@@ -192,6 +194,9 @@
     /* A slim bezel around it (Bryan, 2026-10-06): a dark frame with a
        hairline of gold at its edge, like a screen. */
     .hero-frame {
+      justify-self: end;
+      width: 100%;
+      max-width: 620px;
       padding: 8px;
       border-radius: 18px;
       background: linear-gradient(160deg, #2a3550, #141b2c);
@@ -210,7 +215,9 @@
     .hero-inner:not(:has(.hero-frame)) { grid-template-columns: 1fr; }
     @media (max-width: 1000px) {
       .hero-inner { grid-template-columns: 1fr; gap: 2.8rem; }
-      .hero-frame { max-width: 640px; }
+      .hero-frame { max-width: 640px; justify-self: start; }
+      /* Stacked, the video would straddle the panel again. */
+      .hero::before { display: none; }
     }
 
     .hero-eyebrow {
